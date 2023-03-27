@@ -11,6 +11,7 @@ try:
     )
 except Exception as e:
     print("failed to connect to the database : \n", str(e))
+    exit()
 
 
 def userExists(pseudo: str) -> bool:
