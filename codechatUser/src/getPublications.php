@@ -24,6 +24,11 @@ $cmd->execute();
 
 $publications = $cmd->fetchAll(PDO::FETCH_ASSOC);
 
+if (empty($publications)){
+    echo "";
+    exit();
+}
+
 foreach ($publications as $publication){
     echo makePublication($publication['id'], $db, '..');
 }
