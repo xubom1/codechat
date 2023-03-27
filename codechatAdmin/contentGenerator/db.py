@@ -4,7 +4,7 @@ import pymysql
 # connect to the database :
 try:
     db = pymysql.connect(
-        host='localhost',
+        host='127.0.0.1',
         user='root',
         password='esgi',
         database='codechat'
