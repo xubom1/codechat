@@ -1,0 +1,14 @@
+//first color scheme : 
+$c5: #360568;
+$c4: #5B2A86;
+$c3: #7785ac;
+$c2: #9ac6c5;
+$c1: #a5e6ba;
+
+$primary: $c5;
+$secondary: $c4;
+
+[data-bs-theme="dark"]{
+}
+
+@import "./node_modules/bootstrap/scss/bootstrap.scss";
