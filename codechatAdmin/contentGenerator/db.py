@@ -9,9 +9,8 @@ try:
         password='esgi',
         database='codechat'
     )
-except:
-    print("failed to connect to the database !")
-    exit()
+except Exception as e:
+    print("failed to connect to the database : \n", str(e))
 
 
 def userExists(pseudo: str) -> bool:
