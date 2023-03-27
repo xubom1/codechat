@@ -1,3 +1,4 @@
+#coding=utf-8
 import pymysql
 
 # connect to the database :
