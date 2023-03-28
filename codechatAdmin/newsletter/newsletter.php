@@ -1,7 +1,7 @@
 <?php
 include('../pages/utils.php');
 include('../pages/template.php');
-checkSessionElseLogin('../..');
+checkSessionAdminElseLogin('../.');
 
 $content = "
     <div class=''>
@@ -16,4 +16,4 @@ $content = "
         </form>
     </div>
 ";
-echo makePage($content, '../..');
+echo makePage($content, '../');

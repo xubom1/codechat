@@ -9,10 +9,10 @@ function doesAdminNameExists($name, $database){
     return $exist->fetchAll()[0][0];
 }
 
-function checkSessionElseLogin($rootpath = '..'){
+function checkSessionAdminElseLogin($rootpath = ''){
     session_start();
     if (!isset($_SESSION['admin'])){
-        header("location: $rootpath/admin/login.php?msg=session is not valid, please identify&err=true");
+        header("location: $rootpath/login.php?msg=session is not valid, please identify&err=true");
     }
 }
 

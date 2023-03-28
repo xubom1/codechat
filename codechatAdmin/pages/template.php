@@ -21,16 +21,13 @@ function makePage($content, $rootPath = ".."){
         <header class='container-fluid bg-primary'>
             <nav class='navbar'>
                 <div class='p-1 nav-item d-flex align-items-center'>
-                    <a class='navbar-brand' href='$rootPath/admin'>
+                    <a class='navbar-brand' href='$rootPath/index.php'>
                         <img src='$rootPath/assets/logo.svg' alt='logo' width='30'>
                         codechat
                     </a>
                 </div>
                 <div class='nav-item'>
-                    <button onclick='location.href=\"$rootPath/admin/logout.php\"' class='btn btn-danger mx-1'>logout</button>
-                    <button onclick='switchColorMode()' class='colorModeButton btn btn-dark'>
-                        light mode
-                    </button>
+                    <button onclick='location.href=\"$rootPath/logout.php\"' class='btn btn-danger mx-1'>logout</button>
                 </div>
             </nav>
         </header>

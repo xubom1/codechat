@@ -1,39 +1,17 @@
 <?php
-include('pages/utils.php');
-checkSessionElseLogin();
+include('../pages/utils.php');
+checkSessionAdminElseLogin('.');
 
-include('../database.php');
+include('../../database.php');
 $db = getDatabase();
 
 //get some users in the database
-$cmd = $db->prepare('SELECT * FROM user WHERE admin=0 AND banned=0 ORDER BY creation ASC');
+$cmd = $db->prepare('SELECT * FROM user WHERE admin=0 AND banned=1 ORDER BY creation ASC');
 $cmd->execute();
 $users = $cmd->fetchAll();
 
-function error()
-{
-    if (isset($_GET['msg']) && !empty($_GET['msg'])) {
-        return htmlspecialchars($_GET['msg']);
-    }
-}
-
-$content = '
-    <br>
-    <div class="input-group m-auto" style="width:500px; ">
-      <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"/>
-      <button type="button" class="btn btn-outline-primary">search</button>
-    </div>
-';
-
-$content .= "
-    <div class='container mt-5 '>
-        <p class='text-center " . ((isset($_GET['err']) && $_GET['err'] == 'true') ? "text-danger" : " ") . "'> 
-        " . error() . "
-        </p>
-    </div>
-";
-
-$content .= "
+$content = "
+    <h1 class='text-center my-5'>Banned Users</h1>
     
     <div class='modal fade' id='newAdminModal' aria-labelledby='exampleModalLabel' aria-hidden='true'>
         <form action='createAdmin.php' method='get' class='modal-dialog'>
@@ -73,18 +51,34 @@ $content .= "
 ";
 
 foreach ($users as $i => $user){
-    $content .= sprintf("
+    $content .= "
     <tr>
-        <th scope='row'>%d</th>
-        <td>%s</td>
-        <td>%s</td>
-        <td>%s</td>
-        <td>%s</td>
+        <th scope='row'>" . ($i + 1) ."</th>
+        <td>". $user['pseudo'] ."</td>
+        <td>". $user['mail'] ."</td>
+        <td>". $user['firstName'] ."</td>
+        <td>". $user['lastName'] ."</td>
         <td class='d-flex justify-content-end'>
-            <button class='btn btn-secondary btn-sm' onclick='location.href=\"manageUser.php?user=%s\"'>manage profile</button>
+            <div class='col-auto'><button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#unBanAccount'>unban account</button></div>
         </td>
     </tr>
-    ", $i + 1, $user['pseudo'], $user['mail'], $user['firstName'], $user['lastName'], $user['pseudo']);
+
+    <div class='modal' id='unBanAccount'>
+      <div class='modal-dialog'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <h5 class='modal-title'> unban ". $user['pseudo'] ." account ?</h5>
+            
+            <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+          </div>
+          <div class='modal-footer'>
+            <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
+            <button type='button' class='btn btn-danger' onclick='location.href=\"unban.php?user=" . $user['pseudo'] . "\"'>unban</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    ";
 }
 
 $content .= "
@@ -92,5 +86,5 @@ $content .= "
     </table>
 ";
 
-include("pages/template.php");
+include("../pages/template.php");
 echo makePage($content);
