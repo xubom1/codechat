@@ -1,6 +1,6 @@
 <?php
 include('pages/utils.php');
-checkSessionElseLogin();
+checkSessionAdminElseLogin('.');
 
 $content = "<h1 class='text-center my-5'>hello " . $_SESSION['admin'] . "</h1>";
 
@@ -36,7 +36,7 @@ $content = '
           <div class="card-body">
              <h5 class="card-title">Captcha</h5>
              <p class="card-text">Here change captcha picture. Add and delete captcha.</p>
-             <a href="captcha/" class="btn btn-primary">Start manage</a>
+             <a href="captcha/index.php" class="btn btn-primary">Start manage</a>
           </div>
         </div>
         
@@ -60,4 +60,4 @@ $content = '
 
 
 include("pages/template.php");
-echo makePage($content);
+echo makePage($content, '.');

@@ -1,13 +1,13 @@
 <?php
-include('pages/utils.php');
-include('pages/template.php');
-checkSessionElseLogin();
+include('../pages/utils.php');
+include('../pages/template.php');
+checkSessionAdminElseLogin('.');
 
 if (!isset($_GET['user'])){
     header('location: ./');
 }
 
-include('../database.php');
+include('../../database.php');
 $db = getDatabase();
 
 $cmd = $db->prepare('SELECT * FROM user WHERE pseudo=?');
@@ -62,7 +62,7 @@ function error()
 
 $content = "
     
-    <h2 class='text-center my-4 text-decoration-underline'><em>$pseudo</em> account manager</h2>
+    <h2 class='text-cente r my-4 text-decoration-underline'><em>$pseudo</em> account manager</h2>
     
     <div class='container mt-5 '>
         <p class='text-center " . ((isset($_GET['err']) && $_GET['err'] == 'true') ? "text-danger" : " ") . "'> 
@@ -120,7 +120,7 @@ $content = "
           </div>
           <div class='modal-footer'>
             <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
-            <button type='button' class='btn btn-danger' onclick='location.href=\"users/ban.php?user=" . $user['pseudo'] . "\"'>ban</button>
+            <button type='button' class='btn btn-danger' onclick='location.href=\"ban.php?user=" . $user['pseudo'] . "\"'>ban</button>
           </div>
         </div>
       </div>

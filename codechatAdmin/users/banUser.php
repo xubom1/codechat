@@ -1,8 +1,8 @@
 <?php
-include('pages/utils.php');
-checkSessionElseLogin();
+include('../pages/utils.php');
+checkSessionAdminElseLogin('.');
 
-include('../database.php');
+include('../../database.php');
 $db = getDatabase();
 
 //get some users in the database
@@ -59,9 +59,25 @@ foreach ($users as $i => $user){
         <td>". $user['firstName'] ."</td>
         <td>". $user['lastName'] ."</td>
         <td class='d-flex justify-content-end'>
-            <button class='btn btn-secondary btn-sm' onclick='location.href=\"users/unban.php?user=" . $user['pseudo'] . "\"'>unban</button>
+            <div class='col-auto'><button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#unBanAccount'>unban account</button></div>
         </td>
     </tr>
+
+    <div class='modal' id='unBanAccount'>
+      <div class='modal-dialog'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <h5 class='modal-title'> unban ". $user['pseudo'] ." account ?</h5>
+            
+            <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+          </div>
+          <div class='modal-footer'>
+            <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
+            <button type='button' class='btn btn-danger' onclick='location.href=\"unban.php?user=" . $user['pseudo'] . "\"'>unban</button>
+          </div>
+        </div>
+      </div>
+    </div>
     ";
 }
 
@@ -70,5 +86,5 @@ $content .= "
     </table>
 ";
 
-include("pages/template.php");
+include("../pages/template.php");
 echo makePage($content);
