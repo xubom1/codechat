@@ -1,8 +1,8 @@
 <?php
-include('pages/utils.php');
+include('../pages/utils.php');
 checkSessionElseLogin();
 
-include('../database.php');
+include('../../database.php');
 $db = getDatabase();
 
 //get some users in the database
@@ -92,5 +92,5 @@ $content .= "
     </table>
 ";
 
-include("pages/template.php");
+include("../pages/template.php");
 echo makePage($content);
