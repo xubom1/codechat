@@ -40,7 +40,6 @@ function makePage($content, $rootPath = ".."){
             &copy; 2023 copyright : codechat
         </footer>
  
-        <script src='$rootPath/js/darkMode.js'></script>
     </body>
 </html>
     ";
