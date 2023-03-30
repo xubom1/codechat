@@ -5,7 +5,7 @@ checkSessionAdminElseLogin('../.');
 
 $content = "
     <div class=''>
-        <form action='send.php'>
+        <form action='send.php' method='POST'>
             <label for='subject' class='form-label'>subject</label>
             <input type='text' name='subject' class='form-control'>
             
