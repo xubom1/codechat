@@ -3,8 +3,8 @@ include('../pages/utils.php');
 include('../pages/template.php');
 checkSessionAdminElseLogin('../.');
 
-$subject = $_POST['subject'];
-$text = $_POST['text'];
+//$subject = $_POST['subject'];
+//$text = $_POST['text'];
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -18,7 +18,7 @@ $mail = new PHPMailer(true);
 
 try {
     //Server settings
-    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+    $mail->SMTPDebug = 2;                      //Enable verbose debug output
     $mail->isSMTP();                                            //Send using SMTP
     $mail->Host       = 'pro1.mail.ovh.net';                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
