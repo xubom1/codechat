@@ -138,3 +138,9 @@ nav{
 .profileTable tr:nth-of-type(1) > *{
     height: 100px;
 }
+
+.logo3D{
+    width: 35px;
+    height: 35px;
+    margin-right: 16px;
+}

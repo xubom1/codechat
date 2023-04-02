@@ -108,7 +108,17 @@ checkSessionElseLogin();
                         </table>
                     </div>
 <!--                    publication tab-->
-                    <div class="tab-pane fade" id="publications-tab-pane" role="tabpanel" aria-labelledby="publications-tab" tabindex="0">your publications</div>
+                    <div class="tab-pane fade" id="publications-tab-pane" role="tabpanel" aria-labelledby="publications-tab" tabindex="0">
+                        <?php
+//                            $cmd = $db->prepare('SELECT * FROM publication WHERE creator = :userid');
+//                            $cmd->execute(['userid' => $_SESSION['user']]);
+//                            $publications = $cmd->fetchAll();
+//
+//                            var_dump($publications);
+//                        ?>
+                        <div id="scroller"></div>
+                    </div>
+<!--                    likes-->
                     <div class="tab-pane fade" id="likes-tab-pane" role="tabpanel" aria-labelledby="likes-tab" tabindex="0">your likes</div>
                     <div class="tab-pane fade" id="responses-tab-pane" role="tabpanel" aria-labelledby="responses-tab" tabindex="0">your responses</div>
                     <div class="tab-pane fade" id="followers-tab-pane" role="tabpanel" aria-labelledby="followers-tab" tabindex="0">your followers</div>

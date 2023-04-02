@@ -2,10 +2,13 @@ const path = require('path');
 
 module.exports = {
     mode: 'development',
-    //mode: 'production',
-    entry: './src/viewer3d.js',
+    mode: 'production',
+    entry: {
+        loadingPage: './src/loadingPage.js',
+        logo3D: './src/logo3D.js'
+    },
     output: {
         path: path.resolve(__dirname, 'build'),
-        filename: 'viewer3d.bundle.js'
+        filename: '[name].bundle.js'
     }
 };

@@ -49,7 +49,7 @@ export class Shader{
 
     /**@type {(name: string) => number} */
     getAttribLocation(name){
-        this.gl.getAttribLocation(this.program, name);
+        return this.gl.getAttribLocation(this.program, name);
     }
 
     /**@type {(name: string, value: any) => void} */
