@@ -3,6 +3,13 @@ function checkArrays(a, b){
         console.error("vectors do not have the same size !");
     }
 }
+
+function values(a){
+    return Object.values(a).filter((value) => {
+        return typeof value == "number";
+    });
+}
+
 function numberToArray(value, lengthOftheArray){
     if (typeof value === "number")
         return Array.from({length: lengthOftheArray}, () => value);
@@ -11,38 +18,48 @@ function numberToArray(value, lengthOftheArray){
 }
 
 export let Vectors = {
-    /** @type {(array) => array}  */
-    values: function(a){
-        return Object.values(a).filter((value) => {
-            return typeof value == "number";
-        });
+    values: function(v){
+        return values(v);
     },
-    
+
     /** @type {(array, array, function) => Array} */
     vectorOperationTemplate: function(a_, b_, operation){
-        let a = Vectors.values(a_);
+        let a = values(a_);
         let b = numberToArray(b_, a.length);
         checkArrays(a, b);
 
         let ret = [];
         for (let i = 0; i < a.length; i++) {
-
-            ret[i] = a[i] * b[i];
+            ret[i] = operation(a[i], b[i]);
         }
         return ret;
     },
 
     /** @type {(a: Array, b: Array | number) => Array} */
     sustract: function(a, b){
-        return vectorOperationTemplate(a, b, function(a, b){
+        return this.vectorOperationTemplate(a, b, function(a, b){
             return a - b;
         })
     },
 
     /** @type {(a: Array, b: Array | number) => Array} */
+    add: function(a, b){
+        return this.vectorOperationTemplate(a, b, function(a, b){
+            return a + b;
+        })
+    },
+
+    /** @type {(a: Array, b: Array | number) => Array} */
     divide: function(a, b){
-        return vectorOperationTemplate(a, b, function(a, b){
+        return this.vectorOperationTemplate(a, b, function(a, b){
             return a / b;
+        })
+    },
+
+    /** @type {(a: Array, b: Array | number) => Array} */
+    multiply: function(a, b){
+        return this.vectorOperationTemplate(a, b, function(a, b){
+            return a * b;
         })
     },
 
@@ -92,30 +109,3 @@ export let Vectors = {
         return this.divide(a, l);
     }
 };
-
-export class Vec2{
-    /**@type {(x: number, y: number) => void} */
-    constructor(x, y){
-        this.x = x;
-        this.y = y;
-    }
-}
-
-export class Vec3{
-    /**@type {(x: number, y: number, z: number) => void} */
-    constructor(x, y, z){
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
-}
-
-export class Vec4{
-    /**@type {(x: number, y: number, z: number, w: number) => void} */
-    constructor(x, y, z, w){
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.w = w;
-    }
-}
