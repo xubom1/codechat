@@ -6,7 +6,7 @@ include('../../database.php');
 $db = getDatabase();
 
 //get some users in the database
-$cmd = $db->prepare('SELECT * FROM user WHERE admin=0 AND banned=0 ORDER BY creation ASC');
+$cmd = $db->prepare('SELECT * FROM user WHERE admin=0 AND banned=0 ORDER BY creation ASC LIMIT 10');
 $cmd->execute();
 $users = $cmd->fetchAll();
 
@@ -19,8 +19,8 @@ function error()
 
 $content = '
     <br>
-    <div class="input-group m-auto" style="width:500px; ">
-      <input type="search" id="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"/>
+    <div class="input-group m-auto" style="">
+        <a class="btn btn-primary" href="searchUsers/test.php" role="button">Search</a>
     </div>
 ';
 
