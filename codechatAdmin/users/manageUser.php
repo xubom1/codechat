@@ -11,7 +11,7 @@ include('../../database.php');
 $db = getDatabase();
 
 $cmd = $db->prepare('SELECT * FROM user WHERE pseudo=?');
-$cmd->execute([$_GET['user']]);
+$cmd->execute([htmlspecialchars($_GET['user'])]);
 $user = $cmd->fetchAll()[0];
 
 if(!sizeof($user))
@@ -37,7 +37,7 @@ function createRow($text, $bddName, $user, $type){
                           
                 <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
               </div>
-              <form action='users/change.php?user=". $_GET['user'] ."&type=$bddName' method='post'>
+              <form action='change.php?user=". $_GET['user'] ."&type=$bddName' method='post'>
                   <div class='modal-body'>
                      <label for='name' class='form-label'>New $text</label>
                      <input name='$bddName' type='$type' class='form-control'>
@@ -137,7 +137,7 @@ $content = "
             <p class='modal-body'>By clicking on download you will download all the information concerning $pseudo.</p>
           <div class='modal-footer'>
             <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
-            <button type='button' class='btn btn-primary' onclick='location.href=\"users/generatePdf.php?user=" . $user['pseudo'] . "\"'>Download</button>
+            <button type='button' class='btn btn-primary' onclick='location.href=\"generatePdf.php?user=" . $user['pseudo'] . "\"'>Download</button>
           </div>
         </div>
       </div>

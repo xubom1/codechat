@@ -21,7 +21,7 @@ function makePage($content, $rootPath = ".."){
         <header class='container-fluid bg-primary'>
             <nav class='navbar'>
                 <div class='p-1 nav-item d-flex align-items-center'>
-                    <a class='navbar-brand' href='$rootPath/index.php'>
+                    <a class='navbar-brand' href='$rootPath'>
                         <img src='$rootPath/assets/logo.svg' alt='logo' width='30'>
                         codechat
                     </a>
