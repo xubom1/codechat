@@ -20,7 +20,7 @@ function error()
 $content = '
     <br>
     <div class="input-group m-auto" style="">
-        <a class="btn btn-primary" href="searchUsers/test.php" role="button">Search</a>
+        <a class="btn btn-primary" href="searchUsers/search.php" role="button">Search</a>
     </div>
 ';
 
