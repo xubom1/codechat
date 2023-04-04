@@ -52,7 +52,9 @@ function makePublication($id, $db, $rootpath = ".."): string
     $cmd->execute([$id]);
     $likeCount = $cmd->fetch()[0];
 
-    $pseudo = getUserPseudo($publication['creator'], $db);
+    $user = $publication['creator'];
+    $pseudo = getUserPseudo($user, $db);
+
 
     $interval = displayTimeInterval($publication["lastEdition"]);
     $id = $publication['id'];
@@ -60,7 +62,7 @@ function makePublication($id, $db, $rootpath = ".."): string
     return "
         <article class='publication' id='$id'>
             <div class='publicationHeader d-flex align-items-center'>
-                <img src='$rootpath/assets/defaultAccount.svg' width=45' height='45' alt='userPhoto'>
+                <div class='avatar' codechat-user='$user'></div>
                 <a href='#$id' class='text-body'>$pseudo</a>
                 <div class='mx-2'>
                     &bull; $interval

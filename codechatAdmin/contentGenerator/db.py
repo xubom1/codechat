@@ -98,3 +98,4 @@ def like(user, publication):
     
     db.commit()
     return True
+

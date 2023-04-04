@@ -91,7 +91,7 @@ checkSessionElseLogin();
                                 }
                                 echo $ret;
                             }
-                            makeLine('avatar', "<img src='../assets/defaultAccount.svg' alt='avatar' height='80' id='avatarProfile'>", null, null, 'onclick=\'console.log("not working yet")\'');
+                            makeLine('avatar', "<div class='avatar' codechat-user=' ". $_SESSION['user'] ."'></div>", null, null, 'onclick=\'location.href = "createAvatar.php"\'');
                             makeLine('pseudo', $_SESSION['pseudo'], "text", 'pseudo', '');
                             makeLine('mail', $user['mail'], "text", 'mail', '');
                             makeLine('last name', $user['lastName'], "text", 'lastName', '');
