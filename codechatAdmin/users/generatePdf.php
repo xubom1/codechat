@@ -6,7 +6,7 @@ require_once '../../lib/dompdf/autoload.inc.php';
 include('../../database.php');
 $db = getDatabase();
 
-$user = $_GET['user'];
+$user = htmlspecialchars($_GET['user']);
 
 $cmd = $db->prepare('SELECT * FROM user WHERE pseudo = ?');
 $cmd->execute([$user]);
@@ -16,7 +16,6 @@ $cmdFollow = $db->prepare('SELECT followed FROM follow WHERE follower = ?');
 $cmdFollow->execute([$user]);
 $followArray = $cmdFollow->fetchAll();
 
-$dompdf = new Dompdf();
 
 $content = '
     <h1>Profil : '. $user . '</h1>
@@ -34,9 +33,13 @@ foreach ($followArray as $value){
 
 $content .= '</p>';
 
-
+$dompdf = new Dompdf();
+$dompdf->setPaper('A4', 'portrait');
 $dompdf->loadHtml($content);
 $dompdf->render();
-$dompdf->stream();
+$filename = $user . '_account_detail';
+$dompdf->stream($filename);
 
 echo $content;
+
+header('location: manageUser.php?user='.$user);

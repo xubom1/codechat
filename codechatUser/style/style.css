@@ -131,6 +131,8 @@ nav{
     transform: scale(1.4);
 }
 
-#avatarProfile{
-    transform: scale(1.0);
+.logo3D{
+    width: 35px;
+    height: 35px;
+    margin-right: 16px;
 }

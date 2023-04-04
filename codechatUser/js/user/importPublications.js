@@ -1,3 +1,6 @@
+const ERROR_TIMEOUT = 2000;
+let lastError = Date.now() - ERROR_TIMEOUT;
+
 function addPublications(number ){
     //get already loaded publications
     const publications = document.getElementsByClassName('publication');
@@ -12,21 +15,31 @@ function addPublications(number ){
     fetch("src/getPublications.php", {
         method: "POST",
         body: data
-    }).then(response => response.text())
-    .then(function(text){
+    }).then(function(response){
+            if (!response.ok) {
+                lastError = Date.now();
+                throw Error(response.statusText);
+            }
+            return response.text();
+        }
+    ).then(function(text){
         const container = document.getElementById('scroller');
         if (text !== '')
             container.innerHTML += text;
-    });
+    })
+
 }
 
-addPublications(6);
+addPublications(20);
 
 function checkScrolling() {
+    //avoid spamming in case of an error
+    if (Date.now() < lastError + ERROR_TIMEOUT) return;
+
     const scroller = document.getElementById('scroller');
 
     if (scroller.scrollTop + scroller.offsetHeight > scroller.scrollHeight - 150){
-        addPublications(10);
+        addPublications(20);
     }
 };
 

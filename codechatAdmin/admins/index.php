@@ -1,7 +1,7 @@
 <?php
 
 include("../pages/utils.php");
-checkSessionElseLogin('../..');
+checkSessionAdminElseLogin('../.');
 
 //get admins
 include('../../database.php');
@@ -140,5 +140,5 @@ if (isset($_GET['msg']))
     </script>
     ";
 
-echo makePage($content, "../..");
+echo makePage($content, "../");
 

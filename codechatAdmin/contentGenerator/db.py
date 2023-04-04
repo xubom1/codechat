@@ -1,15 +1,16 @@
+#coding=utf-8
 import pymysql
 
 # connect to the database :
 try:
     db = pymysql.connect(
-        host='localhost',
+        host='127.0.0.1',
         user='root',
         password='esgi',
         database='codechat'
     )
-except:
-    print("failed to connect to the database !")
+except Exception as e:
+    print("failed to connect to the database : \n", str(e))
     exit()
 
 

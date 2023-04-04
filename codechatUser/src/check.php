@@ -26,7 +26,7 @@ if (password_verify($_POST['password'], $res['password'])){
     $cmd->execute([$_SESSION['user']]);
 
     //redirect user in index.php
-    header("location: ../");
+    header("location: /");
 }
 header("location: ../login.php?msg=password is not correct !&err=true");
 
