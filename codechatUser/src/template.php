@@ -18,6 +18,7 @@ function make_head($rootPath = '.', $add = ""): string
             <link rel='stylesheet' href='$rootPath/style/style.css'>
             <link rel='icon' href='$rootPath/assets/logo.svg'>
             <script src='$rootPath/js/user/darkMode.js'></script>
+            <script src='$rootPath/js/user/avatars.js'></script>
             
             $add
         </head>

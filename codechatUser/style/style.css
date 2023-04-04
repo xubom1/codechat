@@ -134,7 +134,3 @@ nav{
 #avatarProfile{
     transform: scale(1.0);
 }
-
-.profileTable tr:nth-of-type(1) > *{
-    height: 100px;
-}

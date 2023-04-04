@@ -82,6 +82,38 @@ def generateLikes(number):
 
     print("done !")
 
+def generateAvatarOwnership(number):
+    #get users
+    with db.db.cursor() as cursor:
+
+        #delete previous avatars
+        cursor.execute('DELETE FROM avatarOwnership')
+        db.db.commit() 
+
+        #get users
+        cursor.execute('SELECT id FROM user')
+        users = cursor.fetchall()
+
+        #get avatar components
+        cursor.execute('SELECT id, type FROM avatarComponent')
+        componentsFlat = list(cursor.fetchall())
+
+        components = {}
+        for component in componentsFlat:
+            component = list(component)
+            #check that the array is not empty
+            if not components.get(component[1]): components[component[1]] = []
+            #add each component to its type in the dictonary components
+            components[component[1]].append(component[0])
+        
+        for type, componentsInType in components.items():
+            for user in users:
+                data = (user[0],  random.choice(componentsInType))
+                cursor.execute('INSERT INTO avatarOwnership(owner, component) VALUES(%s, %s)', data)
+                print('component : ', component, ' for user : ', user)
+
+        db.db.commit()        
+    
 
 #cmd
 def addCommand(arg: str, function):
@@ -93,3 +125,5 @@ addCommand("follow", generateFollows)
 addCommand("publication", generatePublications)
 addCommand("comment", generateComments)
 addCommand("like", generateLikes)
+addCommand("avatar", generateAvatarOwnership)
+
