@@ -1,15 +1,17 @@
 async function selectActiveComponents(){
+    const user = document.getElementsByTagName('main')[0].getAttribute('codechat-user');
     //get already selected components in the db
     const data = new FormData();
-    data.append('user', document.getElementsByTagName('main')[0].getAttribute('codechat-user'));
+    data.append('user', user);
 
     const avatarPromise = await fetch('src/getAvatar.php', {
         method: "POST",
         body: data
     });
 
-    let images = Array.from(await avatarPromise.json());
+    let images = (await avatarPromise.json())[user];
     images = images.map((value) => value.id);//isolate the ids
+    console.log(images);
 
     //set the body parts that are in the database
     const inputs = document.getElementsByClassName('avatarInput');
@@ -20,7 +22,7 @@ async function selectActiveComponents(){
         if (images.includes(parseInt(radio.id))){
             radio.checked = true;
         }
-
+        console.log(input);
     }
 }
 
