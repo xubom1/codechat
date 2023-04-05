@@ -7,23 +7,19 @@ checkSessionElseLogin();
 //check that the user is given
 if (empty($_POST['user'])) exit();
 
+$users = explode("\n",$_POST['user']);
+
 $db = getDatabase();
 
-$cmd = $db->prepare('SELECT component FROM avatarownership WHERE owner = :user');
+$response = [];
+$getPaths = $db->prepare('SELECT avatarcomponent.path, avatarcomponent.type, avatarcomponent.id FROM avatarcomponent CROSS JOIN avatarownership ON avatarcomponent.id = avatarownership.component WHERE avatarownership.owner = :user');
 
-$cmd->execute( ['user' => $_POST['user']]);
-$components = $cmd->fetchAll(PDO::FETCH_ASSOC);
-$images = [];
+//get all the images that compose the avatar of each user and return the path of the images
+foreach ($users as $user){
+    $getPaths->execute(['user' => $user]);
+    $response[(int)$user] = $getPaths->fetchAll(PDO::FETCH_ASSOC);
+}
 
-//if there is some components in the database
-if (count($components)){
-    $getPath = $db->prepare('SELECT path, type, id FROM avatarcomponent WHERE id = :id');
-    foreach ($components as $component){
-        $getPath->execute(['id' => $component['component']]);
-        $images[] = $getPath->fetch(PDO::FETCH_ASSOC);
-    }
-    echo json_encode($images);
-}
-else { //else use the default avatar
-    echo json_encode([]);
-}
+//return json text of the response array
+echo json_encode($response);
+

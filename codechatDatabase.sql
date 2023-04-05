@@ -50,17 +50,17 @@ CREATE TABLE follow(
     FOREIGN KEY(followed) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE avatarComponent(
+CREATE TABLE avatarcomponent(
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
     path VARCHAR(50) NOT NULL,
     type INT
 );
 
-CREATE TABLE avatarOwnership(
+CREATE TABLE avatarownership(
        owner INT,
        component INT,
        PRIMARY KEY(owner, component),
        FOREIGN KEY(owner) REFERENCES user(id),
-       FOREIGN KEY(component) REFERENCES avatarComponent(id)
+       FOREIGN KEY(component) REFERENCES avatarcomponent(id)
 );
