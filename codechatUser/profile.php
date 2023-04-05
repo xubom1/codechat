@@ -8,9 +8,9 @@ checkSessionElseLogin();
 ?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme='<?=getColorTheme()?>'>
-    <?= make_head("..") ?>
+    <?= make_head() ?>
     <body>
-        <?= make_header("..") ?>
+        <?= make_header() ?>
         <!--    MAIN PAGE    -->
         <main>
             <div class="container p-2 border">
@@ -91,7 +91,7 @@ checkSessionElseLogin();
                                 }
                                 echo $ret;
                             }
-                            makeLine('avatar', "<div class='avatar' codechat-user=' ". $_SESSION['user'] ."'></div>", null, null, 'onclick=\'location.href = "createAvatar.php"\'');
+                            makeLine('avatar', "<div class='avatar' codechat-user='". $_SESSION['user'] ."'></div>", null, null, 'onclick=\'location.href = "createAvatar.php"\'');
                             makeLine('pseudo', $_SESSION['pseudo'], "text", 'pseudo', '');
                             makeLine('mail', $user['mail'], "text", 'mail', '');
                             makeLine('last name', $user['lastName'], "text", 'lastName', '');
@@ -128,6 +128,6 @@ checkSessionElseLogin();
         </main>
 
         <!--    END OF MAIN    -->
-        <?= make_footer("..") ?>
+        <?= make_footer() ?>
     </body>
 </html>

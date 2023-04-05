@@ -3,7 +3,7 @@
 function make_head($rootPath = '.', $add = ""): string
 {
     ob_start();
-    include "./js/src/renderer3d/shaders.php";
+    include ($rootPath . "/js/src/renderer3d/shaders.php");
     $shaders = ob_get_clean();
 
     return "
@@ -21,8 +21,8 @@ function make_head($rootPath = '.', $add = ""): string
             <link rel='icon' href='$rootPath/assets/logo.svg'>
             <script src='$rootPath/js/user/darkMode.js'></script>
             <script src='$rootPath/js/user/avatars.js'></script>
-            <script src='$rootPath/js/build/logo3D.bundle.js'></script>
-            
+            $shaders
+            <script src='$rootPath/js/build/logo3D.bundle.js'></script>            
             $add
         </head>
     ";
@@ -71,6 +71,7 @@ function make_header($rootPath = '.'): string
 function make_footer($rootPath = '.'): string
 {
     return "
+        <script></script>
         <footer class='container-fluid bg-secondary text-center  py-3 text-light'>
             <div class='row'>
                 <div class='col align-self-end p-3'>

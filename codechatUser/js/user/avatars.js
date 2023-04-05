@@ -1,42 +1,53 @@
 
-
 async function updateAvatars(){
-    const avatars = document.getElementsByClassName('avatar');
+    const avatarsCollection = document.getElementsByClassName('avatar');
+    if (!avatarsCollection.length) return;
 
-    for (const avatar of avatars) {
-        //get user
-        const user = avatar.getAttribute('codechat-user');
-        if (!user) continue;
+    const avatarsContainers = [].slice.call(avatarsCollection);//get the html collection but fixed in time
+    
+    //get size of the image needed
+    const size = 150
 
-        //get size of the image needed
-        let size = avatar.getAttribute('size');
-        if (!size) size = 50;
+    //get all the users which need an avatar to be displayed
+    let users = [];
 
-        //change class (avoid that the automatic selection function take it while it is loading)
-        avatar.setAttribute('class', 'loading');
+    for (const avatarContainer of avatarsContainers) {
+        users.push(avatarContainer.getAttribute('codechat-user'));
+    }
+    
+    //remove duplicates
+    users = users.filter((value, index) => (users.indexOf(value) === index));
 
-        //create a canvas
+    const usersString = users.join('\n');
+
+    const data = new FormData();
+    data.append('user', usersString);
+
+    const avatarPromise = await fetch('src/getAvatar.php', {
+        method: "POST",
+        body: data
+    });
+
+    //store all the avatars' images path
+    const avatarsData = Object.entries(await avatarPromise.json());
+
+    //array that will store all the generated images
+    const avatars = {};
+
+    for (const [user, avatarData] of avatarsData) {
+
+        //create a canvas for each avatar to create an img
         const canvas = document.createElement('canvas');
 
         //get the 2D context
         canvas.width = size;
         canvas.height = size;
         const ctx = canvas.getContext('2d');
-
-        //getAvatar
-        const data = new FormData();
-        data.append('user', user);
-
-        const avatarPromise = await fetch('src/getAvatar.php', {
-            method: "POST",
-            body: data
-        });
-
-        const imagesData = await avatarPromise.json();
-
+        
+        
         //load images that compose the avatar
         const images = [];
-        for (const imageData of imagesData) {
+        for (const imageData of avatarData) {
             const img = new Image();
 
             //function that is called when an image is added
@@ -45,7 +56,7 @@ async function updateAvatars(){
                 images.push(img);
 
                 //check if all the images are loaded
-                if (images.length == imagesData.length){
+                if (images.length === avatarData.length){
 
                     //draw images in the correct order
                     images.sort((a, b) => a.class - b.class);
@@ -53,18 +64,33 @@ async function updateAvatars(){
                         ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
                     }
 
-                    //convert the canvas to image and display the image in the document
-                    const avatarResult = new Image();
-                    avatarResult.src = canvas.toDataURL("image/png");
-                    avatar.parentNode.replaceChild(avatarResult, avatar);
+                    //convert the canvas to image
+                    avatars[user] = new Image();
+                    avatars[user] = canvas.toDataURL("image/png");
+
+                    //check if all the avatars had been generated
+                    if (Object.keys(avatars).length === avatarsData.length){
+                        
+                        for (const avatarContainer of avatarsContainers) {
+                            //replace the old avatar container with the img
+                            const user = avatarContainer.getAttribute('codechat-user');
+                            const avatarNode = document.createElement('img');
+                            avatarNode.height = avatarContainer.getAttribute('size') ? avatarContainer.getAttribute('size') : 50;
+                            if (!avatars[user]) throw 'failed to find matching user :' + user;
+                            avatarNode.src = avatars[user];
+                            
+                            if (avatarContainer.parentNode) //avoid async related bugs
+                                avatarContainer.parentNode.replaceChild(avatarNode, avatarContainer);
+                        }
+                    }
                 }
             };
             img.src = imageData['path'];
             img.class = imageData['type'];
-        }        
+        }   
     }
 }
 
 document.addEventListener('DOMContentLoaded', function(){
-    setInterval(updateAvatars, 100);
+    setInterval(updateAvatars, 200);
 });
