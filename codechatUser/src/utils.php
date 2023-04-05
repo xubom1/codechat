@@ -41,23 +41,35 @@ function getUserPseudo($id, $db){
 
 function makePublication($id, $db, $rootpath = ".."): string
 {
-
     //get publication
-    $cmd = $db->prepare("SELECT * FROM publication WHERE id=?");
-    $cmd->execute([$id]);
-    $publication = $cmd->fetch();
+    $getPublication = $db->prepare("SELECT * FROM publication WHERE id=?");
+    $getPublication->execute([$id]);
+    $publication = $getPublication->fetch(PDO::FETCH_ASSOC);
 
     //get like count
-    $cmd = $db->prepare("SELECT COUNT(*) FROM liked WHERE publication=?");
-    $cmd->execute([$id]);
-    $likeCount = $cmd->fetch()[0];
+    $getLikeCount = $db->prepare("SELECT COUNT(*) FROM liked WHERE publication=?");
+    $getLikeCount->execute([$id]);
+    $likeCount = $getLikeCount->fetch()[0];
 
+    //determine if user liked this publication
+    $getLiked = $db->prepare("SELECT EXISTS( SELECT * FROM liked WHERE publication = :publication AND user = :user)");
+    $getLiked->execute([
+        'publication' => $id,
+        'user' => $_SESSION['user']
+    ]);
+    $liked = $getLiked->fetch()[0];
+    $likeImg = $liked ? "$rootpath/assets/unlike.png" : "$rootpath/assets/like.svg";
+    $likeUser = $_SESSION['user'];
+
+    //get creator
     $user = $publication['creator'];
     $pseudo = getUserPseudo($user, $db);
 
-
+    //time since publication
     $interval = displayTimeInterval($publication["lastEdition"]);
     $id = $publication['id'];
+
+    $content = $publication['content'];
 
     return "
         <article class='publication' id='$id'>
@@ -69,11 +81,11 @@ function makePublication($id, $db, $rootpath = ".."): string
                 </div>
             </div>
             <div class='publicationBody'>
-                $publication[1]
+                $content
             </div>
             <div class='publicationFooter'>
-                <img src='$rootpath/assets/like.svg'>
-                <div>$likeCount</div>
+                <img src='$likeImg' alt='$liked' onclick='updateLike(this)' codechat-user='$likeUser'>
+                <div class='likesCounter'>$likeCount</div>
             </div>
         </article>
     ";

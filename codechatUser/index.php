@@ -15,9 +15,13 @@
 
         <main class="row justify-content-center">
             <div id="leftPanel" class="mainPagePanel col-2">
-                <div id="user" onclick="location.href='profile.php' " class='d-flex align-items-center justify-content-center'>
-                    <div class='avatar' codechat-user='<?=$_SESSION['user']?>'></div>
-                    <div><?=$_SESSION['pseudo']?></div>
+                <div>
+                    <div id="user" onclick="location.href='profile.php' " class='d-flex align-items-center justify-content-center'>
+                        <div class='avatar' codechat-user='<?=$_SESSION['user']?>'></div>
+                        <div><?=$_SESSION['pseudo']?></div>
+
+                    </div>
+                    <button class='colorModeButton btn btn-outline-success m-2' onclick='switchColorMode()'><?=(($_COOKIE['codechat_theme'] ?? 'light') === 'dark' ? 'light' : 'dark')?> mode</button>
                 </div>
                 <button class="btn btn-secondary">new publication</button>
             </div>

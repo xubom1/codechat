@@ -67,6 +67,8 @@ nav{
     border-radius: 3px;
 }
 
+
+
 /*side panels on the main page*/
 
 .mainPagePanel{
@@ -119,6 +121,11 @@ nav{
     width:25px;
     padding-top: 2px;
     margin-right: 5px;
+    transition: all .3s;
+}
+
+.publicationFooter img:hover{
+    transform: scale(1.1);
 }
 
 /*other pages*/

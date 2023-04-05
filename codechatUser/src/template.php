@@ -38,7 +38,6 @@ function make_header($rootPath = '.'): string
                         <canvas class='logo3D'></canvas>
                         <span class='text-light'>codechat</span>
                     </a>
-                    <button class='colorModeButton btn btn-secondary' onclick='switchColorMode()'>" . (($_COOKIE['codechat_theme'] ?? 'light') === 'dark' ? 'light' : 'dark') . " mode</button>
                 </div>
 
                 <div class='mx-2'>
