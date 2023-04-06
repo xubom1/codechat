@@ -1,7 +1,6 @@
 <?php
     include("src/template.php");
     include("src/utils.php");
-    include("../database.php");
 
     checkSessionElseLogin();
 ?>
@@ -23,7 +22,7 @@
                     </div>
                     <button class='colorModeButton btn btn-outline-success m-2' onclick='switchColorMode()'><?=(($_COOKIE['codechat_theme'] ?? 'light') === 'dark' ? 'light' : 'dark')?> mode</button>
                 </div>
-                <button class="btn btn-secondary">new publication</button>
+                <button class="btn btn-secondary" onclick="location.href='/newPublication.php'">new publication</button>
             </div>
 
             <div id="scrollerContainer" class="col-6">
@@ -31,7 +30,7 @@
             </div>
 
             <div id="rightPanel" class="mainPagePanel col-2">
-            </div>           
+            </div>
         </main>
 
         <!--    END OF MAIN    -->
