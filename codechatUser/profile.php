@@ -110,24 +110,71 @@ checkSessionElseLogin();
 <!--                    publication tab-->
                     <div class="tab-pane fade" id="publications-tab-pane" role="tabpanel" aria-labelledby="publications-tab" tabindex="0">
                         <?php
-//                            $cmd = $db->prepare('SELECT * FROM publication WHERE creator = :userid');
-//                            $cmd->execute(['userid' => $_SESSION['user']]);
-//                            $publications = $cmd->fetchAll();
-//
-//                            var_dump($publications);
-//                        ?>
-                        <div id="scroller"></div>
+                        //get publication published by the user
+                        $cmd = $db->prepare('SELECT id FROM publication WHERE creator = :user AND respondTo IS NULL LIMIT 100');
+                        $cmd->execute(['user' => $_SESSION['user']]);
+                        $publications = $cmd->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach ($publications as $publication){
+                            echo makePublication($publication['id'], $db);
+                        }
+                        ?>
                     </div>
 <!--                    likes-->
-                    <div class="tab-pane fade" id="likes-tab-pane" role="tabpanel" aria-labelledby="likes-tab" tabindex="0">your likes</div>
-                    <div class="tab-pane fade" id="responses-tab-pane" role="tabpanel" aria-labelledby="responses-tab" tabindex="0">your responses</div>
-                    <div class="tab-pane fade" id="followers-tab-pane" role="tabpanel" aria-labelledby="followers-tab" tabindex="0">your followers</div>
-                    <div class="tab-pane fade" id="followed-tab-pane" role="tabpanel" aria-labelledby="followed-tab" tabindex="0">followed people</div>
+                    <div class="tab-pane fade" id="likes-tab-pane" role="tabpanel" aria-labelledby="likes-tab" tabindex="0">
+                        <?php
+                        //get publication that user liked
+                        $cmd = $db->prepare('SELECT publication.id FROM publication LEFT JOIN liked ON liked.publication = publication.id WHERE liked.user = :user LIMIT 100');
+                        $cmd->execute(['user' => $_SESSION['user']]);
+                        $publications = $cmd->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach ($publications as $publication){
+                            echo makePublication($publication['id'], $db);
+                        }
+                        ?>
+                    </div>
+                    <div class="tab-pane fade" id="responses-tab-pane" role="tabpanel" aria-labelledby="responses-tab" tabindex="0">
+                        <?php
+                        //get responses created by the user
+                        $cmd = $db->prepare('SELECT id FROM publication WHERE creator = :user AND respondTo IS NOT NULL LIMIT 100');
+                        $cmd->execute(['user' => $_SESSION['user']]);
+                        $publications = $cmd->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach ($publications as $publication){
+                            echo makePublication($publication['id'], $db);
+                        }
+                        ?>
+                    </div>
+                    <div class="tab-pane fade" id="followers-tab-pane" role="tabpanel" aria-labelledby="followers-tab" tabindex="0">
+                        <?php
+                        //get users that follow the user
+                        $cmd = $db->prepare('SELECT user.id FROM user CROSS JOIN follow ON follow.follower = user.id WHERE follow.followed = :user');
+                        $cmd->execute(['user' => $_SESSION['user']]);
+                        $followers = $cmd->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach ($followers as $follower){
+                            echo make_user_presentation($db, $follower['id']);
+                        }
+                        ?>
+                    </div>
+                    <div class="tab-pane fade" id="followed-tab-pane" role="tabpanel" aria-labelledby="followed-tab" tabindex="0">
+                        <?php
+                        //get users that are followed by the user
+                        $cmd = $db->prepare('SELECT user.id FROM user CROSS JOIN follow ON follow.followed = user.id WHERE follow.follower = :user');
+                        $cmd->execute(['user' => $_SESSION['user']]);
+                        $followeds = $cmd->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach ($followeds as $followed){
+                            echo make_user_presentation($db, $followed['id']);
+                        }
+                        ?>
+                    </div>
                 </div>
             </div>
         </main>
 
         <!--    END OF MAIN    -->
         <?= make_footer() ?>
+        <script src="js/user/importPublications.js"></script>
     </body>
 </html>

@@ -91,6 +91,20 @@ function makePublication($id, $db, $rootpath = ".."): string
     ";
 }
 
+function make_user_presentation($db, $id): string {
+    $getUser = $db->prepare('SELECT pseudo FROM user WHERE id = :user ');
+    $getUser->execute(['user' => $id]);
+    $user = $getUser->fetch(PDO::FETCH_ASSOC);
+    $pseudo = $user['pseudo'];
+
+    return "
+        <div class='d-flex flex-row align-items-center'>
+            <div class='avatar' codechat-user='$id'></div>
+            <a href='#$id' class='text-body'>$pseudo</a>
+        </div>
+    ";
+}
+
 function getColorTheme(){
     return $_COOKIE['codechat_theme'] ?? 'light';
 }
