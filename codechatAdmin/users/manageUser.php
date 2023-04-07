@@ -1,7 +1,7 @@
 <?php
 include('../pages/utils.php');
 include('../pages/template.php');
-checkSessionAdminElseLogin('.');
+checkSessionAdminElseLogin();
 
 if (!isset($_GET['user'])){
     header('location: ./');

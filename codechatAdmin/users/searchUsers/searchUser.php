@@ -28,7 +28,7 @@ if(isset($_GET['name'])){
             echo sprintf("
             <tr>
                 <th scope='row'>%d</th>
-                <td></td>
+                <td>%s</td>
                 <td>%s</td>
                 <td>%s</td>
                 <td>%s</td>
