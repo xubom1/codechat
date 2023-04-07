@@ -1,12 +1,11 @@
 <?php
+include('../database.php');
+
+$db = getDatabase();
+
 session_start();
 if( isset($_POST['inscrip1'])){
-    if(
-    !isset($_POST['pseudo']) 
-    ||!isset($_POST['mail'])
-    ||!isset($_POST['lastName']) 
-    ||!isset($_POST['firstName'])
-    || empty($_POST['pseudo'])
+    if( empty($_POST['pseudo'])
     || empty($_POST['mail'])
     || empty($_POST['lastName'])
     || empty($_POST['firstName'])
@@ -33,11 +32,7 @@ if(!filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL))
 }
 /*******************VERIFICATION DEUXIÈME PAGE******************************************************************************************************* */  
 if( isset($_POST['inscrip2'])){
-    if(
-    !isset($_POST['postalCode'])
-    ||!isset($_POST['city'])
-    ||!isset($_POST['address'])
-    || empty($_POST['postalCode'])
+    if( empty($_POST['postalCode'])
     || empty($_POST['city'])
     || empty($_POST['address'])
     
@@ -59,10 +54,7 @@ else{
 }
 /*********************************VERIFICATION MOT DE PASSE***************************************************************************************** */  
 if( isset($_POST['inscrip3'])){
-    if(
-        !isset($_POST['password'])
-    ||!isset($_POST['confirmPassword'])
-    || empty($_POST['password'])
+    if( empty($_POST['password'])
     || empty($_POST['confirmPassword'])
     )
     {
@@ -80,13 +72,7 @@ if( isset($_POST['inscrip3'])){
           
         
 
-/************************************************************************************************************************** */  
-    try{
-        $db = new PDO('mysql:host=localhost;dbname=codechat', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION ));
-        }catch(Exception $e){
-            die('Erreur PDO : ' . $e->getMessage());
-        }
-   
+/************************************************************************************************************************** */
 
     $q = 'SELECT pseudo FROM user WHERE pseudo = :pseudo';
     $req = $db-> prepare($q);
@@ -95,11 +81,9 @@ if( isset($_POST['inscrip3'])){
     ]);
 
     $response = $req->fetch(); 
-    if($response != false){
-        var_dump($reponse);
-        exit;
+    if($response){
         $msg = 'The nickname is already in use';
-        header ('location: sign_in.php?message='.$msg);
+        header ('location: sign_in.php?message='. $msg);
         exit();
     }
     $q = 'SELECT mail  FROM user WHERE mail = :mail';
