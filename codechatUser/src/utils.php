@@ -12,7 +12,7 @@ function checkNotSessionElseMainPage(): void
 {
     session_start();
     if (isset($_SESSION['user'])){
-        header("location: ../?");
+        header("location: ../");
     }
 }
 
@@ -41,39 +41,67 @@ function getUserPseudo($id, $db){
 
 function makePublication($id, $db, $rootpath = ".."): string
 {
-
     //get publication
-    $cmd = $db->prepare("SELECT * FROM publication WHERE id=?");
-    $cmd->execute([$id]);
-    $publication = $cmd->fetch();
+    $getPublication = $db->prepare("SELECT * FROM publication WHERE id=?");
+    $getPublication->execute([$id]);
+    $publication = $getPublication->fetch(PDO::FETCH_ASSOC);
 
     //get like count
-    $cmd = $db->prepare("SELECT COUNT(*) FROM liked WHERE publication=?");
-    $cmd->execute([$id]);
-    $likeCount = $cmd->fetch()[0];
+    $getLikeCount = $db->prepare("SELECT COUNT(*) FROM liked WHERE publication=?");
+    $getLikeCount->execute([$id]);
+    $likeCount = $getLikeCount->fetch()[0];
 
-    $pseudo = getUserPseudo($publication['creator'], $db);
+    //determine if user liked this publication
+    $getLiked = $db->prepare("SELECT EXISTS( SELECT * FROM liked WHERE publication = :publication AND user = :user)");
+    $getLiked->execute([
+        'publication' => $id,
+        'user' => $_SESSION['user']
+    ]);
+    $liked = $getLiked->fetch()[0];
+    $likeImg = $liked ? "$rootpath/assets/unlike.png" : "$rootpath/assets/like.svg";
+    $likeUser = $_SESSION['user'];
 
+    //get creator
+    $user = $publication['creator'];
+    $pseudo = getUserPseudo($user, $db);
+
+    //time since publication
     $interval = displayTimeInterval($publication["lastEdition"]);
     $id = $publication['id'];
+
+    $content = $publication['content'];
 
     return "
         <article class='publication' id='$id'>
             <div class='publicationHeader d-flex align-items-center'>
-                <img src='$rootpath/assets/defaultAccount.svg' width=45' height='45' alt='userPhoto'>
+                <div class='avatar' codechat-user='$user'></div>
                 <a href='#$id' class='text-body'>$pseudo</a>
                 <div class='mx-2'>
                     &bull; $interval
                 </div>
             </div>
             <div class='publicationBody'>
-                $publication[1]
+                $content
             </div>
             <div class='publicationFooter'>
-                <img src='$rootpath/assets/like.svg'>
-                <div>$likeCount</div>
+                <img src='$likeImg' alt='$liked' onclick='updateLike(this)' codechat-user='$likeUser'>
+                <div class='likesCounter'>$likeCount</div>
             </div>
         </article>
+    ";
+}
+
+function make_user_presentation($db, $id): string {
+    $getUser = $db->prepare('SELECT pseudo FROM user WHERE id = :user ');
+    $getUser->execute(['user' => $id]);
+    $user = $getUser->fetch(PDO::FETCH_ASSOC);
+    $pseudo = $user['pseudo'];
+
+    return "
+        <div class='d-flex flex-row align-items-center'>
+            <div class='avatar' codechat-user='$id'></div>
+            <a href='#$id' class='text-body'>$pseudo</a>
+        </div>
     ";
 }
 

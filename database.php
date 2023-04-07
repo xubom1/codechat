@@ -10,7 +10,7 @@ function getDatabase(){
         );
     }
     catch (Exception $e){
-        die("failed to connect to the database !\n error : " . $e->getMessage());
+        die("failed to connect to the database !\n errors : " . $e->getMessage());
     }
     return $db;
 }

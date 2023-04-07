@@ -2,6 +2,10 @@
 
 function make_head($rootPath = '.', $add = ""): string
 {
+    ob_start();
+    include ($rootPath . "/js/src/renderer3d/shaders.php");
+    $shaders = ob_get_clean();
+
     return "
         <head>
             <title>Codechat</title>
@@ -9,16 +13,16 @@ function make_head($rootPath = '.', $add = ""): string
             <meta name='viewport' content='width=device-width, initial-scale=1'>
             
             <!-- bootstrap -->
-
             <link rel='stylesheet' href='$rootPath/bootstrap/bootstrap.css'>
             <script src='$rootPath/bootstrap/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js'></script>
 
             <!-- includes -->
-
             <link rel='stylesheet' href='$rootPath/style/style.css'>
             <link rel='icon' href='$rootPath/assets/logo.svg'>
             <script src='$rootPath/js/user/darkMode.js'></script>
-            
+            <script src='$rootPath/js/user/avatars.js'></script>
+            $shaders
+            <script src='$rootPath/js/build/logo3D.bundle.js'></script>            
             $add
         </head>
     ";
@@ -29,12 +33,11 @@ function make_header($rootPath = '.'): string
     return "
         <header class='container-fluid bg-primary p-0'>
             <nav class='navbar'>
-                <div class='p-1 mx-2'>
-                    <a class='navbar-brand' href='$rootPath/'>
-                        <img src='$rootPath/assets/logo.svg' alt='logo' width='35' class='animHover'>
+                <div class='p-1 mx-2 d-flex'>
+                    <a class='navbar-brand d-flex' href='$rootPath/'>
+                        <canvas class='logo3D'></canvas>
                         <span class='text-light'>codechat</span>
                     </a>
-                    <button class='colorModeButton btn btn-secondary' onclick='switchColorMode()'>" . (($_COOKIE['codechat_theme'] ?? 'light') === 'dark' ? 'light' : 'dark') . " mode</button>
                 </div>
 
                 <div class='mx-2'>
@@ -67,6 +70,7 @@ function make_header($rootPath = '.'): string
 function make_footer($rootPath = '.'): string
 {
     return "
+        <script></script>
         <footer class='container-fluid bg-secondary text-center  py-3 text-light'>
             <div class='row'>
                 <div class='col align-self-end p-3'>

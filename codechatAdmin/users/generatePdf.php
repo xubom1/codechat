@@ -1,42 +1,31 @@
 <?php
 
-use Dompdf\Dompdf;
-require_once '../../lib/dompdf/autoload.inc.php';
+require('../../lib/html2pdf/vendor/autoload.php');
 
-include('../../database.php');
-$db = getDatabase();
+$obj = new Pdf();
 
-$user = $_GET['user'];
+$html = '<html><body>'
+    . '<p>Put your html here, or generate it with your favourite '
+    . 'templating system.</p>'
+    . '</body></html>';
 
-$cmd = $db->prepare('SELECT * FROM user WHERE pseudo = ?');
-$cmd->execute([$user]);
-$infoArray = $cmd->fetch();
+$invoice = $obj->generatePdf($html);
 
-$cmdFollow = $db->prepare('SELECT followed FROM follow WHERE follower = ?');
-$cmdFollow->execute([$user]);
-$followArray = $cmdFollow->fetchAll();
+define('INVOICE_DIR', public_path('uploads/invoices'));
 
-$dompdf = new Dompdf();
-
-$content = '
-    <h1>Profil : '. $user . '</h1>
-    <p> Le mail :'. $infoArray[1] .'</p>
-    <p> Le nom :'. $infoArray[2] .'</p>
-    <p> Le prenom :'. $infoArray[3] .'</p>
-    <p> Le mail :'. $infoArray[4] .'</p>
-    <p> Le mail :'. $infoArray[5] .'</p>
-    <p> Liste des follow :
-';
-
-foreach ($followArray as $value){
-    $content .= '<br>'.$value[0].' ';
+if (!is_dir(INVOICE_DIR)) {
+    mkdir(INVOICE_DIR, 0755, true);
 }
 
-$content .= '</p>';
+$outputName = str_random(10);
+$pdfPath = INVOICE_DIR.'/'.$outputName.'.pdf';
 
 
-$dompdf->loadHtml($content);
-$dompdf->render();
-$dompdf->stream();
+File::put($pdfPath, $invoice);
 
-echo $content;
+$headers = [
+    'Content-Type' => 'application/pdf',
+    'Content-Disposition' =>  'attachment; filename="'.'filename.pdf'.'"',
+];
+
+return response()->download($pdfPath, 'filename.pdf', $headers);

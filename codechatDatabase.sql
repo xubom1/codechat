@@ -34,15 +34,6 @@ CREATE TABLE image(
     FOREIGN KEY (publication) REFERENCES publication(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE avatarComponent(
-    id INT PRIMARY KEY,
-    path VARCHAR(50) NOT NULL,
-    type INT,
-    ownedBy INT NOT NULL,
-    FOREIGN KEY(ownedBy) REFERENCES user(id)
-);
-
-
 CREATE TABLE liked(
     publication INT,
     user INT,
@@ -57,4 +48,19 @@ CREATE TABLE follow(
     PRIMARY KEY (followed, follower),
     FOREIGN KEY(follower) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY(followed) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE avatarcomponent(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+    path VARCHAR(50) NOT NULL,
+    type INT
+);
+
+CREATE TABLE avatarownership(
+       owner INT,
+       component INT,
+       PRIMARY KEY(owner, component),
+       FOREIGN KEY(owner) REFERENCES user(id),
+       FOREIGN KEY(component) REFERENCES avatarcomponent(id)
 );

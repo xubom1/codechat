@@ -1,14 +1,6 @@
 <?php
 include('pages/utils.php');
-checkSessionElseLogin();
-
-include('../database.php');
-$db = getDatabase();
-
-//get some users in the database
-$cmd = $db->prepare('SELECT * FROM user WHERE admin=0 AND banned=0 ORDER BY creation LIMIT 100');
-$cmd->execute();
-$users = $cmd->fetchAll();
+checkSessionAdminElseLogin('.');
 
 $content = "<h1 class='text-center my-5'>hello " . $_SESSION['admin'] . "</h1>";
 
@@ -18,7 +10,7 @@ $content = '
           <div class="card-body">
              <h5 class="card-title">Manage Users</h5>
              <p class="card-text">Here is all users in codechat database.</p>
-             <a href="allUsers.php" class="btn btn-primary">Start manage</a>
+             <a href="users/allUsers.php" class="btn btn-primary">Start manage</a>
           </div>
         </div>
         
@@ -26,7 +18,7 @@ $content = '
           <div class="card-body">
              <h5 class="card-title">Manage Banned Users</h5>
              <p class="card-text">Here is all banned users in codechat database.</p>
-             <a href="banUser.php" class="btn btn-primary">Start manage</a>
+             <a href="users/banUser.php" class="btn btn-primary">Start manage</a>
           </div>
         </div>
         
@@ -34,7 +26,7 @@ $content = '
           <div class="card-body">
              <h5 class="card-title">Newsletter</h5>
              <p class="card-text">Here ypu can create newsletter. And send it automaticly.</p>
-             <a href="banUser.php" class="btn btn-primary">Start manage</a>
+             <a href="newsletter/newsletter.php" class="btn btn-primary">Start manage</a>
           </div>
         </div>
     </div>
@@ -44,7 +36,7 @@ $content = '
           <div class="card-body">
              <h5 class="card-title">Captcha</h5>
              <p class="card-text">Here change captcha picture. Add and delete captcha.</p>
-             <a href="allUsers.php" class="btn btn-primary">Start manage</a>
+             <a href="captcha/" class="btn btn-primary">Start manage</a>
           </div>
         </div>
         
@@ -52,7 +44,7 @@ $content = '
           <div class="card-body">
              <h5 class="card-title">Manage administrateur</h5>
              <p class="card-text">Here is all administrateur, that you can manage, create or delete.</p>
-             <a href="admins/index.php" class="btn btn-primary">Start manage</a>
+             <a href="admins/" class="btn btn-primary">Start manage</a>
           </div>
         </div>
         
@@ -60,7 +52,31 @@ $content = '
           <div class="card-body">
              <h5 class="card-title">statistical</h5>
              <p class="card-text">Here you can see login or registration numbers by hour.</p>
-             <a href="graph.php" class="btn btn-primary">Start manage</a>
+             <a href="graph/graph.php" class="btn btn-primary">Start manage</a>
+          </div>
+        </div>
+    </div>
+    
+    <div class="d-flex justify-content-center">
+        <div class="card m-4" style="width: 18rem;">
+          <div class="card-body">
+             <h5 class="card-title">Event</h5>
+             <p class="card-text">Here manage all event create in codechat.</p>
+             <a href="event/" class="btn btn-primary">Start manage</a>
+          </div>
+        </div>
+        <div class="card m-4" style="width: 18rem;">
+          <div class="card-body">
+             <h5 class="card-title">Publication</h5>
+             <p class="card-text">See all the publication. And manage all the publication.</p>
+             <a href="publication/" class="btn btn-primary">Start manage</a>
+          </div>
+        </div>
+        <div class="card m-4" style="width: 18rem;">
+          <div class="card-body">
+             <h5 class="card-title">Avatar</h5>
+             <p class="card-text">Add or delete avatar items or update avatar items.</p>
+             <a href="avatar/" class="btn btn-primary">Start manage</a>
           </div>
         </div>
     </div>
@@ -68,4 +84,4 @@ $content = '
 
 
 include("pages/template.php");
-echo makePage($content);
+echo makePage($content, '.');
