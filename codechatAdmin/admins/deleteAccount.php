@@ -1,6 +1,6 @@
 <?php
 include("../pages/utils.php");
-checkSessionElseLogin();
+checkSessionAdminElseLogin();
 
 if (!isset($_POST['admin'])) header("location: ./");
 

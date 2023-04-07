@@ -84,4 +84,4 @@ $content .= "
 
 
 include("../../pages/template.php");
-echo makePage($content, '../../');
+echo makePage('User', $content, '../../');

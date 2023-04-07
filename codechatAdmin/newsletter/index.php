@@ -16,4 +16,4 @@ $content = "
         </form>
     </div>
 ";
-echo makePage($content, '../');
+echo makePage('Newsletter', $content, '../');

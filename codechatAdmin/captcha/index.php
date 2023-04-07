@@ -5,4 +5,4 @@ checkSessionAdminElseLogin('.');
 $content = "This is the captcha page";
 
 include("../pages/template.php");
-echo makePage($content);
+echo makePage('Captcha', $content);

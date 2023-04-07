@@ -10,7 +10,7 @@ if (!isset($_GET['user'])){
 include('../../database.php');
 $db = getDatabase();
 
-$cmd = $db->prepare('SELECT * FROM user WHERE pseudo=?');
+$cmd = $db->prepare('SELECT * FROM user WHERE pseudo=? AND banned=0');
 $cmd->execute([htmlspecialchars($_GET['user'])]);
 $user = $cmd->fetchAll()[0];
 
@@ -145,4 +145,4 @@ $content = "
     
 ";
 
-echo makePage($content, "..");
+echo makePage('Manage '. $pseudo , $content, "..");

@@ -10,7 +10,7 @@ $content = '
           <div class="card-body">
              <h5 class="card-title">Manage Users</h5>
              <p class="card-text">Here is all users in codechat database.</p>
-             <a href="users/allUsers.php" class="btn btn-primary">Start manage</a>
+             <a href="users/searchUsers/" class="btn btn-primary">Start manage</a>
           </div>
         </div>
         
@@ -26,7 +26,7 @@ $content = '
           <div class="card-body">
              <h5 class="card-title">Newsletter</h5>
              <p class="card-text">Here ypu can create newsletter. And send it automaticly.</p>
-             <a href="newsletter/newsletter.php" class="btn btn-primary">Start manage</a>
+             <a href="newsletter/" class="btn btn-primary">Start manage</a>
           </div>
         </div>
     </div>
@@ -52,7 +52,7 @@ $content = '
           <div class="card-body">
              <h5 class="card-title">statistical</h5>
              <p class="card-text">Here you can see login or registration numbers by hour.</p>
-             <a href="graph/graph.php" class="btn btn-primary">Start manage</a>
+             <a href="graph/" class="btn btn-primary">Start manage</a>
           </div>
         </div>
     </div>
@@ -84,4 +84,4 @@ $content = '
 
 
 include("pages/template.php");
-echo makePage($content, '.');
+echo makePage('Home', $content, '.');

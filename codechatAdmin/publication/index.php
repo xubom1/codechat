@@ -5,4 +5,4 @@ checkSessionAdminElseLogin('.');
 $content = "This page is for manage all publication !";
 
 include("../pages/template.php");
-echo makePage($content);
+echo makePage('Publication', $content);

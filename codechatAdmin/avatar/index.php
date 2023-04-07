@@ -5,4 +5,4 @@ checkSessionAdminElseLogin('.');
 $content = "This page is for manage all avatar items !";
 
 include("../pages/template.php");
-echo makePage($content);
+echo makePage('Avatar', $content);
