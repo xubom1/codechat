@@ -28,12 +28,12 @@ if(isset($_GET['name'])){
             echo sprintf("
             <tr>
                 <th scope='row'>%d</th>
-                <td></td>
+                <td>%s</td>
                 <td>%s</td>
                 <td>%s</td>
                 <td>%s</td>
                 <td class='d-flex justify-content-end'>
-                    <button class='btn btn-secondary btn-sm' onclick='location.href=\"manageUser.php?user=%s\"'>manage profile</button>
+                    <button class='btn btn-secondary btn-sm' onclick='location.href=\"../manageUser.php?user=%s\"'>manage profile</button>
                 </td>
             </tr>
             ", $i + 1, $user['pseudo'], $user['mail'], $user['firstName'], $user['lastName'], $user['pseudo']);
@@ -41,19 +41,3 @@ if(isset($_GET['name'])){
     }
 
 }
-/*
-foreach ($users as $i => $user){
-    $content .= sprintf("
-    <tr>
-        <th scope='row'>%d</th>
-        <td>%s</td>
-        <td>%s</td>
-        <td>%s</td>
-        <td>%s</td>
-        <td class='d-flex justify-content-end'>
-            <button class='btn btn-secondary btn-sm' onclick='location.href=\"manageUser.php?user=%s\"'>manage profile</button>
-        </td>
-    </tr>
-    ", $i + 1, $user['pseudo'], $user['mail'], $user['firstName'], $user['lastName'], $user['pseudo']);
-}
-*/

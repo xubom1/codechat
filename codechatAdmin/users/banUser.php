@@ -59,7 +59,7 @@ foreach ($users as $i => $user){
         <td>". $user['firstName'] ."</td>
         <td>". $user['lastName'] ."</td>
         <td class='d-flex justify-content-end'>
-            <div class='col-auto'><button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#unBanAccount'>unban account</button></div>
+            <div class='col-auto'><button class='btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#unBanAccount'>unban account</button></div>
         </td>
     </tr>
 
@@ -87,4 +87,4 @@ $content .= "
 ";
 
 include("../pages/template.php");
-echo makePage($content);
+echo makePage('Banned', $content);

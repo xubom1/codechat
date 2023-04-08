@@ -140,5 +140,5 @@ if (isset($_GET['msg']))
     </script>
     ";
 
-echo makePage($content, "../");
+echo makePage('Admins', $content, "../");
 
