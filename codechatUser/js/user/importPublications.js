@@ -6,7 +6,6 @@ function addPublications(number ){
     //get already loaded publications
     const publications = document.getElementsByClassName('publication');
 
-
     //data to send
     let data = new FormData();
     data.append("publicationsCount", publications.length.toString());
@@ -31,7 +30,7 @@ function addPublications(number ){
 
 }
 
-addPublications(20);
+
 
 function checkScrolling() {
     //avoid spamming in case of an error
@@ -44,7 +43,11 @@ function checkScrolling() {
     }
 };
 
-setInterval(checkScrolling, 100);
+if (document.getElementById('scroller')){
+    addPublications(20);
+    setInterval(checkScrolling, 100);
+}
+    
 
 
 //like system
