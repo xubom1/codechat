@@ -1,5 +1,5 @@
 <?php
-include('../database.php');
+include('../../database.php');
 
 $db = getDatabase();
 
@@ -12,21 +12,21 @@ if( isset($_POST['inscrip1'])){
 )
 {
 $msg = 'you must fill in all the fields ';
-header('location: sign_in.php?message=' . $msg);
+header('location: sign_in.php?msg=' . $msg);
 exit();
 }
    
 if(!filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL))
 {
 	$msg = 'Invalid mail.';
-	header('location: sign_in.php?message=' . $msg);
+	header('location: sign_in.php?msg=' . $msg);
 	exit();
 }else{
     $_SESSION ['mail'] = $_POST['mail'];
     $_SESSION ['pseudo'] = $_POST ['pseudo'];
     $_SESSION ['firstName'] = $_POST['firstName'];
     $_SESSION['lastName'] =  $_POST['lastName'];
-    header('location:address.php');
+    header('location: address.php');
     exit;
 }
 }
@@ -39,7 +39,7 @@ if( isset($_POST['inscrip2'])){
 )
 {
 $msg = 'you must fill in all the fields ';
-header('location: Address.php?message=' . $msg);
+header('location: Address.php?msg=' . $msg);
 exit();
 } 
  
@@ -48,7 +48,7 @@ else{
     $_SESSION['postalCode'] = $_POST['postalCode'];
     $_SESSION ['city'] = $_POST ['city'];
     $_SESSION ['address'] = $_POST['address'];
-    header('location:password.php');
+    header('location: password.php');
     exit;
 }
 }
@@ -59,11 +59,11 @@ if( isset($_POST['inscrip3'])){
     )
     {
         $msg = 'you must fill in all the fields ';
-        header('location: password.php?message=' . $msg);
+        header('location: password.php?msg=' . $msg);
         exit();
         } if (isset($_POST['password']) !== isset($_POST['confirmPassword'])) {
             $msg = 'the password must be the same.';
-            header ('location:password.php?message='.$msg);
+            header ('location: password.php?msg='.$msg);
             exit();
         }
         else{
@@ -83,7 +83,7 @@ if( isset($_POST['inscrip3'])){
     $response = $req->fetch(); 
     if($response){
         $msg = 'The nickname is already in use';
-        header ('location: sign_in.php?message='. $msg);
+        header ('location: sign_in.php?msg='. $msg);
         exit();
     }
     $q = 'SELECT mail  FROM user WHERE mail = :mail';
@@ -92,12 +92,12 @@ if( isset($_POST['inscrip3'])){
         'mail' =>  $_SESSION ['mail']
     ]);
     $response = $req->fetch(); 
-    if($response != false){
+    if($response){
         $msg = 'The email address is already in use';
-        header ('location: sign_in.php?message='.$msg);
+        header ('location: sign_in.php?msg='.$msg);
         exit();
     }
-    $q = 'INSERT INTO user (pseudo,mail,lastName,firstName,postalCode,city,address, password) VALUES(:pseudo, :mail, :lastName, :firstName, :postalCode, :city, :address,  :password)';
+    $q = 'INSERT INTO user (pseudo, mail, lastName, firstName, postalCode, city, address, password) VALUES(:pseudo, :mail, :lastName, :firstName, :postalCode, :city, :address,  :password)';
     $req = $db-> prepare($q);
 
     $reponse = $req ->execute([
@@ -113,13 +113,13 @@ if( isset($_POST['inscrip3'])){
 
     if($reponse ==0){
         $msg = 'Erreur lors de l\'inscription en base de données.';
-        header('location:sign_in.php?message=' .$msg);
+        header('location: sign_in.php?msg=' .$msg);
         exit();
     } else {
         $msg = 'compte créé avec succès!!';
-        header('location: login.php?message=' .$msg);
+        header('location: ../login.php?msg=' .$msg);
         exit;
     }
 }
 }
-?>
+

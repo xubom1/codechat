@@ -31,8 +31,8 @@ if (isset($_GET['err']) && $_GET['err'] == 'true'){
 
                 <input type="submit" value="Log In" class="btn btn-primary my-2" >
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href='sign_in.php'>New around here? Sign up</a>
-                <a class="dropdown-item" href="#">Forgot password?</a>
+                <span>New around here?</span> <a href='signin/sign_in.php'>Sign Up</a><br>
+                <a href="#">Forgot password ?</a>
 
             </form>
         </main>
