@@ -92,5 +92,6 @@ async function updateAvatars(){
 }
 
 document.addEventListener('DOMContentLoaded', function(){
+    updateAvatars();
     setInterval(updateAvatars, 200);
 });

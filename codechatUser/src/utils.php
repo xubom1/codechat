@@ -1,10 +1,11 @@
 <?php
 
-function checkSessionElseLogin(): void
+function checkSessionElseLogin($sendError = true): void
 {
     session_start();
     if (!isset($_SESSION['user'])){
-        header("location: login.php?msg=session is not valid, please identify&err=true");
+        $get = $sendError ? "?msg=session is not valid, please identify&err=true" : " ";
+        header("location: login.php$get");
     }
 }
 
@@ -47,7 +48,7 @@ function make_user_presentation($db, $id): string {
 
     return "
         <div class='d-flex flex-row align-items-center'>
-            <div class='avatar' codechat-user='$id'></div>
+            <div class='avatar' codechat-user='$id'><img src='/assets/defaultAccount.svg' width='50'></div>
             <a href='/user.php?user=$id' class='text-body'>$pseudo</a>
         </div>
     ";

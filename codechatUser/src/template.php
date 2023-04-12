@@ -13,52 +13,71 @@ function make_head($rootPath = '.', $add = ""): string
             <meta name='viewport' content='width=device-width, initial-scale=1'>
             
             <!-- bootstrap -->
-            <link rel='stylesheet' href='$rootPath/bootstrap/bootstrap.css'>
-            <script src='$rootPath/bootstrap/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js'></script>
+            <link rel='stylesheet' href='/bootstrap/bootstrap.css'>
+            <script src='/bootstrap/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js'></script>
 
             <!-- includes -->
-            <link rel='stylesheet' href='$rootPath/style/style.css'>
-            <link rel='icon' href='$rootPath/assets/logo.svg'>
-            <script src='$rootPath/js/user/darkMode.js'></script>
-            <script src='$rootPath/js/user/avatars.js'></script>
+            <link rel='stylesheet' href='/style/style.css'>
+            <link rel='icon' href='/assets/logo.svg'>
+            <script src='/js/user/darkMode.js'></script>
+            <script src='/js/user/avatars.js'></script>
             $shaders
-            <script src='$rootPath/js/build/logo3D.bundle.js'></script>            
+            <script src='/js/build/logo3D.bundle.js'></script>            
             $add
         </head>
     ";
 }
 
-function make_header($rootPath = '.'): string
+function make_header($rootPath = '.', $searchBar = true): string
 {
+    $entry = '';
+    if (gettype($searchBar) === "string"){
+        $entry = $searchBar;
+        $displaySearchBar = true;
+    }
+    else{
+        $displaySearchBar = $searchBar;
+    }
+
     return "
         <header class='container-fluid bg-primary p-0'>
-            <nav class='navbar'>
-                <div class='p-1 mx-2 d-flex'>
-                    <a class='navbar-brand d-flex' href='$rootPath/'>
+            <nav class='navbar d-flex'>
+                <div class='p-1 mx-2'>
+                    <a class='navbar-brand d-flex' href='/'>
                         <canvas class='logo3D'></canvas>
                         <span class='text-light'>codechat</span>
                     </a>
                 </div>
-
-                <div class='mx-2'>
-                    <img src='$rootPath/assets/burger.svg' alt='burger' class='animHover' width='40px' data-bs-toggle='collapse' data-bs-target='#collapsePanel'>
+                " .
+                ($displaySearchBar ? "<form class='input-group' id='searchBar' action='/search.php' method='get'>
+                    <input name='entry' type='text' class='form-control' required value='" . $entry . "'>
+                    <input type='submit' class='btn btn-outline-success' value='search'>
+                </form>" : "") .
+"
+                <div class='mx-2 ms-5'>
+                    <img src='/assets/burger.svg' alt='burger' class='animHover' width='40px' data-bs-toggle='collapse' data-bs-target='#collapsePanel'>
                 </div>
             </nav>
             <div class='collapse bg-secondary' id='collapsePanel'>
                 <div class='p-4'>
 
-                    <div class='my-2' onclick='location.href=\"$rootPath/\"' title='set your account settings'>
-                        <img src='$rootPath/assets/settings.svg' alt='logout' width='25' class='mx-1 animHover'>
+                    <!--<div class='my-2' onclick='location.href=\"/\"' title='set your account settings'>
+                        <img src='/assets/settings.svg' alt='logout' width='25' class='mx-1 animHover'>
                         <label class='text-light'>settings</label>
+                    </div>-->
+                    
+                    <div class='my-2' onclick='location.href=\"/\"'>
+                        <img src='/assets/home.svg' alt='profile' width='25' class='mx-1 animHover'>
+                        <label class='text-light'>Home</label>
                     </div>
-
-                    <div class='my-2' onclick='location.href=\"$rootPath/profile.php\"'>
-                        <img src='$rootPath/assets/home.svg' alt='profile' width='25' class='mx-1 animHover'>
+                    
+                    <div class='my-2' onclick='location.href=\"/profile.php\"'>
+                        <img src='/assets/defaultAccount.svg' alt='profile' width='25' class='mx-1 animHover'>
                         <label class='text-light'>profile</label>
                     </div>
 
-                    <div class='my-2' onclick='location.href=\"$rootPath/src/logout.php\"'>
-                        <img src='$rootPath/assets/logout.svg' alt='logout' width='25' class='mx-1 animHover'>
+                    <div class='my-2' onclick='location.href=\"/src/logout.php\"'>
+                        <img src='/assets/logout.svg' alt='logout' width='25' class='mx-1 animHover'>
                         <label class='text-light'>Log Out</label>
                     </div>
                 </div>

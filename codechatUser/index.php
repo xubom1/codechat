@@ -2,7 +2,7 @@
     include("src/template.php");
     include("src/utils.php");
 
-    checkSessionElseLogin();
+    checkSessionElseLogin(false);
 ?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme='<?=getColorTheme()?>'>
