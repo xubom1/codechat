@@ -1,6 +1,8 @@
 async function searchUser(){
     const input = document.getElementById('search');
     const name = input.value;
+    const del = document.getElementById('tenSub').value;
+    console.log(del);
     try {
         const res = await fetch('searchUser.php?name=' + name);
         const str = await res.text();
@@ -23,20 +25,20 @@ async function searchUser(){
     }
 }
 
-function formClick() {
-    const test1 = document.getElementById('flexCheck1');
-    const test2 = document.getElementById('flexCheck2');
-    const test3 = document.getElementById('flexCheck3');
-    const test4 = document.getElementById('flexCheck4');
-    if (!test1.disabled && !test2.disabled && !test3.disabled && !test4.disabled){
-        test1.setAttribute("disabled", " ");
-        test2.setAttribute("disabled", " ");
-        test3.setAttribute("disabled", " ");
-        test4.setAttribute("disabled", " ");
-    } else {
-        test1.removeAttribute("disabled");
-        test2.removeAttribute("disabled");
-        test3.removeAttribute("disabled");
-        test4.removeAttribute("disabled");
+function validate(){
+    let str = 'searchUser.php?name=name';
+    if (flexCheck1.checked == 1){
+
+        console.log(str);
     }
+    if (flexCheck2.checked == 1){
+        str.concat('&mail=yes');
+    }
+    if (flexCheck3.checked == 1){
+        str.concat('&lastName=yes');
+    }
+    if (flexCheck4.checked == 1){
+        str.concat('&firstName=yes');
+    }
+    console.log(str);
 }

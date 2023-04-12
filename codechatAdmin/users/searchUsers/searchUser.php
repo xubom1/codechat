@@ -2,10 +2,11 @@
 
 ini_set('display_errors', 1);
 
+include('../../../database.php');
 
 if(isset($_GET['name'])){
     $name = $_GET['name'];
-    $db = new PDO('mysql:host=localhost;port=3306;dbname=codechat;charset=utf8', 'root', 'esgi');
+    $db = getDatabase();
     $sql = 'SELECT * FROM user WHERE pseudo LIKE ? OR mail LIKE ? OR firstName LIKE ?';
 
     /**
