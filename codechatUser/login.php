@@ -19,7 +19,7 @@ if (isset($_GET['err']) && $_GET['err'] == 'true'){
 <html lang="en" data-bs-theme='<?=getColorTheme()?>'>
     <?= make_head()?>
     <body>
-        <?= make_header()?>
+        <?= make_header('', false)?>
         <main class="justify-content-center row container m-auto">
             <h3 class="<?=$msgClass?> text-center"><?=$msg?></h3>
             <form class="col-6 mt-4" method="post" action="./src/check.php">

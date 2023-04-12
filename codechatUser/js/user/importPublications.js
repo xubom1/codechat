@@ -30,8 +30,6 @@ function addPublications(number ){
 
 }
 
-
-
 function checkScrolling() {
     //avoid spamming in case of an error
     if (Date.now() < lastError + ERROR_TIMEOUT) return;
@@ -47,11 +45,9 @@ if (document.getElementById('scroller')){
     addPublications(20);
     setInterval(checkScrolling, 100);
 }
-    
 
 
 //like system
-
 async function updateLike(button){
     //get the like counter
     const likesCounter = button.parentNode.getElementsByClassName('likesCounter')[0];
