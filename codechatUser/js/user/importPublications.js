@@ -6,7 +6,6 @@ function addPublications(number ){
     //get already loaded publications
     const publications = document.getElementsByClassName('publication');
 
-
     //data to send
     let data = new FormData();
     data.append("publicationsCount", publications.length.toString());
@@ -31,8 +30,6 @@ function addPublications(number ){
 
 }
 
-addPublications(20);
-
 function checkScrolling() {
     //avoid spamming in case of an error
     if (Date.now() < lastError + ERROR_TIMEOUT) return;
@@ -44,11 +41,13 @@ function checkScrolling() {
     }
 };
 
-setInterval(checkScrolling, 100);
+if (document.getElementById('scroller')){
+    addPublications(20);
+    setInterval(checkScrolling, 100);
+}
 
 
 //like system
-
 async function updateLike(button){
     //get the like counter
     const likesCounter = button.parentNode.getElementsByClassName('likesCounter')[0];

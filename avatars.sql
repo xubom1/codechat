@@ -8,5 +8,16 @@ INSERT INTO avatarcomponent(name, path, type) VALUES('blond hair','assets/avatar
 INSERT INTO avatarcomponent(name, path, type) VALUES('blue hair','assets/avatars/blueHair.png', 2);
 INSERT INTO avatarcomponent(name, path, type) VALUES('red hair','assets/avatars/redHair.png', 2);
 
-DELETE avatarownership FROM avatarownership CROSS JOIN avatarcomponent ON avatarownership.component = avatarcomponent.id WHERE avatarownership.owner = 101 AND avatarcomponent.type = 2;
+#eyes
+INSERT INTO avatarcomponent(name, path, type) VALUES('blue eyes','assets/avatars/blueEyes.png', 3);
+INSERT INTO avatarcomponent(name, path, type) VALUES('black eyes','assets/avatars/blackEyes.png', 3);
+INSERT INTO avatarcomponent(name, path, type) VALUES('green eyes','assets/avatars/greenEyes.png', 3);
 
+#mustache
+INSERT INTO avatarcomponent(name, path, type) VALUES('black mustache','assets/avatars/blackMustache.png', 4);
+INSERT INTO avatarcomponent(name, path, type) VALUES('blond mustache','assets/avatars/blondMustache.png', 4);
+INSERT INTO avatarcomponent(name, path, type) VALUES('no mustache','assets/avatars/void.png', 4);
+
+#glasses
+INSERT INTO avatarcomponent(name, path, type) VALUES('glasses','assets/avatars/glasses.png', 5);
+INSERT INTO avatarcomponent(name, path, type) VALUES('no glasses','assets/avatars/void.png', 5);

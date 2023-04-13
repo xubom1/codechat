@@ -2,10 +2,11 @@
 
 ini_set('display_errors', 1);
 
+include('../../../database.php');
 
 if(isset($_GET['name'])){
     $name = $_GET['name'];
-    $db = new PDO('mysql:host=localhost;port=3306;dbname=codechat;charset=utf8', 'root', 'esgi');
+    $db = getDatabase();
     $sql = 'SELECT * FROM user WHERE pseudo LIKE ? OR mail LIKE ? OR firstName LIKE ?';
 
     /**
@@ -28,12 +29,12 @@ if(isset($_GET['name'])){
             echo sprintf("
             <tr>
                 <th scope='row'>%d</th>
-                <td></td>
+                <td>%s</td>
                 <td>%s</td>
                 <td>%s</td>
                 <td>%s</td>
                 <td class='d-flex justify-content-end'>
-                    <button class='btn btn-secondary btn-sm' onclick='location.href=\"manageUser.php?user=%s\"'>manage profile</button>
+                    <button class='btn btn-secondary btn-sm' onclick='location.href=\"../manageUser.php?user=%s\"'>manage profile</button>
                 </td>
             </tr>
             ", $i + 1, $user['pseudo'], $user['mail'], $user['firstName'], $user['lastName'], $user['pseudo']);

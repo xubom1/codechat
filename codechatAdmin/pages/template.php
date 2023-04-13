@@ -1,12 +1,12 @@
 <?php
 
-function makePage($content, $rootPath = ".."){
+function makePage($title, $content, $rootPath = ".."){
     return
         "
 <!DOCTYPE html>
 <html lang='en' data-bs-theme='dark'>
     <head>
-        <title></title>
+        <title>$title</title>
         <meta charset='utf-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <link rel='shortcut icon' href='$rootPath/assets/logo.svg'>

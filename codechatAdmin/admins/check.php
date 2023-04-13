@@ -1,6 +1,6 @@
 <?php
 include("../pages/utils.php");
-checkSessionElseLogin();
+checkSessionAdminElseLogin();
 
 if (empty($_POST['id']) || empty($_POST['password'])){
     header("location: index.php?msg&you can't create empty admin");

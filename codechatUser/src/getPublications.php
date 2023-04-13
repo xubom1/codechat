@@ -15,7 +15,7 @@ if (isset($_POST['countWanted'])){
     $publicationsCountWanted = $_POST['countWanted'];
 }
 
-$cmd = $db->prepare('(SELECT publication.id FROM publication, follow WHERE publication.creator = follow.followed AND follow.follower = :user ORDER BY publication.lastEdition DESC) LIMIT :offset, :count');
+$cmd = $db->prepare('(SELECT publication.id FROM publication, follow WHERE publication.respondTo IS NULL AND publication.creator = follow.followed AND follow.follower = :user ORDER BY publication.lastEdition DESC) LIMIT :offset, :count');
 
 $cmd->bindValue(":user", $_SESSION['user']);
 $cmd->bindValue(":offset", $publicationOffset, PDO::PARAM_INT);

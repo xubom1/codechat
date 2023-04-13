@@ -1,10 +1,11 @@
 <?php
 
-function checkSessionElseLogin(): void
+function checkSessionElseLogin($sendError = true): void
 {
     session_start();
     if (!isset($_SESSION['user'])){
-        header("location: login.php?msg=session is not valid, please identify&err=true");
+        $get = $sendError ? "?msg=session is not valid, please identify&err=true" : " ";
+        header("location: login.php$get");
     }
 }
 
@@ -39,11 +40,25 @@ function getUserPseudo($id, $db){
     return $cmd->fetch()['pseudo'];
 }
 
+function make_user_presentation($db, $id): string {
+    $getUser = $db->prepare('SELECT pseudo FROM user WHERE id = :user ');
+    $getUser->execute(['user' => $id]);
+    $user = $getUser->fetch(PDO::FETCH_ASSOC);
+    $pseudo = $user['pseudo'];
+
+    return "
+        <div class='d-flex flex-row align-items-center'>
+            <div class='avatar' codechat-user='$id'><img src='/assets/defaultAccount.svg' width='50'></div>
+            <a href='/user.php?user=$id' class='text-body'>$pseudo</a>
+        </div>
+    ";
+}
+
 function makePublication($id, $db, $rootpath = ".."): string
 {
     //get publication
     $getPublication = $db->prepare("SELECT * FROM publication WHERE id=?");
-    $getPublication->execute([$id]);
+    $getPublication->execute([(int)$id]);
     $publication = $getPublication->fetch(PDO::FETCH_ASSOC);
 
     //get like count
@@ -74,8 +89,7 @@ function makePublication($id, $db, $rootpath = ".."): string
     return "
         <article class='publication' id='$id'>
             <div class='publicationHeader d-flex align-items-center'>
-                <div class='avatar' codechat-user='$user'></div>
-                <a href='#$id' class='text-body'>$pseudo</a>
+                " . make_user_presentation($db, $user) . "
                 <div class='mx-2'>
                     &bull; $interval
                 </div>
@@ -88,20 +102,6 @@ function makePublication($id, $db, $rootpath = ".."): string
                 <div class='likesCounter'>$likeCount</div>
             </div>
         </article>
-    ";
-}
-
-function make_user_presentation($db, $id): string {
-    $getUser = $db->prepare('SELECT pseudo FROM user WHERE id = :user ');
-    $getUser->execute(['user' => $id]);
-    $user = $getUser->fetch(PDO::FETCH_ASSOC);
-    $pseudo = $user['pseudo'];
-
-    return "
-        <div class='d-flex flex-row align-items-center'>
-            <div class='avatar' codechat-user='$id'></div>
-            <a href='#$id' class='text-body'>$pseudo</a>
-        </div>
     ";
 }
 

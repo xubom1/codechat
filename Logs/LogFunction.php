@@ -7,3 +7,7 @@ function logAdmin ($path, $admin, $userPseudo, $type, $SorN, $description){
     fwrite($logFunction, $txt);
     fclose($logFunction);
 }
+
+function logAdminPublication (){
+
+}
