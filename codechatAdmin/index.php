@@ -42,7 +42,7 @@ $content = '
         
         <div class="card m-4" style="width: 18rem;">
           <div class="card-body">
-             <h5 class="card-title">Manage administrateur</h5>
+             <h5 class="card-title">Manage administrator</h5>
              <p class="card-text">Here is all administrateur, that you can manage, create or delete.</p>
              <a href="admins/" class="btn btn-primary">Start manage</a>
           </div>

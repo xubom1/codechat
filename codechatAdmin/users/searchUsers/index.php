@@ -14,7 +14,7 @@ $content = '
     <br>
     <div class="m-auto input-group" style="width: 500px">
         <input type="text" id="search" class="form-control" placeholder="Search">
-        <button class="btn btn-success" onclick="searchUser()">Search</button>
+        <button class="btn btn-success" onclick="searchUser()" id="searchBtn">Search</button>
         <button class="btn btn-primary" onclick="location.href=\'index.php\'">Reset</button>
     </div>
     <div class="d-flex flex-row m-2 d-flex justify-content-center">

@@ -10,14 +10,15 @@ function doesAdminNameExists($name, $database){
 }
 
 function checkSessionAdminElseLogin($rootpath = ''){
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     if (!isset($_SESSION['admin'])){
         header("location: $rootpath/login.php?msg=session is not valid, please identify&err=true");
     }
 }
 
 function checkNotSessionElseMainPage(){
-    session_start();
     if (isset($_SESSION['admin'])){
         header("location: ../?");
     }
