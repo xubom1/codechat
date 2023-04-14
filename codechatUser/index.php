@@ -13,7 +13,7 @@
         <!--    MAIN PAGE    -->
 
         <main class="row justify-content-center">
-            <div id="leftPanel" class="mainPagePanel col-2">
+            <div id="leftPanel" class="mainPagePanel col-2 border-start">
                 <div>
                     <div id="user" onclick="location.href='profile.php' " class='d-flex align-items-center justify-content-center'>
                         <div class='avatar' codechat-user='<?=$_SESSION['user']?>'></div>
@@ -25,11 +25,11 @@
                 <button class="btn btn-secondary" onclick="location.href='/newPublication.php'">new publication</button>
             </div>
 
-            <div id="scrollerContainer" class="col-6">
+            <div id="scrollerContainer" class="col-6 border-start border-end">
                 <div id="scroller"></div>
             </div>
+            <div id="rightPanel" class="mainPagePanel col-2 border-end">
 
-            <div id="rightPanel" class="mainPagePanel col-2">
             </div>
         </main>
 

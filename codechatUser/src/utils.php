@@ -41,15 +41,29 @@ function getUserPseudo($id, $db){
 }
 
 function make_user_presentation($db, $id): string {
+    //get pseudo
     $getUser = $db->prepare('SELECT pseudo FROM user WHERE id = :user ');
     $getUser->execute(['user' => $id]);
     $user = $getUser->fetch(PDO::FETCH_ASSOC);
     $pseudo = $user['pseudo'];
 
+    //get if the user follow this user
+    $getFollow = $db->prepare('SELECT COUNT(*) FROM follow WHERE follower = :sessionUser AND followed = :user');
+    $getFollow->execute([
+        'sessionUser' => $_SESSION['user'],
+        'user' => $id
+    ]);
+
+
+    $followed = !$getFollow->fetch()[0];
+    $notFollowed = !$followed;
+    $followButtonInner = $followed ? "follow" : "unfollow";
+
     return "
         <div class='d-flex flex-row align-items-center'>
             <div class='avatar' codechat-user='$id'><img src='/assets/defaultAccount.svg' width='50'></div>
             <a href='/user.php?user=$id' class='text-body'>$pseudo</a>
+            <button class='btn btn-sm btn-outline-danger mx-2 followButton' onclick='updateFollow(this)' state='$notFollowed' codechat-user='$id'>$followButtonInner</button>
         </div>
     ";
 }
@@ -87,7 +101,7 @@ function makePublication($id, $db, $rootpath = ".."): string
     $content = $publication['content'];
 
     return "
-        <article class='publication' id='$id'>
+        <article class='publication border-bottom' id='$id'>
             <div class='publicationHeader d-flex align-items-center'>
                 " . make_user_presentation($db, $user) . "
                 <div class='mx-2'>

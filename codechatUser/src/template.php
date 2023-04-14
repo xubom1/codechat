@@ -51,7 +51,7 @@ function make_header($rootPath = '.', $searchBar = true): string
                 " .
                 ($displaySearchBar ? "<form class='input-group' id='searchBar' action='/search.php' method='get'>
                     <input name='entry' type='text' class='form-control' required value='" . $entry . "'>
-                    <input type='submit' class='btn btn-outline-success' value='search'>
+                    <input type='submit' class='btn btn-success' value='search'>
                 </form>" : "") .
 "
                 <div class='mx-2 ms-5'>
