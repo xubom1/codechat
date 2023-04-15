@@ -10,7 +10,7 @@ checkSessionElseLogin(false);
 <html lang="en" data-bs-theme='<?=getColorTheme()?>'>
 <?= make_head('..')?>
     <body>
-    <?= make_header('..')?>
+    <?= make_header('', false)?>
 
      <!--    MAIN PAGE    -->
 

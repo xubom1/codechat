@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="en" data-bs-theme='<?=getColorTheme()?>'>
     <?= make_head('..')?>
     <body>
-        <?= make_header('..')?>
+    <?= make_header('', false)?>
          <!--    MAIN PAGE    -->
          <main class="container">
 
