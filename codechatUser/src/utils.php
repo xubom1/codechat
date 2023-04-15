@@ -104,7 +104,7 @@ function makePublication($id, $db, $rootpath = ".."): string
         <article class='publication border-bottom' id='$id'>
             <div class='publicationHeader d-flex align-items-center'>
                 " . make_user_presentation($db, $user) . "
-                <div class='mx-2'>
+                <div>
                     &bull; $interval
                 </div>
             </div>

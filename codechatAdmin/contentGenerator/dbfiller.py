@@ -88,7 +88,7 @@ def generateAvatarOwnership(number):
     with db.db.cursor() as cursor:
 
         #delete previous avatars
-        cursor.execute('DELETE FROM avatarOwnership')
+        cursor.execute('DELETE FROM avatarownership')
         db.db.commit() 
 
         #get users
@@ -96,7 +96,7 @@ def generateAvatarOwnership(number):
         users = cursor.fetchall()
 
         #get avatar components
-        cursor.execute('SELECT id, type FROM avatarComponent')
+        cursor.execute('SELECT id, type FROM avatarcomponent')
         componentsFlat = list(cursor.fetchall())
 
         components = {}
@@ -110,7 +110,7 @@ def generateAvatarOwnership(number):
         for type, componentsInType in components.items():
             for user in users:
                 data = (user[0],  random.choice(componentsInType))
-                cursor.execute('INSERT INTO avatarOwnership(owner, component) VALUES(%s, %s)', data)
+                cursor.execute('INSERT INTO avatarownership(owner, component) VALUES(%s, %s)', data)
                 print('component : ', component, ' for user : ', user)
 
         db.db.commit()        
