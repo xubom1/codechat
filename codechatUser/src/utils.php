@@ -54,16 +54,14 @@ function make_user_presentation($db, $id): string {
         'user' => $id
     ]);
 
-
     $followed = !$getFollow->fetch()[0];
-    $notFollowed = !$followed;
     $followButtonInner = $followed ? "follow" : "unfollow";
 
     return "
         <div class='d-flex flex-row align-items-center'>
             <div class='avatar' codechat-user='$id'><img src='/assets/defaultAccount.svg' width='50'></div>
             <a href='/user.php?user=$id' class='text-body'>$pseudo</a>
-            <button class='btn btn-sm btn-outline-danger mx-2 followButton' onclick='updateFollow(this)' state='$notFollowed' codechat-user='$id'>$followButtonInner</button>
+            <button class='btn btn-sm btn-outline-danger mx-2 followButton' onclick='updateFollow(this)' state='$followed' codechat-user='$id'>$followButtonInner</button>
         </div>
     ";
 }
@@ -71,7 +69,7 @@ function make_user_presentation($db, $id): string {
 function makePublication($id, $db, $rootpath = ".."): string
 {
     //get publication
-    $getPublication = $db->prepare("SELECT * FROM publication WHERE id=?");
+    $getPublication = $db->prepare("SELECT creator, content, lastEdition, id FROM publication WHERE id=?");
     $getPublication->execute([(int)$id]);
     $publication = $getPublication->fetch(PDO::FETCH_ASSOC);
 
@@ -81,7 +79,7 @@ function makePublication($id, $db, $rootpath = ".."): string
     $likeCount = $getLikeCount->fetch()[0];
 
     //determine if user liked this publication
-    $getLiked = $db->prepare("SELECT EXISTS( SELECT * FROM liked WHERE publication = :publication AND user = :user)");
+    $getLiked = $db->prepare("SELECT EXISTS( SELECT user FROM liked WHERE publication = :publication AND user = :user)");
     $getLiked->execute([
         'publication' => $id,
         'user' => $_SESSION['user']
@@ -92,13 +90,18 @@ function makePublication($id, $db, $rootpath = ".."): string
 
     //get creator
     $user = $publication['creator'];
-    $pseudo = getUserPseudo($user, $db);
 
     //time since publication
     $interval = displayTimeInterval($publication["lastEdition"]);
     $id = $publication['id'];
 
+    //get the content of the publication
     $content = $publication['content'];
+
+    //get the number of comments
+    $getCommentsCount = $db->prepare('SELECT COUNT(*) FROM publication WHERE respondTo = :publication');
+    $getCommentsCount->execute(['publication' => $id]);
+    $commentsCount = $getCommentsCount->fetch()[0];
 
     return "
         <article class='publication border-bottom' id='$id'>
@@ -112,8 +115,10 @@ function makePublication($id, $db, $rootpath = ".."): string
                 $content
             </div>
             <div class='publicationFooter'>
-                <img src='$likeImg' alt='$liked' onclick='updateLike(this)' codechat-user='$likeUser'>
-                <div class='likesCounter'>$likeCount</div>
+                <img src='$likeImg' alt='$liked' onclick='updateLike(this)' codechat-user='$likeUser' publication='$id'>
+                <div class='mx-1 likesCounter'>$likeCount</div>
+                <img src='/assets/comment.svg' class='ms-3 mt-1' onclick='location.href=\"/publication.php?id=$id\"'>
+                <div class='mx-1'>$commentsCount</div>
             </div>
         </article>
     ";
