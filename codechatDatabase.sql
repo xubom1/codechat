@@ -64,3 +64,17 @@ CREATE TABLE avatarownership(
        FOREIGN KEY(owner) REFERENCES user(id),
        FOREIGN KEY(component) REFERENCES avatarcomponent(id)
 );
+CREATE TABLE events (   id int NOT NULL AUTO_INCREMENT PRIMARY KEY,   
+name VARCHAR(100),  
+ description VARCHAR(255),  
+  starting_date DATETIME,   
+  ending_date DATETIME,   
+  location VARCHAR(100),   
+  user int,   
+  FOREIGN KEY (user) REFERENCES user(id) );
+
+CREATE TABLE eventSign (
+    signer VARCHAR(80) REFERENCES user(id),
+    event VARCHAR(80) REFERENCES events(id),
+    PRIMARY KEY (signer, event)
+);

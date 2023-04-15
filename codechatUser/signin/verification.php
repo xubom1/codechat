@@ -61,7 +61,7 @@ if( isset($_POST['inscrip3'])){
         $msg = 'you must fill in all the fields ';
         header('location: password.php?msg=' . $msg);
         exit();
-        } if (isset($_POST['password']) !== isset($_POST['confirmPassword'])) {
+        } if (isset($_POST['password']) != isset($_POST['confirmPassword'])) {
             $msg = 'the password must be the same.';
             header ('location: password.php?msg='.$msg);
             exit();
