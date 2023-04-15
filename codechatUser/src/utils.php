@@ -61,7 +61,7 @@ function make_user_presentation($db, $id): string {
         <div class='d-flex flex-row align-items-center'>
             <div class='avatar' codechat-user='$id'><img src='/assets/defaultAccount.svg' width='50'></div>
             <a href='/user.php?user=$id' class='text-body'>$pseudo</a>
-            <button class='btn btn-sm btn-outline-danger mx-2 followButton' onclick='updateFollow(this)' state='$followed' codechat-user='$id'>$followButtonInner</button>
+            <button class='btn btn-sm " . ($followed ? "btn-danger" : "btn-outline-danger") . " mx-2 followButton' onclick='updateFollow(this)' state='$followed' codechat-user='$id'>$followButtonInner</button>
         </div>
     ";
 }

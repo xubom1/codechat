@@ -82,7 +82,7 @@ async function updateFollow(button){
     //get all the other follow button
     let buttons = [].slice.call(document.getElementsByClassName('followButton'));
     //filter the button that are for the same user
-    buttons = buttons.filter((otherButton) => otherButton.getAttribute('codechat-user') == button.getAttribute('codechat-user'));
+    buttons = buttons.filter((otherButton) => otherButton.getAttribute('codechat-user') === button.getAttribute('codechat-user'));
     
     let state = 1;
     let inner = 'follow';
@@ -96,6 +96,14 @@ async function updateFollow(button){
     for (const otherButton of buttons) {
         otherButton.state = state;
         otherButton.innerHTML = inner;
+        if (state){
+            otherButton.classList.add('btn-danger');
+            otherButton.classList.remove('btn-outline-danger');
+        }
+        else{
+            otherButton.classList.remove('btn-danger');
+            otherButton.classList.add('btn-outline-danger');
+        }
     }
 
     let data = new FormData();
