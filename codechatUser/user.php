@@ -17,7 +17,7 @@ if ($_GET['user'] == $_SESSION['user']){
 
 $db = getDatabase();
 
-$getUser = $db->prepare('SELECT * FROM user WHERE id = :user');
+$getUser = $db->prepare('SELECT id, creation FROM user WHERE id = :user');
 $getUser->execute(['user' => $_GET['user']]);
 $user = $getUser->fetch(PDO::FETCH_ASSOC);
 

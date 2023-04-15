@@ -64,15 +64,8 @@ async function updateLike(button){
         likesCounter.innerHTML++;
     }
 
-    //get publication node to get the publication id
-    let publication = button;
-    do{
-        publication = publication.parentNode;
-    }
-    while(!publication.getAttribute('class').split().includes('publication'));
-
     let data = new FormData();
-    data.append("publication", publication.id);
+    data.append("publication", button.getAttribute('publication'));
     data.append("user", button.getAttribute('codechat-user'));
     data.append("like", button.alt);
 
