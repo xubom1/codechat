@@ -1,6 +1,6 @@
 <?php
 include('../pages/utils.php');
-checkSessionAdminElseLogin();
+checkSessionAdminElseLogin('../');
 
 include('../../database.php');
 $db = getDatabase();
@@ -98,7 +98,7 @@ if (isset($_POST['postalCode']) && !empty($_POST['postalCode'])){
 
 if (isset($_POST['city']) && !empty($_POST['city'])){
     $city = htmlspecialchars($_POST['city']);
-    $cmd = $db->prepare('UPDATE user SET postalCode=? WHERE pseudo=?');
+    $cmd = $db->prepare('UPDATE user SET city=? WHERE pseudo=?');
     $cmd->execute([$city, $user]);
     logAdmin('../../Logs/LogAdminChangeUser.txt', $_SESSION['admin'], $user, $_GET['type'], 'SUCC', $city);
     header('location: manageUser.php?user='. $user . '&msg= city changed successfuly&err=false');
@@ -109,7 +109,7 @@ if (isset($_POST['city']) && !empty($_POST['city'])){
 
 if (isset($_POST['address']) && !empty($_POST['address'])){
     $address = htmlspecialchars($_POST['address']);
-    $cmd = $db->prepare('UPDATE user SET addresse=? WHERE pseudo=?');
+    $cmd = $db->prepare('UPDATE user SET address=? WHERE pseudo=?');
     $cmd->execute([$address, $user]);
     logAdmin('../../Logs/LogAdminChangeUser.txt', $_SESSION['admin'], $user, $_GET['type'], 'SUCC', $address);
     header('location: manageUser.php?user='. $user . '&msg= address changed successfuly&err=false');
@@ -120,4 +120,11 @@ if (isset($_POST['address']) && !empty($_POST['address'])){
 
 if (isset($_POST['password']) && !empty($_POST['password'])){
     $password = htmlspecialchars($_POST['password']);
+    $cmd = $db->prepare('UPDATE user SET password=? WHERE pseudo=?');
+    $cmd->execute([password_hash($password, PASSWORD_BCRYPT), $user]);
+    logAdmin('../../Logs/LogAdminChangeUser.txt', $_SESSION['admin'], $user, $_GET['type'], 'SUCC', 'password changed');
+    header('location: manageUser.php?user='. $user . '&msg=password changed successfuly&err=false');
+} else if (empty($_POST['password']) && $_GET['type'] == 'password'){
+    logAdmin('../../Logs/LogAdminChangeUser.txt', $_SESSION['admin'], $user, $_GET['type'], 'FAIL', 'failed');
+    header('location: manageUser.php?user='. $user . '&msg=failed to change password !&err=true');
 }

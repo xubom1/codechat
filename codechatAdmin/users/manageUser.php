@@ -1,7 +1,7 @@
 <?php
 include('../pages/utils.php');
 include('../pages/template.php');
-checkSessionAdminElseLogin();
+checkSessionAdminElseLogin('../');
 
 if (!isset($_GET['user'])){
     header('location: ./');
@@ -12,12 +12,12 @@ $db = getDatabase();
 
 $cmd = $db->prepare('SELECT * FROM user WHERE pseudo=? AND banned=0');
 $cmd->execute([htmlspecialchars($_GET['user'])]);
-$user = $cmd->fetchAll()[0];
+$user = $cmd->fetchAll();
 
 if(!sizeof($user))
     header('location: ../');
 
-$pseudo = $_GET['user'];
+$pseudo = htmlspecialchars($_GET['user']);
 
 function createRow($text, $bddName, $user, $type){
     return "
