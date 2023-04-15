@@ -49,7 +49,7 @@ $content = '
 
 $content .= "
     <div class='container mt-5 ' style='width: 150px'>
-        <p class='text-center " . ((isset($_GET['err']) && $_GET['err'] == 'true') ? "text-danger" : " ") . "'> 
+        <p class='text-center" . ((isset($_GET['err']) && $_GET['err'] == 'true') ? "alert alert-danger mt-4" : " ") . "'> 
         " . error() . "
         </p>
     </div>

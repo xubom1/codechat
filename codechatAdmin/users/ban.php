@@ -1,6 +1,6 @@
 <?php
 include('../pages/utils.php');
-checkSessionAdminElseLogin('.');
+checkSessionAdminElseLogin('../');
 
 
 include ('../../database.php');
@@ -8,8 +8,8 @@ $db = getDatabase();
 
 $user = htmlspecialchars($_GET['user']);
 
-if (isset($_GET['user']) && empty($_GET['user'])){
-    header('location: ../allUsers.php?msg=user not found&err=true');
+if (!isset($_GET['user']) && empty($_GET['user'])){
+    header('location: allUsers.php?msg=user not found&err=true');
     exit;
 }
 
@@ -20,8 +20,7 @@ $users = $cmdCheck->fetch();
 if ($users > 0){
     $cmd = $db->prepare('UPDATE user SET banned=1 WHERE pseudo = ?');
     $cmd->execute([$user]);
-    header('location: allUsers.php?msg=user banned&err=false');
+    header('location: searchUsers/index.php?msg=user banned&err=false');
+} else {
+    header('location: allUsers.php?msg=user can\'t banned&err=true');
 }
-
-//$cmd = $db->prepare('UPDATE user SET banned=1 WHERE pseudo = ?');
-//$cmd->execute([$user]);

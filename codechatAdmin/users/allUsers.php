@@ -1,6 +1,6 @@
 <?php
 include('../pages/utils.php');
-checkSessionAdminElseLogin('.');
+checkSessionAdminElseLogin('../');
 
 include('../../database.php');
 $db = getDatabase();
@@ -69,4 +69,4 @@ $content .= "
 
 
 include("../pages/template.php");
-echo makePage($content);
+echo makePage('Users', $content, '..');
