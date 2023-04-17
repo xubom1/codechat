@@ -34,11 +34,11 @@ $type = $_GET['type'] ?? $defaultType;
     <html lang="en" data-bs-theme='<?=getColorTheme()?>'>
     <?= make_head(".", "
         <style>
-            .row-cols-1 a{
+            .row-cols-1 > a{
                 text-decoration: none;
                 transition: .3s;
             }
-            .row-cols-1 a:hover{
+            .row-cols-1 > a:hover{
                 background-color: #0003;
             }
         </style>

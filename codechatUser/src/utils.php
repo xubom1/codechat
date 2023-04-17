@@ -17,7 +17,7 @@ function checkNotSessionElseMainPage(): void
     }
 }
 
-function displayTimeInterval($date): string
+function displayTimeInterval($date, $short = false): string
 {
     //get publication interval since creation
     date_default_timezone_set('Europe/Paris');
@@ -26,9 +26,10 @@ function displayTimeInterval($date): string
     $interval = date_diff($dateNow, $datePub);
 
     $units = ['y' => 'year', 'm' => 'month', 'd' => 'day', 'h' => 'hour', 'i' => 'minute', 's' => 'second'];
+    if ($short) $units = ['y' => 'y', 'm' => 'm', 'd' => 'd', 'h' => 'h', 'i' => 'min', 's' => 'sec'];
     foreach ($units as $key => $output){
         if ($interval->$key != 0){
-            return $interval->$key . ' ' . $output . ($interval->$key === 1 ? '' : 's') . ' ago';
+            return $interval->$key . ' ' . $output . ($interval->$key === 1 || $short ? '' : 's') . ' ago';
         }
     }
     return "0 second ago";
@@ -60,7 +61,18 @@ function make_user_presentation($db, $id): string {
     return "
         <div class='d-flex flex-row align-items-center'>
             <div class='avatar' codechat-user='$id'><img src='/assets/defaultAccount.svg' width='50'></div>
-            <a href='/user.php?user=$id' class='text-body'>$pseudo</a>
+            
+            
+            <div class='dropdown'>
+                <a class='dropdown-toggle text-body' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
+                    $pseudo
+                </a>
+                <ul class='dropdown-menu'>
+                    <li><a class='dropdown-item' href='/user.php?user=$id' class='text-body'>profile</a></li>
+                    <li><a class='dropdown-item' href='/?user=$id'>tchat</a></li>
+                </ul>
+            </div>
+            
             <button class='btn btn-sm " . ($followed ? "btn-danger" : "btn-outline-danger") . " mx-2 followButton' onclick='updateFollow(this)' state='$followed' codechat-user='$id'>$followButtonInner</button>
         </div>
     ";

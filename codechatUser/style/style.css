@@ -59,17 +59,14 @@ nav{
     padding: 4px;
 }
 
-#scroller::-webkit-scrollbar {
+#scroller::-webkit-scrollbar, #messages::-webkit-scrollbar {
     width:10px;
-
 }
 
-#scroller::-webkit-scrollbar-thumb {
+#scroller::-webkit-scrollbar-thumb, #messages::-webkit-scrollbar-thumb{
     background-color: #7785ac;
     border-radius: 3px;
 }
-
-
 
 /*side panels on the main page*/
 
@@ -99,6 +96,72 @@ nav{
 
 #user:hover img{
     transform: scale(1.07);
+}
+
+#messagesContainer{
+    height: calc(100vh - 75px);
+}
+
+.contact{
+    text-decoration: none;
+}
+
+.contact:hover{
+    background-color: #0002;
+}
+
+#messages{
+    overflow-y: scroll;
+}
+
+.message{
+    border: 1px solid var(--bs-border-color);
+    border-radius: 5px;
+    padding: 5px 8px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    margin: 5px 5px 20px;
+    width: 75%;
+    color: var(--bs-body-color-rgb);
+}
+
+.messageSent{
+    text-align: right;
+    align-self: end;
+    background-color: #5B2A8633;
+}
+
+.messageReceived{
+    text-align: left;
+    align-self: start;
+    background-color: #7785ac33;
+}
+
+.messageReceived:before {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    border-left: 6px solid var(--bs-border-color);
+    border-right: 6px solid transparent;
+    border-top: 6px solid var(--bs-border-color);
+    border-bottom: 6px solid transparent;
+    left: 12px;
+    bottom: -12px;
+}
+
+.messageSent:before {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    border-left: 6px solid transparent;
+    border-right: 6px solid var(--bs-border-color);
+    border-top: 6px solid var(--bs-border-color);
+    border-bottom: 6px solid transparent;
+    right: 12px;
+    bottom: -12px;
 }
 
 /*publications style*/
