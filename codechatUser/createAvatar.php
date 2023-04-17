@@ -52,6 +52,7 @@
                 border: 4px solid #0000;
                 border-radius: 5px;
                 transition: all .2s;
+                background-color: #FFF1;
             }
             
             input[type='radio']:checked + label{
