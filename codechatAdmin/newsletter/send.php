@@ -9,9 +9,9 @@ checkSessionAdminElseLogin('../');
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require '../../PHPMailer/src/Exception.php';
-require '../../PHPMailer/src/PHPMailer.php';
-require '../../PHPMailer/src/SMTP.php';
+require '../../lib/PHPMailer/src/Exception.php';
+require '../../lib/PHPMailer/src/PHPMailer.php';
+require '../../lib/PHPMailer/src/SMTP.php';
 
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
@@ -30,7 +30,7 @@ try {
 
     //Recipients
     $mail->setFrom('team@codechat.fr', 'Team Codechat');
-    $mail->addAddress('s.reakulan04@gmail.com', 'Rakulan');
+    $mail->addAddress('s.rakulan04@gmail.com', 'Rakulan');
 
     //Attachments
     //$mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
