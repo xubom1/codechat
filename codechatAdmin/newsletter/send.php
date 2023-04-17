@@ -3,8 +3,8 @@ include('../pages/utils.php');
 include('../pages/template.php');
 checkSessionAdminElseLogin('../');
 
-//$subject = $_POST['subject'];
-//$text = $_POST['text'];
+$subject = $_POST['subject'];
+$text = $_POST['text'];
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -38,9 +38,9 @@ try {
 
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject = 'Here is the subject';
-    $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+    $mail->Subject = $subject;
+    $mail->Body    = $text;
+    $mail->AltBody = $text;
 
     $mail->send();
     echo 'Message has been sent';
