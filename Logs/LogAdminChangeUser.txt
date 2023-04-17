@@ -8,3 +8,5 @@
 23/04/14 - 09:04:51-rakus-rakus-city-SUCC-Chelles
 23/04/14 - 09:04:56-rakus-rakus-lastName-SUCC-Sivathasan
 23/04/14 - 09:04:05-rakus-rakus-postalCode-SUCC-25000
+23/04/17 - 07:04:23-rakus-rakulan-password-SUCC-password changed
+23/04/17 - 07:04:26-rakus-rakulan-password-FAIL-failed

@@ -1,7 +1,7 @@
 <?php
 include('../pages/utils.php');
 include('../pages/template.php');
-checkSessionAdminElseLogin('../.');
+checkSessionAdminElseLogin('../');
 
 //$subject = $_POST['subject'];
 //$text = $_POST['text'];
@@ -18,14 +18,15 @@ $mail = new PHPMailer(true);
 
 try {
     //Server settings
-    $mail->SMTPDebug = 2;                      //Enable verbose debug output
+    $mail->SMTPDebug   = 2;                      //Enable verbose debug output
     $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'pro1.mail.ovh.net';                     //Set the SMTP server to send through
-    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = 'team@codechat.fr';                     //SMTP username
-    $mail->Password   = 'Respons11!';                               //SMTP password
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;           //Enable implicit TLS encryption
-    $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+    $mail->Host        = 'pro1.mail.ovh.net';                     //Set the SMTP server to send through
+    $mail->SMTPAuth    = true;                                   //Enable SMTP authentication
+    $mail->Username    = 'team@codechat.fr';                     //SMTP username
+    $mail->Password    = 'Respons11!';
+    $mail->SMTPAutoTLS = true;
+    $mail->SMTPSecure  = PHPMailer::ENCRYPTION_STARTTLS;           //Enable implicit TLS encryption
+    $mail->Port        = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
     //Recipients
     $mail->setFrom('team@codechat.fr', 'Team Codechat');
