@@ -9,7 +9,7 @@ $db = getDatabase();
 $user = htmlspecialchars($_GET['user']);
 
 if (!isset($_GET['user']) && empty($_GET['user'])){
-    header('location: allUsers.php?msg=user not found&err=true');
+    header('location: searchUsers/index.php?msg=user not found&err=true');
     exit;
 }
 
@@ -22,5 +22,5 @@ if ($users > 0){
     $cmd->execute([$user]);
     header('location: searchUsers/index.php?msg=user banned&err=false');
 } else {
-    header('location: allUsers.php?msg=user can\'t banned&err=true');
+    header('location: searchUsers/index.php?msg=user can\'t banned&err=true');
 }
