@@ -17,7 +17,7 @@ function checkNotSessionElseMainPage(): void
     }
 }
 
-function displayTimeInterval($date): string
+function displayTimeInterval($date, $short = false): string
 {
     //get publication interval since creation
     date_default_timezone_set('Europe/Paris');
@@ -26,9 +26,10 @@ function displayTimeInterval($date): string
     $interval = date_diff($dateNow, $datePub);
 
     $units = ['y' => 'year', 'm' => 'month', 'd' => 'day', 'h' => 'hour', 'i' => 'minute', 's' => 'second'];
+    if ($short) $units = ['y' => 'y', 'm' => 'm', 'd' => 'd', 'h' => 'h', 'i' => 'min', 's' => 'sec'];
     foreach ($units as $key => $output){
         if ($interval->$key != 0){
-            return $interval->$key . ' ' . $output . ($interval->$key === 1 ? '' : 's') . ' ago';
+            return $interval->$key . ' ' . $output . ($interval->$key === 1 || $short ? '' : 's') . ' ago';
         }
     }
     return "0 second ago";
@@ -41,15 +42,38 @@ function getUserPseudo($id, $db){
 }
 
 function make_user_presentation($db, $id): string {
+    //get pseudo
     $getUser = $db->prepare('SELECT pseudo FROM user WHERE id = :user ');
     $getUser->execute(['user' => $id]);
     $user = $getUser->fetch(PDO::FETCH_ASSOC);
     $pseudo = $user['pseudo'];
 
+    //get if the user follow this user
+    $getFollow = $db->prepare('SELECT COUNT(*) FROM follow WHERE follower = :sessionUser AND followed = :user');
+    $getFollow->execute([
+        'sessionUser' => $_SESSION['user'],
+        'user' => $id
+    ]);
+
+    $followed = !$getFollow->fetch()[0];
+    $followButtonInner = $followed ? "follow" : "unfollow";
+
     return "
         <div class='d-flex flex-row align-items-center'>
             <div class='avatar' codechat-user='$id'><img src='/assets/defaultAccount.svg' width='50'></div>
-            <a href='/user.php?user=$id' class='text-body'>$pseudo</a>
+            
+            
+            <div class='dropdown'>
+                <a class='dropdown-toggle text-body' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
+                    $pseudo
+                </a>
+                <ul class='dropdown-menu'>
+                    <li><a class='dropdown-item' href='/user.php?user=$id' class='text-body'>profile</a></li>
+                    <li><a class='dropdown-item' href='/?user=$id'>tchat</a></li>
+                </ul>
+            </div>
+            
+            <button class='btn btn-sm " . ($followed ? "btn-danger" : "btn-outline-danger") . " mx-2 followButton' onclick='updateFollow(this)' state='$followed' codechat-user='$id'>$followButtonInner</button>
         </div>
     ";
 }
@@ -57,7 +81,7 @@ function make_user_presentation($db, $id): string {
 function makePublication($id, $db, $rootpath = ".."): string
 {
     //get publication
-    $getPublication = $db->prepare("SELECT * FROM publication WHERE id=?");
+    $getPublication = $db->prepare("SELECT creator, content, lastEdition, id FROM publication WHERE id=?");
     $getPublication->execute([(int)$id]);
     $publication = $getPublication->fetch(PDO::FETCH_ASSOC);
 
@@ -67,7 +91,7 @@ function makePublication($id, $db, $rootpath = ".."): string
     $likeCount = $getLikeCount->fetch()[0];
 
     //determine if user liked this publication
-    $getLiked = $db->prepare("SELECT EXISTS( SELECT * FROM liked WHERE publication = :publication AND user = :user)");
+    $getLiked = $db->prepare("SELECT EXISTS( SELECT user FROM liked WHERE publication = :publication AND user = :user)");
     $getLiked->execute([
         'publication' => $id,
         'user' => $_SESSION['user']
@@ -78,19 +102,24 @@ function makePublication($id, $db, $rootpath = ".."): string
 
     //get creator
     $user = $publication['creator'];
-    $pseudo = getUserPseudo($user, $db);
 
     //time since publication
     $interval = displayTimeInterval($publication["lastEdition"]);
     $id = $publication['id'];
 
+    //get the content of the publication
     $content = $publication['content'];
 
+    //get the number of comments
+    $getCommentsCount = $db->prepare('SELECT COUNT(*) FROM publication WHERE respondTo = :publication');
+    $getCommentsCount->execute(['publication' => $id]);
+    $commentsCount = $getCommentsCount->fetch()[0];
+
     return "
-        <article class='publication' id='$id'>
+        <article class='publication border-bottom' id='$id'>
             <div class='publicationHeader d-flex align-items-center'>
                 " . make_user_presentation($db, $user) . "
-                <div class='mx-2'>
+                <div>
                     &bull; $interval
                 </div>
             </div>
@@ -98,8 +127,10 @@ function makePublication($id, $db, $rootpath = ".."): string
                 $content
             </div>
             <div class='publicationFooter'>
-                <img src='$likeImg' alt='$liked' onclick='updateLike(this)' codechat-user='$likeUser'>
-                <div class='likesCounter'>$likeCount</div>
+                <img src='$likeImg' alt='$liked' onclick='updateLike(this)' codechat-user='$likeUser' publication='$id'>
+                <div class='mx-1 likesCounter'>$likeCount</div>
+                <img src='/assets/comment.svg' class='ms-3 mt-1' onclick='location.href=\"/publication.php?id=$id\"'>
+                <div class='mx-1'>$commentsCount</div>
             </div>
         </article>
     ";

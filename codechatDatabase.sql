@@ -64,3 +64,10 @@ CREATE TABLE avatarownership(
        FOREIGN KEY(owner) REFERENCES user(id),
        FOREIGN KEY(component) REFERENCES avatarcomponent(id)
 );
+
+CREATE TABLE message(
+    author INT REFERENCES user(id),
+    receiver INT REFERENCES user(id),
+    content VARCHAR(255) NOT NULL,
+    creation DATETIME NOT NULL DEFAULT NOW()
+);

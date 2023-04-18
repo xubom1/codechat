@@ -17,7 +17,7 @@ if ($_GET['user'] == $_SESSION['user']){
 
 $db = getDatabase();
 
-$getUser = $db->prepare('SELECT * FROM user WHERE id = :user');
+$getUser = $db->prepare('SELECT id, creation FROM user WHERE id = :user');
 $getUser->execute(['user' => $_GET['user']]);
 $user = $getUser->fetch(PDO::FETCH_ASSOC);
 
@@ -32,9 +32,9 @@ $getFollowedCount->execute(['user' => $_GET['user']]);
 $followedCount = $getFollowedCount->fetch()[0];
 
 //get publications
-$getPublications  = $db->prepare('SELECT id FROM publication WHERE creator = :user limit 10');
+$getPublications  = $db->prepare('SELECT id FROM publication WHERE respondTo IS NULL AND creator = :user limit 100');
 $getPublications->execute(['user' => $_GET['user']]);
-$publications = $getPublications->fetchAll();
+$publications = $getPublications->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 <!DOCTYPE html>
@@ -44,16 +44,17 @@ $publications = $getPublications->fetchAll();
         <?= make_header()?>
         <!--    MAIN PAGE    -->
         <main class="container mt-3">
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center justify-content-center my-5">
                 <?=make_user_presentation($db, $user['id']);?>
                 <div class="p-2">&bull; user created in <? echo date('M Y',strtotime($user['creation']));?></div>
                 <div class="px-1">&bull; <?=$followersCount?> followers</div>
                 <div> &bull; <?=$followedCount;?> followed</div>
             </div>
-            <div>
+            <div class="p-3 text-center"><?=count($publications)?> publications</div>
+            <div class="col-8 m-auto p-2 border rounded-top-2">
                 <?php
                 foreach ($publications as $publication){
-                    makePublication($publication['id'], $db, '.');
+                    echo makePublication($publication['id'], $db, '.');
                 }
                 ?>
             </div>
