@@ -80,6 +80,30 @@ $content = '
           </div>
         </div>
     </div>
+    
+    <div class="d-flex justify-content-center">
+        <div class="card m-4" style="width: 18rem;">
+          <div class="card-body">
+             <h5 class="card-title">Inactive account</h5>
+             <p class="card-text">Here you will see all accounts that have been inactive for a while.</p>
+             <a href="event/" class="btn btn-primary">Start manage</a>
+          </div>
+        </div>
+        <div class="card m-4" style="width: 18rem;">
+          <div class="card-body">
+             <h5 class="card-title">Report</h5>
+             <p class="card-text">Here you will find all reports and complaints made by users.</p>
+             <a href="publication/" class="btn btn-primary">Start manage</a>
+          </div>
+        </div>
+        <div class="card m-4" style="width: 18rem;">
+          <div class="card-body">
+             <h5 class="card-title">Message</h5>
+             <p class="card-text">Here you will find messages sent to you by users or administrators.</p>
+             <a href="avatar/" class="btn btn-primary">Start manage</a>
+          </div>
+        </div>
+    </div>
 ';
 
 
