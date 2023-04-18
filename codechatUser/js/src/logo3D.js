@@ -4,7 +4,7 @@ import { Shader } from "./renderer3d/Shader";
 import { Model } from "./renderer3d/Model";
 import { Texture } from "./renderer3d/Texture";
 
-let angle = Math.PI * 4;
+let angle = Math.PI * .5;
 
 window.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementsByClassName('logo3D')[0];
