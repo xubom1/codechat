@@ -8,7 +8,7 @@ include('../src/template.php');
 <html lang="en" data-bs-theme='<?=getColorTheme()?>'>
     <?= make_head('..')?>
     <body>
-        <?= make_header('..')?>
+    <?= make_header('', false)?>
          <!--    MAIN PAGE    -->
          <main class="container">
             <nav aria-label="breadcrumb" class="my-2">

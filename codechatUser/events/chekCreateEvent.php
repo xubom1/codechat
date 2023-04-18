@@ -1,6 +1,6 @@
 <?php
-include("src/utils.php");
-include("../../database.php");
+include('../src/utils.php');
+include('../../database.php');
 
 checkSessionElseLogin();
 

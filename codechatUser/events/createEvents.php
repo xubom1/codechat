@@ -17,8 +17,8 @@ checkSessionElseLogin(false);
                 <ol class="breadcrumb p-2 d-flex justify-content-center">
                     
                     <li class="breadcrumb-item active" aria-current="page">Create an event</li>
-                    <li class="breadcrumb-item"><a href="signevents.php">Assist to an event</a></li>
-                    
+                    <li class="breadcrumb-item"><a href="takePartEvent.php">Assist to an event</a></li>
+                    <li class="breadcrumb-item"><a href="myEvent.php">Edit my event</a></li>
                 </ol>
             </nav>
         <div class="p-3">
@@ -35,7 +35,7 @@ checkSessionElseLogin(false);
              }
              ?>
 
-            <form action="newEventscript.php" method="post" class="">
+            <form action="chekCreateEvent.php" method="post" class="">
             <label for="name">Name of the event :</label>
         <input type="text" id="name" name="name" required><br><br>
         <label for="starting_date">Starting date :</label>

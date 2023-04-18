@@ -18,8 +18,9 @@ checkSessionElseLogin(false);
 
      <nav aria-label="breadcrumb" class="my-2">
                 <ol class="breadcrumb p-2 d-flex justify-content-center">
-                    <li class="breadcrumb-item"><a href="events.php">create an event</a></li>
+                    <li class="breadcrumb-item"><a href="createEvents.php">Create an event</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Assist to event</li>
+                    <li class="breadcrumb-item"><a href="myEvent.php">Edit my event</a></li>
                    
                 </ol>
             </nav>
@@ -28,10 +29,16 @@ checkSessionElseLogin(false);
     
     <ul>
         <?php
+        
+ 
         $db = getDatabase();
-        $getEvents = $db->query('SELECT id,name, starting_date, ending_date, location, description FROM events');
-
+        $getId = $db->query('SELECT id FROM user');
+        $id = $getId->fetch(PDO::FETCH_ASSOC)['id'];
+      
+        $getEvents = $db->query("SELECT id, name, starting_date, ending_date, location, description FROM events WHERE creator != '" .$_SESSION['user']. "'");
+        
         while ($event = $getEvents->fetch()) {
+            
             echo '<li>';
             echo '<h3>' . $event['name'] . '</h3>';
             echo '<p><strong>Date : </strong> du ' . $event['starting_date'] . ' au ' . $event['ending_date'] . '</p>';
