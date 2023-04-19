@@ -8,7 +8,8 @@ $db = getDatabase();
 
 $cmd = $db->prepare('SELECT pseudo, mail FROM user WHERE wantNews=?');
 $cmd->execute([1]);
-$users = $cmd->fetch();
+$users = $cmd->fetchAll();
+
 
 $subject = $_POST['subject'];
 $text = $_POST['text'];
