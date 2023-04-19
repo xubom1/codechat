@@ -65,21 +65,25 @@ CREATE TABLE avatarownership(
        FOREIGN KEY(component) REFERENCES avatarcomponent(id)
 );
 
-CREATE TABLE events (   id int NOT NULL AUTO_INCREMENT PRIMARY KEY,   
-name VARCHAR(100),  
- description VARCHAR(255),  
-  starting_date DATETIME,   
-  ending_date DATETIME,   
-  location VARCHAR(100),   
-  user int,   
-  FOREIGN KEY (user) REFERENCES user(id) );
+CREATE TABLE events (   
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,   
+    name VARCHAR(100),  
+    description VARCHAR(255),  
+    starting_date DATETIME,   
+    ending_date DATETIME,   
+    location VARCHAR(100),   
+    user INT,   
+    FOREIGN KEY (user) REFERENCES user(id) 
+);
 
 CREATE TABLE eventSign (
     signer VARCHAR(80) REFERENCES user(id),
     event VARCHAR(80) REFERENCES events(id),
     PRIMARY KEY (signer, event)
+);
 
 CREATE TABLE message(
+    id INT AUTO_INCREMENT PRIMARY KEY,
     author INT REFERENCES user(id),
     receiver INT REFERENCES user(id),
     content VARCHAR(255) NOT NULL,
