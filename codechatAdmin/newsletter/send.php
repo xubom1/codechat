@@ -3,6 +3,13 @@ include('../pages/utils.php');
 include('../pages/template.php');
 checkSessionAdminElseLogin('../');
 
+include('../../database.php');
+$db = getDatabase();
+
+$cmd = $db->prepare('SELECT pseudo, mail FROM user WHERE wantNews=?');
+$cmd->execute([1]);
+$users = $cmd->fetch();
+
 $subject = $_POST['subject'];
 $text = $_POST['text'];
 
@@ -16,9 +23,7 @@ require '../../lib/PHPMailer/src/SMTP.php';
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
 
-try {
-    //Server settings
-    $mail->SMTPDebug   = 2;                      //Enable verbose debug output
+foreach($users as $user){
     $mail->isSMTP();                                            //Send using SMTP
     $mail->Host        = 'pro1.mail.ovh.net';                     //Set the SMTP server to send through
     $mail->SMTPAuth    = true;                                   //Enable SMTP authentication
@@ -30,7 +35,7 @@ try {
 
     //Recipients
     $mail->setFrom('team@codechat.fr', 'Team Codechat');
-    $mail->addAddress('s.rakulan04@gmail.com', 'Rakulan');
+    $mail->addAddress($user['mail'], $user['pseudo']);
 
     //Attachments
     //$mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
@@ -44,6 +49,4 @@ try {
 
     $mail->send();
     echo 'Message has been sent';
-} catch (Exception $e) {
-    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-}
+    }
