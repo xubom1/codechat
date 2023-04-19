@@ -25,7 +25,7 @@ checkSessionElseLogin(false);
                 </ol>
             </nav>
             <div class="events">
-    <h2>Liste des événements</h2>
+    <h2>List of events</h2>
     
     <ul>
         <?php
@@ -42,11 +42,11 @@ checkSessionElseLogin(false);
             echo '<li>';
             echo '<h3>' . $event['name'] . '</h3>';
             echo '<p><strong>Date : </strong> du ' . $event['starting_date'] . ' au ' . $event['ending_date'] . '</p>';
-            echo '<p><strong>Lieu : </strong>' . $event['location'] . '</p>';
+            echo '<p><strong>Location : </strong>' . $event['location'] . '</p>';
             echo '<p><strong>Description : </strong>' . $event['description'] . '</p>';
-            echo '<button class="btn-register" data-event-id="' . $event['id'] . '">S\'inscrire</button>';
+            echo '<button class="btn-register" data-event-id="' . $event['id'] . '">sign up</button>';
             echo '<span>&nbsp;</span>';
-            echo '<button class="btn-unregister" data-event-id="' . $event['id'] . '">Se désinscrire</button>';
+            echo '<button class="btn-unregister" data-event-id="' . $event['id'] . '">Unregister</button>';
             echo '</li>';
         }
         
@@ -54,40 +54,38 @@ checkSessionElseLogin(false);
     </ul>
 </div>
 <script>
-// Récupère tous les boutons "S'inscrire"
+
 var btnRegisters = document.querySelectorAll('.btn-register');
 for (var i = 0; i < btnRegisters.length; i++) {
-    // Ajoute un gestionnaire d'événements "click" à chaque bouton
+   
     btnRegisters[i].addEventListener('click', function() {
-        // Récupère l'ID de l'événement à partir de l'attribut "data-event-id"
+      
         var eventId = this.getAttribute('data-event-id');
 
-        // Envoie une requête AJAX pour ajouter l'utilisateur à l'événement
+       
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'register.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onload = function() {
-            // Affiche un message de confirmation
+           
             alert(xhr.responseText);
         };
         xhr.send('event_id=' + eventId);
     });
 }
 
-// Récupère tous les boutons "Se désinscrire"
 var btnUnregisters = document.querySelectorAll('.btn-unregister');
 for (var i = 0; i < btnUnregisters.length; i++) {
-    // Ajoute un gestionnaire d'événements "click" à chaque bouton
+    
     btnUnregisters[i].addEventListener('click', function() {
-        // Récupère l'ID de l'événement à partir de l'attribut "data-event-id"
+        
         var eventId = this.getAttribute('data-event-id');
 
-        // Envoie une requête AJAX pour supprimer l'utilisateur de l'événement
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'unregister.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onload = function() {
-            // Affiche un message de confirmation
+           
             alert(xhr.responseText);
         };
         xhr.send('event_id=' + eventId);

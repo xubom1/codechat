@@ -24,7 +24,7 @@ checkSessionElseLogin(false);
                 </ol>
             </nav>
             <div class="events">
-    <h2>Mes événements</h2>
+    <h2>My events</h2>
     
     <ul>
     <?php
@@ -35,7 +35,7 @@ checkSessionElseLogin(false);
         $getEvents = $db->query("SELECT id, name, starting_date, ending_date, location, description FROM events WHERE creator = '" .$_SESSION['user']. "'");
         
         if ($getEvents->rowCount() == 0) {
-            echo '<p>Vous n\'avez créé aucun événement pour le moment.</p>';
+            echo '<p>You have not created any events yet.</p>';
           } else {
             while ($event = $getEvents->fetch()) {
               echo '<li>';
