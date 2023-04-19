@@ -2,7 +2,7 @@
 const ERROR_TIMEOUT = 2000;
 let lastError = Date.now() - ERROR_TIMEOUT;
 
-function addPublications(number ){
+function addPublications(number){
     //get already loaded publications
     const publications = document.getElementsByClassName('publication');
 
@@ -27,7 +27,6 @@ function addPublications(number ){
         if (text !== '')
             container.innerHTML += text;
     })
-
 }
 
 function checkScrolling() {
@@ -38,12 +37,13 @@ function checkScrolling() {
 
     if (scroller.scrollTop + scroller.offsetHeight > scroller.scrollHeight - 150){
         addPublications(20);
+        lastError = Date.now();
     }
-};
+}
 
 if (document.getElementById('scroller')){
     addPublications(20);
-    setInterval(checkScrolling, 100);
+    setInterval(checkScrolling, 200);
 }
 
 
@@ -53,7 +53,7 @@ async function updateLike(button){
     const likesCounter = button.parentNode.getElementsByClassName('likesCounter')[0];
 
     //change the button img and data and update the likes count 
-    if (button.alt != 0) {
+    if (parseInt(button.alt)) {
         button.src = '/assets/like.svg';
         button.alt = 0;
         likesCounter.innerHTML--;
@@ -64,15 +64,8 @@ async function updateLike(button){
         likesCounter.innerHTML++;
     }
 
-    //get publication node to get the publication id
-    let publication = button;
-    do{
-        publication = publication.parentNode;
-    }
-    while(!publication.getAttribute('class').split().includes('publication'));
-
     let data = new FormData();
-    data.append("publication", publication.id);
+    data.append("publication", button.getAttribute('publication'));
     data.append("user", button.getAttribute('codechat-user'));
     data.append("like", button.alt);
 
@@ -81,6 +74,44 @@ async function updateLike(button){
         method: "POST",
         body: data
     })).text();
+}
 
+//follow system
+async function updateFollow(button){
+
+    //get all the other follow button
+    let buttons = [].slice.call(document.getElementsByClassName('followButton'));
+    //filter the button that are for the same user
+    buttons = buttons.filter((otherButton) => otherButton.getAttribute('codechat-user') === button.getAttribute('codechat-user'));
     
+    let state = 1;
+    let inner = 'follow';
+
+    if (parseInt(button.state)){
+        state = 0;
+        inner = 'unfollow';
+    }
+
+    //change the state of the same button   
+    for (const otherButton of buttons) {
+        otherButton.state = state;
+        otherButton.innerHTML = inner;
+        if (state){
+            otherButton.classList.add('btn-danger');
+            otherButton.classList.remove('btn-outline-danger');
+        }
+        else{
+            otherButton.classList.remove('btn-danger');
+            otherButton.classList.add('btn-outline-danger');
+        }
+    }
+
+    let data = new FormData();
+    data.append("user", button.getAttribute('codechat-user'));
+    data.append("follow", button.state);
+
+    const response = await (await fetch("src/follow.php", {
+        method: "POST",
+        body: data
+    })).text();
 }

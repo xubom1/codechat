@@ -1,3 +1,6 @@
+
+
+
 async function searchUser(){
     const input = document.getElementById('search');
     const name = input.value;
@@ -25,20 +28,4 @@ async function searchUser(){
     }
 }
 
-function validate(){
-    let str = 'searchUser.php?name=name';
-    if (flexCheck1.checked == 1){
 
-        console.log(str);
-    }
-    if (flexCheck2.checked == 1){
-        str.concat('&mail=yes');
-    }
-    if (flexCheck3.checked == 1){
-        str.concat('&lastName=yes');
-    }
-    if (flexCheck4.checked == 1){
-        str.concat('&firstName=yes');
-    }
-    console.log(str);
-}

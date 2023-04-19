@@ -1,10 +1,11 @@
 <?php
 include('../pages/utils.php');
 include('../pages/template.php');
-checkSessionAdminElseLogin();
+checkSessionAdminElseLogin('../');
 
 if (!isset($_GET['user'])){
     header('location: ./');
+    exit;
 }
 
 include('../../database.php');
@@ -14,10 +15,10 @@ $cmd = $db->prepare('SELECT * FROM user WHERE pseudo=? AND banned=0');
 $cmd->execute([htmlspecialchars($_GET['user'])]);
 $user = $cmd->fetchAll()[0];
 
-if(!sizeof($user))
-    header('location: ../');
+if($user == 0)
+    header('location: searchUsers/index.php?msg=unkown error&err=true');
 
-$pseudo = $_GET['user'];
+$pseudo = htmlspecialchars($_GET['user']);
 
 function createRow($text, $bddName, $user, $type){
     return "
@@ -33,11 +34,11 @@ function createRow($text, $bddName, $user, $type){
           <div class='modal-dialog'>
             <div class='modal-content'>
               <div class='modal-header'>
-                <h5 class='modal-title'>change ". $_GET['user'] ."'s $text</h5>
+                <h5 class='modal-title'>change ". htmlspecialchars($_GET['user']) ."'s $text</h5>
                           
                 <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
               </div>
-              <form action='change.php?user=". $_GET['user'] ."&type=$bddName' method='post'>
+              <form action='change.php?user=". htmlspecialchars($_GET['user']) ."&type=$bddName' method='post'>
                   <div class='modal-body'>
                      <label for='name' class='form-label'>New $text</label>
                      <input name='$bddName' type='$type' class='form-control'>
@@ -103,7 +104,7 @@ $content = "
           </div>
           <div class='modal-footer'>
             <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
-            <button type='button' class='btn btn-danger' onclick='location.href=\"deleteUser.php?user=" . $user['pseudo'] . "\"'>delete</button>
+            <button type='button' class='btn btn-danger' onclick='location.href=\"deleteUser.php?user=" . htmlspecialchars($_GET['user']) . "\"'>delete</button>
           </div>
         </div>
       </div>
@@ -120,7 +121,7 @@ $content = "
           </div>
           <div class='modal-footer'>
             <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
-            <button type='button' class='btn btn-danger' onclick='location.href=\"ban.php?user=" . $user['pseudo'] . "\"'>ban</button>
+            <button type='button' class='btn btn-danger' onclick='location.href=\"ban.php?user=" . htmlspecialchars($_GET['user']) . "\"'>ban</button>
           </div>
         </div>
       </div>
@@ -137,7 +138,7 @@ $content = "
             <p class='modal-body'>By clicking on download you will download all the information concerning $pseudo.</p>
           <div class='modal-footer'>
             <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
-            <button type='button' class='btn btn-primary' onclick='location.href=\"generatePdf.php?user=" . $user['pseudo'] . "\"'>Download</button>
+            <button type='button' class='btn btn-primary' onclick='location.href=\"generatePdf.php?user=" . htmlspecialchars($_GET['user']) . "\"'>Download</button>
           </div>
         </div>
       </div>

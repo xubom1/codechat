@@ -19,5 +19,5 @@ $users = $cmdCheck->fetch();
 if ($users > 0){
     $cmd = $db->prepare('UPDATE user SET banned=0 WHERE pseudo = ?');
     $cmd->execute([$user]);
-    header('location: allUsers.php?msg=user banned&err=false');
+    header('location: searchUsers/index.php?msg=user unbanned&err=false');
 }

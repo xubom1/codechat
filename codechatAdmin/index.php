@@ -42,7 +42,7 @@ $content = '
         
         <div class="card m-4" style="width: 18rem;">
           <div class="card-body">
-             <h5 class="card-title">Manage administrateur</h5>
+             <h5 class="card-title">Manage administrator</h5>
              <p class="card-text">Here is all administrateur, that you can manage, create or delete.</p>
              <a href="admins/" class="btn btn-primary">Start manage</a>
           </div>
@@ -76,6 +76,30 @@ $content = '
           <div class="card-body">
              <h5 class="card-title">Avatar</h5>
              <p class="card-text">Add or delete avatar items or update avatar items.</p>
+             <a href="avatar/" class="btn btn-primary">Start manage</a>
+          </div>
+        </div>
+    </div>
+    
+    <div class="d-flex justify-content-center">
+        <div class="card m-4" style="width: 18rem;">
+          <div class="card-body">
+             <h5 class="card-title">Inactive account</h5>
+             <p class="card-text">Here you will see all accounts that have been inactive for a while.</p>
+             <a href="event/" class="btn btn-primary">Start manage</a>
+          </div>
+        </div>
+        <div class="card m-4" style="width: 18rem;">
+          <div class="card-body">
+             <h5 class="card-title">Report</h5>
+             <p class="card-text">Here you will find all reports and complaints made by users.</p>
+             <a href="publication/" class="btn btn-primary">Start manage</a>
+          </div>
+        </div>
+        <div class="card m-4" style="width: 18rem;">
+          <div class="card-body">
+             <h5 class="card-title">Message</h5>
+             <p class="card-text">Here you will find messages sent to you by users or administrators.</p>
              <a href="avatar/" class="btn btn-primary">Start manage</a>
           </div>
         </div>

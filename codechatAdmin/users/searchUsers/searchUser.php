@@ -7,7 +7,7 @@ include('../../../database.php');
 if(isset($_GET['name'])){
     $name = $_GET['name'];
     $db = getDatabase();
-    $sql = 'SELECT * FROM user WHERE pseudo LIKE ? OR mail LIKE ? OR firstName LIKE ?';
+    $sql = 'SELECT * FROM user WHERE pseudo LIKE ? OR mail LIKE ? OR firstName LIKE ? AND banned=0';
 
     /**
      * Le mot clé LIKE permet de filtrer en valeur qui match une partie d'un mot
