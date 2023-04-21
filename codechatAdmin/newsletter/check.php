@@ -21,14 +21,19 @@ if (!isset($_POST['title']) || empty($_POST['title']) ||
 }
 
 date_default_timezone_set('Europe/Paris');
+$sendDateTime = $_POST['date'].' '.$_POST['time'].':00';
 
 if ($_POST['date'] < date('Y-m-d')){
     header('location: index.php?msg=date invalide.');
-}
-if ($_POST['time'] < date('H:i')){
-    header('location: index.php?msg=heure invalide.');
+    exit;
 }
 
-$cmd = $db->prepare('INSERT INTO newsletter (title, content, creationDate, creationTime, sendDate, sendTime, createBy, sendTo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-$cmd->execute([$_POST['title'], $_POST['content'], date('Y-m-d'), date('H:i'), $_POST['date'], $_POST['time'], $_SESSION['admin'], $_POST['sendTo']]);
+if ($_POST['date'] == date('Y-m-d') && $_POST['time'] < date('H:m')){
+    header('location: index.php?msg=time invalide');
+    exit;
+}
+
+
+$cmd = $db->prepare('INSERT INTO newsletter (title, content, creationDateTime, sendDateTime, createBy, sendTo) VALUES (?, ?, ?, ?, ?, ?)');
+$cmd->execute([$_POST['title'], $_POST['content'], date('Y-m-d H:m:s'), $sendDateTime, $_SESSION['admin'], $_POST['sendTo']]);
 header('location: index.php?msg=Newsletter is send');

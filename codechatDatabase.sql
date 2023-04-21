@@ -76,14 +76,12 @@ CREATE TABLE newsletter (
     id int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     title TEXT,
     content TEXT,
-    creationDate DATE,
-    creationTime TIME,
-    sendDate DATE,
-    sendTime TIME,
+    creationDateTime DATETIME,
+    sendDateTime DATETIME,
     deleted BOOLEAN DEFAULT 0,
     createBy VARCHAR(50),
     sent BOOLEAN DEFAULT 0,
-    sendTo VARCHAR(18);
+    sendTo VARCHAR(18)
 );
 
 CREATE TABLE sendTo (
