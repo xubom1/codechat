@@ -19,6 +19,14 @@ $sendMail = $db->prepare('SELECT * FROM newsletter WHERE sent = 0');
 $sendMail->execute([]);
 $getMail = $sendMail->fetchAll(PDO::FETCH_ASSOC);
 
+date_default_timezone_set('Europe/Paris');
+
+$date = date('H:i:s');
+$newDate = date('H:i:s', strtotime($date. ' +1 minutes'));
 
 
-var_dump($getMail);
+foreach ($getMail as $mail){
+    if ($mail['sendDateTime'] >= date('Y-m-d H:m:s') && $mail['sendDateTime'] <= $newDate){
+        var_dump($mail);
+    }
+}

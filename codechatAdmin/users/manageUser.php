@@ -87,6 +87,7 @@ $content = "
             <div class='col-auto'><button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#banAccount'>ban account</button></div>
             <div class='col-auto'><button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#deleteAccount'>delete account</button></div>
             <div class='col-auto'><button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#printAccount'>Download</button></div>
+            <div class='col-auto'><button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#makeAnAdmin'>Make Admin</button></div>
         </div>
     </div>
     
@@ -139,6 +140,23 @@ $content = "
           <div class='modal-footer'>
             <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
             <button type='button' class='btn btn-primary' onclick='location.href=\"generatePdf.php?user=" . htmlspecialchars($_GET['user']) . "\"'>Download</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!--make user as an admin -->
+    <div class='modal' id='makeAnAdmin'>
+      <div class='modal-dialog'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <h5 class='modal-title'> Make $pseudo as an admin ?</h5>
+            <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+          </div>
+            <p class='modal-body'>By clicking on change you will make $pseudo as an admin.</p>
+          <div class='modal-footer'>
+            <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
+            <button type='button' class='btn btn-primary' onclick='location.href=\"changeToAdmin.php?user=" . htmlspecialchars($_GET['user']) . "\"'>Change</button>
           </div>
         </div>
       </div>
