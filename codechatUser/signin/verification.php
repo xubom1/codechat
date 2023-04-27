@@ -5,10 +5,10 @@ $db = getDatabase();
 
 session_start();
 if( isset($_POST['inscrip1'])){
-    if( empty($_POST['pseudo'])
-    || empty($_POST['mail'])
-    || empty($_POST['lastName'])
-    || empty($_POST['firstName'])
+    if( empty(trim($_POST['pseudo']))
+    || empty(trim($_POST['mail']))
+    || empty(trim($_POST['lastName']))
+    || empty(trim($_POST['firstName']))
 )
 {
 $msg = 'you must fill in all the fields ';
@@ -42,7 +42,13 @@ $msg = 'you must fill in all the fields ';
 header('location: Address.php?msg=' . $msg);
 exit();
 } 
- 
+ if($_POST['postalCode']>5)
+ {
+    $msg = 'you must fill in all the fields ';
+    header('location: address.php?msg=' . $msg);
+    exit();
+    }
+
 
 else{
     $_SESSION['postalCode'] = $_POST['postalCode'];
@@ -68,58 +74,11 @@ if( isset($_POST['inscrip3'])){
         }
         else{
             $_SESSION ['password'] = $_POST['password'];
-         
-          
-        
-
-/************************************************************************************************************************** */
-
-    $q = 'SELECT pseudo FROM user WHERE pseudo = :pseudo';
-    $req = $db-> prepare($q);
-    $req->execute([
-        'pseudo' =>  $_SESSION ['pseudo']
-    ]);
-
-    $response = $req->fetch(); 
-    if($response){
-        $msg = 'The nickname is already in use';
-        header ('location: sign_in.php?msg='. $msg);
-        exit();
-    }
-    $q = 'SELECT mail  FROM user WHERE mail = :mail';
-    $req = $db-> prepare($q);
-    $req->execute([
-        'mail' =>  $_SESSION ['mail']
-    ]);
-    $response = $req->fetch(); 
-    if($response){
-        $msg = 'The email address is already in use';
-        header ('location: sign_in.php?msg='.$msg);
-        exit();
-    }
-    $q = 'INSERT INTO user (pseudo, mail, lastName, firstName, postalCode, city, address, password) VALUES(:pseudo, :mail, :lastName, :firstName, :postalCode, :city, :address,  :password)';
-    $req = $db-> prepare($q);
-
-    $reponse = $req ->execute([
-        'pseudo'=>  $_SESSION ['pseudo'],
-        'mail'=>  $_SESSION ['mail'],
-        'lastName'=>  $_SESSION ['lastName'],
-        'firstName'=>  $_SESSION ['firstName'],
-        'postalCode'=>  $_SESSION ['postalCode'],
-        'city'=>  $_SESSION ['city'],
-        'address'=>  $_SESSION ['address'],
-        'password' => password_hash( $_SESSION['password'], PASSWORD_DEFAULT)
-    ]);
-
-    if($reponse ==0){
-        $msg = 'Erreur lors de l\'inscription en base de données.';
-        header('location: sign_in.php?msg=' .$msg);
-        exit();
-    } else {
-        $msg = 'compte créé avec succès!!';
-        header('location: ../login.php?msg=' .$msg);
+            header('location: ../captchaPuzzle/index.php');
         exit;
     }
 }
-}
 
+/******************************************************************************* */
+
+     ?>

@@ -2,6 +2,7 @@
 include('../src/utils.php');
 include('../src/template.php');
 
+session_start();
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

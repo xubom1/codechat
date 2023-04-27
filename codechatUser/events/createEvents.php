@@ -36,19 +36,30 @@ checkSessionElseLogin(false);
              ?>
 
             <form action="chekCreateEvent.php" method="post" class="">
-            <label for="name">Name of the event :</label>
-        <input type="text" id="name" name="name" required><br><br>
-        <label for="starting_date">Starting date :</label>
-        <input type="datetime-local" id="starting_date" name="starting_date" required> <br><br>
-         <label for="date_fin">Ending date :</label>
-        <input type="datetime-local" id="ending_date" name="ending_date" required> <br><br>
-        <label for="date_fin">Location :</label>
-        <input type="text" id="location" name="location" required><br><br>
-        <label for="description">Description :</label>
-        <textarea class="form-control my-3" rows="10" id="description" name="description"></textarea>
-        
-        <input type="submit" value="created" name="events" class="btn btn-secondary my-3">
+            <div class="form-group">
+                <label for="name">Name of the event:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="starting_date">Starting date:</label>
+                <input type="datetime-local" class="form-control" id="starting_date" name="starting_date" required>
+            </div>
+            <div class="form-group">
+                <label for="ending_date">Ending date:</label>
+                <input type="datetime-local" class="form-control" id="ending_date" name="ending_date" required>
+            </div>
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input type="text" class="form-control" id="location" name="location" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea class="form-control" rows="10" id="description" name="description"></textarea>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary">Create</button>
             </form>
+
             </div>
     </main>
 

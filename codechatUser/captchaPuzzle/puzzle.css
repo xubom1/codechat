@@ -1,0 +1,17 @@
+.my-container {
+    text-align: center;
+}
+.my-board {
+    width: 360px;
+    height: 360px;
+    background-color: rgb(59, 94, 103);
+    border: 10px solid #fefefe;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+.my-board img {
+    width: 118px;
+    height: 118px;
+    border: 1px solid  #9db2c2 ;
+}
