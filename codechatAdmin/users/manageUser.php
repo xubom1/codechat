@@ -139,7 +139,7 @@ $content = "
             <p class='modal-body'>By clicking on download you will download all the information concerning $pseudo.</p>
           <div class='modal-footer'>
             <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
-            <button type='button' class='btn btn-primary' onclick='location.href=\"generatePdf.php?user=" . htmlspecialchars($_GET['user']) . "\"'>Download</button>
+            <button type='button' class='btn btn-primary' onclick='location.href=\"downloadUser.php?user=" . htmlspecialchars($_GET['user']) . "\"'>Download</button>
           </div>
         </div>
       </div>
