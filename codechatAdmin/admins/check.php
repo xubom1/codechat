@@ -19,4 +19,3 @@ if (!doesAdminNameExists($_POST['id'], $db)){
         "password" => password_hash(htmlspecialchars( $_POST['password']), PASSWORD_BCRYPT)
     ]) or die(print_r($db->errorInfo()));
 }
-

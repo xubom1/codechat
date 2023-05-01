@@ -83,6 +83,7 @@ if ($getAllProgram){
                 <td>'. $prog['sendDateTime'] .'</td>
                 <td>'. $prog['createBy'] .'</td>
                 <td>'. $prog['sendTo'] .'</td>
+                
                 <td><img src="../assets/edit.svg" alt="edit" class="editButton p-0" height="20" title="edit"></td>
                 <td><img src="../assets/delete2.svg" alt="edit" class="editButton p-0" height="20" title="edit"></td>
             </tr>
