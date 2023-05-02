@@ -8,7 +8,7 @@ $db = getDatabase();
 
 $content = '
     <h1 class="text-center">Newsletter Management</h1>
-    <div class="d-flex align-items-start mt-4">
+    <div class="container d-flex align-items-start mt-4">
       <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
         <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-create">Create</button>
         <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-program">Programmer</button>
@@ -24,7 +24,6 @@ $content = '
                 <select class="form-select" aria-label="Default select example" name="sendTo">
                   <option selected>Send to</option>
                   <option value="all">All</option>
-                  <option value="new">New</option>
                   <option value="administrator">Administrator only</option>
                 </select>
                 
@@ -37,23 +36,15 @@ $content = '
                   <textarea class="form-control" id="inputContent" rows="3" name="content"></textarea>
                 </div>
                 
-                <div class="mb-3">
-                  <label for="inputDate" class="form-label">Date</label>
-                  <input type="date" class="form-control" id="inputDate" name="date">
-                </div>
-                <div class="mb-3">
-                  <label for="inputTime" class="form-label">Date</label>
-                  <input type="time" class="form-control" id="inputTime" name="time">
-                </div>
-                
                 <button type="submit" class="btn btn-primary">Send</button>
                 
             </form>
             
         </div>
         
-        <!-- View all programmed newsletter -->
+        <!-- programmed newsletter -->
         <div class="tab-pane fade" id="v-pills-program">
+            <button class="btn btn-primary">Create</button>
             <table class="table table-striped">
               <thead>
                 <tr>
