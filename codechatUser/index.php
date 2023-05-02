@@ -21,7 +21,7 @@
     }
 ?>
 <!DOCTYPE html>
-<html lang="en" data-bs-theme='<?=getColorTheme()?>'>
+<html lang="en" data-bs-theme='<?=getColorTheme()?>' codechat-user='<?=$_SESSION['user']?>'>
     <?= make_head()?>
     <body>
         <?= make_header()?>
@@ -74,7 +74,7 @@
                             </div>
                             <div class='d-flex'>
                                 <input id='messageInput' type='text' name='content' class='form-control' maxlength='255' placeholder='tchat with $pseudo' required>
-                                <img src='/assets/send.svg' alt='send' height='40' class='animHover p-1' onclick='newMessage($user, $author)'>
+                                <img src='/assets/send.svg' alt='send' height='40' class='animHover p-1' onclick='newMessage()'>
                             </div>
                         </div>
                     ";

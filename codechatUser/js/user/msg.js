@@ -6,7 +6,10 @@ async function sendMessage(content, receiver, author){
     await (await fetch("/messages/create.php", {method: 'POST', body: data}));
 }
 
-async function newMessage(receiver, author){
+async function newMessage(){
+    const receiver = location.href.split('=')[1];
+    const author = document.getElementsByTagName('html')[0].getAttribute('codechat-user');
+
     await sendMessage(document.getElementById('messageInput').value, receiver, author);
     window.location.reload();
 }
@@ -44,10 +47,19 @@ async function updateMessages(){
     let updatedNumberOfMessage = await getMessagesCount();
     if (getPreviousNumberOfMessage() !== updatedNumberOfMessage){
         await updateContacts();
-        window.location.reload();
+        if (location.href.includes('user'))
+            window.location.reload();
         setPreviousNumberOfMessage(updatedNumberOfMessage);
     }
 }
 
-updateContacts();
+//make the enter key work on msg input
+const input = document.getElementById('messageInput');
+if (input) {
+    input.addEventListener("keydown", ({key}) => {
+        if (key === "Enter") newMessage().then();
+    })
+}
+
+updateContacts().then();
 setInterval(updateMessages, 1000);

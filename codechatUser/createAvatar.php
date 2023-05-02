@@ -6,16 +6,10 @@
     checkSessionElseLogin();
     $db = getDatabase();
 
-    //the index has to correspond with the type number in the db
-    $types = [
-        1 => 'head',
-        2 => 'hair'
-    ];
-
     function make_avatar_type_input($db, $type): string{
         $getComponentPerType = $db->prepare('SELECT * FROM avatarcomponent WHERE type = :type');
         $getComponentPerType->execute(['type' => $type]);
-        $components = $getComponentPerType->fetchAll();
+        $components = $getComponentPerType->fetchAll(PDO::FETCH_ASSOC);
 
         $ret = "<div class='border p-2 row justify-content-center' style='height: 400px'>";
 
@@ -93,12 +87,12 @@
                             }
 
                             //loop through different types
-                        foreach ($types as $type){
-                            $active = ($type == 1) ? 'active' : '';//make the first one active (=showed)
-                            echo    "<div class='carousel-item $active'>" .
-                                        make_avatar_type_input($db, $type) .
-                                    "</div>";
-                        }
+                            foreach ($types as $type){
+                                $active = ($type == $types[0]) ? 'active' : '';//make the first one active (=showed)
+                                echo    "<div class='carousel-item $active'>" .
+                                            make_avatar_type_input($db, $type) .
+                                        "</div>";
+                            }
                         ?>
                     </div>
                     <div class="d-flex justify-content-end">
