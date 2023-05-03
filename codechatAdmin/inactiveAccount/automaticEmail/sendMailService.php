@@ -19,7 +19,31 @@ function Database(){
 
 $db = Database();
 
-include('../../mailFunction.php');
+function sendMail($setFromMail, $setFromPseudo, $userMail, $user, $attachementName, $attachementPath, $subject, $body, $bodyNoHtml){
+    $mail = new PHPMailer(true);
+    $mail->isSMTP();
+    $mail->Host       = 'pro1.mail.ovh.net';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = 'support@codechat.fr';
+    $mail->Password   = 'password';
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->SMTPAutoTLS = true;
+    $mail->Port       = 587;
+
+    $mail->setFrom($setFromMail, $setFromPseudo);
+    $mail->addAddress($userMail, $user);
+
+    if (isset($attachementPath) AND isset($attachementName)){
+        $mail->addAttachment($attachementPath, $attachementName);
+    }
+
+    $mail->isHTML(true);
+    $mail->Subject = $subject;
+    $mail->Body    = $body;
+    $mail->AltBody = $bodyNoHtml;
+
+    $mail->send();
+}
 
 date_default_timezone_set('Europe/Paris');
 
