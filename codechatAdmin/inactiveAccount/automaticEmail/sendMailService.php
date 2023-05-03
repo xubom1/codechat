@@ -2,7 +2,7 @@
 
 <?php
 
-function getDatabase(){
+function Database(){
     try{
         $db = new PDO(
             'mysql:host=localhost;dbname=codechat;charset=utf8',
@@ -17,7 +17,7 @@ function getDatabase(){
     return $db;
 }
 
-$db = getDatabase();
+$db = Database();
 
 include('../../mailFunction.php');
 
