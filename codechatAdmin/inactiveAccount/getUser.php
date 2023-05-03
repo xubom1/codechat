@@ -21,7 +21,7 @@ if (isset($_GET['date']) AND isset($_GET['number']) AND !empty($_GET['date']) AN
                 <td>" . $user['mail'] . "</td>
                 <td>" . $user['lastLogin'] . "</td>
                 <td>
-                    <button class='btn btn-primary btn-sm'>Send Mail</button>
+                    <a href='sendMail/index.php?id=" . $user['id'] ."'><button class='btn btn-primary btn-sm'>Send Mail</button></a>
                 </td>
             </tr>
             ");
@@ -41,7 +41,7 @@ if (isset($_GET['date']) AND isset($_GET['number']) AND !empty($_GET['date']) AN
                 <td>" . $user['mail'] . "</td>
                 <td>" . $user['lastLogin'] . "</td>
                 <td>
-                    <button class='btn btn-primary btn-sm'>Send Mail</button>
+                    <a href='sendMail/index.php?id=" . $user['id'] ."'><button class='btn btn-primary btn-sm'>Send Mail</button></a>
                 </td>
             </tr>
             ");

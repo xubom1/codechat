@@ -2,9 +2,23 @@
 include('../pages/utils.php');
 checkSessionAdminElseLogin('.');
 
+function error()
+{
+    if (isset($_GET['msg']) && !empty($_GET['msg'])) {
+        return htmlspecialchars($_GET['msg']);
+    }
+}
 
 $content = '
-        <h1 class="text-center">Inactive Account</h1>
+        <h1 class="text-center">Inactive Account</h1>';
+
+if (isset($_GET['msg']) && !empty($_GET['msg'])) {
+    $content .= "<p class='text-center mt-4" . ((isset($_GET['err']) && $_GET['err'] == 'true') ? " alert alert-danger" : " alert alert-success") . "'> 
+    " . error() . "
+    </p>";
+}
+
+$content .= '
         <a href="automaticEmail/"><button class="btn btn-primary">Setting</button></a>
         <div class="my-5">
             <label>Since :</label>
