@@ -1,13 +1,12 @@
+document.getElementById('dateSince').valueAsDate = new Date();
 
-
-
-async function searchUser(){
-    const input = document.getElementById('search');
-    const name = input.value;
+async function getInactiveUser(){
+    const inputDate = document.getElementById('dateSince').value;
+    const inputNumber = document.getElementById('showNumber').value;
     try {
-        const res = await fetch('searchUser.php?name=' + name);
+        const res = await fetch('getUser.php?date=' + inputDate + '&number=' + inputNumber);
         const str = await res.text();
-        if (str){
+        if (str) {
             const problem = document.getElementById('description');
             problem.innerHTML = 'Found succefully !';
             problem.classList.value = "alert alert-success mt-4";
@@ -20,10 +19,7 @@ async function searchUser(){
             const user = document.getElementById('userRow');
             user.innerHTML = ' ';
         }
-
     } catch (err) {
         alert('bug');
     }
 }
-
-

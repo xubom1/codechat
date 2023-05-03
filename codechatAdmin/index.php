@@ -86,7 +86,7 @@ $content = '
           <div class="card-body">
              <h5 class="card-title">Inactive account</h5>
              <p class="card-text">Here you will see all accounts that have been inactive for a while.</p>
-             <a href="event/" class="btn btn-primary">Start manage</a>
+             <a href="inactiveAccount/" class="btn btn-primary">Start manage</a>
           </div>
         </div>
         <div class="card m-4" style="width: 18rem;">

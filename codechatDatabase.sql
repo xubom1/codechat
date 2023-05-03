@@ -109,3 +109,15 @@ CREATE TABLE sendTo (
     FOREIGN KEY(id_newsletter) REFERENCES newsletter(id),
     FOREIGN KEY(id_user) REFERENCES user(id)
 );
+
+CREATE TABLE send (
+    id INT PRIMARY KEY,
+    month INT,
+    day INT,
+    hour INT,
+    minute INT,
+    date DATE,
+    lastSendDate DATE,
+    lastSendTime TIME,
+    lastUpdate DATETIME
+);
