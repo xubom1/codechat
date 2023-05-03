@@ -68,7 +68,7 @@ $content .= "</tr>
                         <input class='mt-1 form-control' type='number' min='00' max='23' placeholder='hour' name='hour'>
                         <input class='mt-1 form-control' type='number' min='00' max='59' placeholder='minute' name='minute'>
                         <label class='mt-2'>Last login</label>
-                        <input class='mt-1 form-control col-12' type='date' name='date'>
+                        <input class='mt-1 form-control col-12' type='date' name='date' id='date'>
                 </div>
                 <div class='modal-footer'>
                     <button type='submit' class='btn btn-primary'>Change</button>
@@ -77,6 +77,7 @@ $content .= "</tr>
             </div>
         </div>
     </div>
+    <script src='date.js'></script>
 ";
 
 include("../../pages/template.php");
