@@ -1,6 +1,6 @@
 <?php
 include('../../pages/utils.php');
-checkSessionAdminElseLogin('.');
+checkSessionAdminElseLogin('../..');
 
 if (!isset($_POST['month']) && empty($_GET['month'])
     || !isset($_POST['day']) && empty($_GET['day'])

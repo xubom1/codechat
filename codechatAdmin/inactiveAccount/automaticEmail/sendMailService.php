@@ -19,6 +19,13 @@ function Database(){
 
 $db = Database();
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../../lib/PHPMailer/src/Exception.php';
+require '../../lib/PHPMailer/src/PHPMailer.php';
+require '../../lib/PHPMailer/src/SMTP.php';
+
 function sendMail($setFromMail, $setFromPseudo, $userMail, $user, $attachementName, $attachementPath, $subject, $body, $bodyNoHtml){
     $mail = new PHPMailer(true);
     $mail->isSMTP();
@@ -64,7 +71,7 @@ while(true){
         $newTime = date('H:i:s', strtotime($newHour. ' +' . $get['minute'] . 'minutes'));
 
         if ($newDate === date('Y-m-d')){
-            if ($newTime == date('H:i'.':00')){
+            if ($newTime <= date('H:i'.':00')){
                 $getUser = $db->prepare('SELECT id, pseudo, mail FROM user WHERE lastLogin < ?');
                 $getUser->execute([$get['date']]);
                 $showAll = $getUser->fetchAll(PDO::FETCH_ASSOC);
@@ -74,8 +81,8 @@ while(true){
                         $body = 'Hello ' . $user['pseudo'] . ',<br> Your account will be deleted if you do not log in. Here is the access link: codechat.fr';
                         sendMail('support@codechat.fr', 'Codechat Support', $user['mail'], $user['pseudo'], NULL, NULL, $subject, $body, $body);
                     }
-                    $update = $db->prepare('UPDATE send SET lastUpdate = ? WHERE id = ?');
-                    $update->execute([date('Y-m-d'), 1]);
+                    $update = $db->prepare('UPDATE send SET lastSendDate = ?, lastSendTime = ? WHERE id = ?');
+                    $update->execute([date('Y-m-d'), date('H:i'), 1]);
                 }
             }
         }

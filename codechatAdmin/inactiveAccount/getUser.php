@@ -1,4 +1,6 @@
 <?php
+include('../pages/utils.php');
+checkSessionAdminElseLogin('../');
 
 include('../../database.php');
 $db = getDatabase();
