@@ -1,7 +1,7 @@
 <?php
 include('../pages/utils.php');
 include('../pages/template.php');
-checkSessionAdminElseLogin('../.');
+checkSessionAdminElseLogin('../');
 
 include("../../database.php");
 $db = getDatabase();

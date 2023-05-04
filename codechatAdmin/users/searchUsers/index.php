@@ -1,6 +1,6 @@
 <?php
 include('../../pages/utils.php');
-checkSessionAdminElseLogin('.');
+checkSessionAdminElseLogin('../..');
 
 
 function error()

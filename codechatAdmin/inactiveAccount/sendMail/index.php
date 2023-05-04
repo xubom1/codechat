@@ -1,6 +1,6 @@
 <?php
 include('../../pages/utils.php');
-checkSessionAdminElseLogin('.');
+checkSessionAdminElseLogin('../..');
 
 if (!isset($_GET['id']) || empty($_GET['id'])){
     header('location: ../index.php?msg=error&err=true');
