@@ -33,6 +33,8 @@ function sendMail($setFromMail, $setFromPseudo, $userMail, $user, $attachementNa
         $mail->AltBody = $bodyNoHtml;
 
         $mail->send();
+
+        return 'ok';
     } catch (Exception $e){
         header('location: '. $path .'?msg=Mail not send&err=true');
     }
