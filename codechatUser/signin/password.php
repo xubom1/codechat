@@ -1,6 +1,7 @@
 <?php
 include('../src/utils.php');
 include('../src/template.php');
+session_start();
 
 
 ?>

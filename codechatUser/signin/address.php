@@ -2,7 +2,6 @@
 include('../src/utils.php');
 include('../src/template.php');
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme='<?=getColorTheme()?>'>
