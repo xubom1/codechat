@@ -14,7 +14,7 @@ if(strlen($_POST['content']) > 10000) die('content is too long !');
 $db = getDatabase();
 $newPublication = $db->prepare('INSERT INTO publication(content, creator) VALUES(:content, :creator)');
 $newPublication->execute([
-    'content' => $_POST['content'],
+    'content' => htmlspecialchars($_POST['content']),
     'creator' => $_SESSION['user']
 ]);
 
