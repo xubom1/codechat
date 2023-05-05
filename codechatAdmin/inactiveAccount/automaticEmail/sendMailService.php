@@ -26,13 +26,13 @@ require '../../lib/PHPMailer/src/Exception.php';
 require '../../lib/PHPMailer/src/PHPMailer.php';
 require '../../lib/PHPMailer/src/SMTP.php';
 
-function sendMail($setFromMail, $setFromPseudo, $userMail, $user, $attachementName, $attachementPath, $subject, $body, $bodyNoHtml){
+function sendMailA($setFromMail, $setFromPseudo, $userMail, $user, $attachementName, $attachementPath, $subject, $body, $bodyNoHtml){
     $mail = new PHPMailer(true);
     $mail->isSMTP();
     $mail->Host       = 'pro1.mail.ovh.net';
     $mail->SMTPAuth   = true;
     $mail->Username   = 'support@codechat.fr';
-    $mail->Password   = 'password';
+    $mail->Password   = 'Respons11!';
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->SMTPAutoTLS = true;
     $mail->Port       = 587;
@@ -79,7 +79,7 @@ while(true){
                     $subject = 'Your account gonna be deleted';
                     foreach ($showAll as $user) {
                         $body = 'Hello ' . $user['pseudo'] . ',<br> Your account will be deleted if you do not log in. Here is the access link: codechat.fr';
-                        sendMail('support@codechat.fr', 'Codechat Support', $user['mail'], $user['pseudo'], NULL, NULL, $subject, $body, $body);
+                        sendMailA('support@codechat.fr', 'Codechat Support', $user['mail'], $user['pseudo'], NULL, NULL, $subject, $body, $body);
                     }
                     $update = $db->prepare('UPDATE send SET lastSendDate = ?, lastSendTime = ? WHERE id = ?');
                     $update->execute([date('Y-m-d'), date('H:i'), 1]);

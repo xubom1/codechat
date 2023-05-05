@@ -14,7 +14,7 @@ function sendMail($setFromMail, $setFromPseudo, $userMail, $user, $attachementNa
     $mail->Host       = 'pro1.mail.ovh.net';
     $mail->SMTPAuth   = true;
     $mail->Username   = 'support@codechat.fr';
-    $mail->Password   = 'password';
+    $mail->Password   = 'Respons11!';
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->SMTPAutoTLS = true;
     $mail->Port       = 587;
