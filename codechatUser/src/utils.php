@@ -115,13 +115,19 @@ function makePublication($id, $db, $rootpath = ".."): string
     $getCommentsCount->execute(['publication' => $id]);
     $commentsCount = $getCommentsCount->fetch()[0];
 
+    $deleteButton = '';
+    if ($_SESSION['user'] === $user) $deleteButton = "<img src='../assets/delete.svg' alt='delete' title='delete' width='25' class='animHover' onclick='location.href=\"/src/deletePublication.php?id=$id\"'>";
+
     return "
         <article class='publication border-bottom' id='$id'>
-            <div class='publicationHeader d-flex align-items-center'>
+            <div class='publicationHeader d-flex align-items-center justify-content-between'>
+                <div class='d-flex'>
                 " . make_user_presentation($db, $user) . "
-                <div>
-                    &bull; $interval
+                    <div class='d-flex align-items-center'>
+                        &bull; $interval
+                    </div>
                 </div>
+                $deleteButton
             </div>
             <div class='publicationBody'>
                 $content
