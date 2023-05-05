@@ -12,5 +12,5 @@ if (!isset($_POST['pseudo']) && empty($_POST['pseudo'])
     exit;
 }
 
-sendMail('support@codechat.fr', 'Codechat Support', $_POST['mail'], $_POST['pseudo'], NULL, NULL, $_POST['title'], $_POST['content'], $_POST['content']);
+sendMail('support@codechat.fr', 'Codechat Support', $_POST['mail'], $_POST['pseudo'], NULL, NULL, $_POST['title'], $_POST['content'], $_POST['content'], '../index.php');
 header('location: ../index.php?msg=Message send');
