@@ -61,8 +61,8 @@ CREATE TABLE avatarownership(
        owner INT,
        component INT,
        PRIMARY KEY(owner, component),
-       FOREIGN KEY(owner) REFERENCES user(id),
-       FOREIGN KEY(component) REFERENCES avatarcomponent(id)
+       FOREIGN KEY(owner) REFERENCES user(id)  ON DELETE CASCADE ON UPDATE CASCADE,
+       FOREIGN KEY(component) REFERENCES avatarcomponent(id)  ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE events (   
@@ -73,12 +73,12 @@ CREATE TABLE events (
     ending_date DATETIME,   
     location VARCHAR(100),   
     user INT,   
-    FOREIGN KEY (user) REFERENCES user(id) 
+    FOREIGN KEY (user) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE eventSign (
-    signer VARCHAR(80) REFERENCES user(id),
-    event VARCHAR(80) REFERENCES events(id),
+    signer VARCHAR(80) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    event VARCHAR(80) REFERENCES events(id) ON DELETE CASCADE ON UPDATE CASCADE,
     PRIMARY KEY (signer, event)
 );
 
@@ -120,4 +120,14 @@ CREATE TABLE send (
     lastSendDate DATE,
     lastSendTime TIME,
     lastUpdate DATETIME
+);
+
+CREATE TABLE request (
+    id INT PRIMARY KEY,
+    id_user INT,
+    title VARCHAR(100),
+    content TEXT,
+    urgence_level INT,
+    date DATETIME,
+    close BOOLEAN DEFAULT 0
 );

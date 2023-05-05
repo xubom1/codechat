@@ -105,7 +105,7 @@ $content = "
           </div>
           <div class='modal-footer'>
             <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
-            <button type='button' class='btn btn-danger' onclick='location.href=\"deleteUser.php?user=" . htmlspecialchars($_GET['user']) . "\"'>delete</button>
+            <button type='button' class='btn btn-danger' onclick='location.href=\"deleteUser.php?user=" . $_GET['user'] . "\"'>delete</button>
           </div>
         </div>
       </div>
@@ -122,7 +122,7 @@ $content = "
           </div>
           <div class='modal-footer'>
             <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
-            <button type='button' class='btn btn-danger' onclick='location.href=\"ban.php?user=" . htmlspecialchars($_GET['user']) . "\"'>ban</button>
+            <button type='button' class='btn btn-danger' onclick='location.href=\"ban.php?user=" . $_GET['user'] . "\"'>ban</button>
           </div>
         </div>
       </div>
@@ -139,7 +139,7 @@ $content = "
             <p class='modal-body'>By clicking on download you will download all the information concerning $pseudo.</p>
           <div class='modal-footer'>
             <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
-            <button type='button' class='btn btn-primary' onclick='location.href=\"downloadUser.php?user=" . htmlspecialchars($_GET['user']) . "\"'>Download</button>
+            <button type='button' class='btn btn-primary' onclick='location.href=\"downloadUser.php?user=" . $_GET['user'] . "\"'>Download</button>
           </div>
         </div>
       </div>
@@ -156,7 +156,7 @@ $content = "
             <p class='modal-body'>By clicking on change you will make $pseudo as an admin.</p>
           <div class='modal-footer'>
             <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
-            <button type='button' class='btn btn-primary' onclick='location.href=\"changeToAdmin.php?user=" . htmlspecialchars($_GET['user']) . "\"'>Change</button>
+            <button type='button' class='btn btn-primary' onclick='location.href=\"changeToAdmin.php?user=" . $_GET['user'] . "\"'>Change</button>
           </div>
         </div>
       </div>

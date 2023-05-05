@@ -15,12 +15,12 @@ $db = getDatabase();
 
 $cmd = $db->prepare('SELECT id FROM user WHERE pseudo = ?');
 $cmd->execute([$user]);
-$cmd->fetchAll(PDO::FETCH_ASSOC);
+$ok = $cmd->fetchAll(PDO::FETCH_ASSOC);
 
-if ($cmd){
+if ($ok){
     $cmd = $db->prepare('UPDATE user SET admin = 1 WHERE pseudo = ?');
     $cmd->execute([$user]);
-    header('lcoation: ../admins/index.php?msg='. $user .' is admin');
+    header('location: ../admins/index.php?msg='. $user .' is admin');
     exit;
 } else {
     header('location: searchUsers/index.php?msg=Problem');
