@@ -43,8 +43,32 @@ include('../src/template.php');
 <body>
 <?= make_header('', false)?>
 <main class="container">
-  
+  <?php
+$dir = "uploads/";
+$files = array_diff(scandir($dir), array('.', '..'));
+$randomFile = $dir . $files[array_rand($files)];
 
+// Charger l'image
+$originalImage = imagecreatefromjpeg($randomFile);
+$originalWidth = imagesx($originalImage);
+$originalHeight = imagesy($originalImage);
+
+$partWidth = $originalWidth / 3;
+$partHeight = $originalHeight / 3;
+
+$parts = array();
+for ($i = 0; $i < 3; $i++) {
+    for ($j = 0; $j < 3; $j++) {
+        $part = imagecreatetruecolor($partWidth, $partHeight);
+        imagecopy($part, $originalImage, 0, 0, $i * $partWidth, $j * $partHeight, $partWidth, $partHeight);
+        $parts[] = $part;
+    }
+}
+
+foreach ($parts as $index => $part) {
+    imagejpeg($part, "image_test".($index+1).".jpg", 100);
+}
+?>
 
   <div class="container my-container">
     <h1 class="my-5">CAPTCHA</h1>

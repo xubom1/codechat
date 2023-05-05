@@ -32,9 +32,9 @@ if(!filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL))
 }
 /*******************VERIFICATION DEUXIÈME PAGE******************************************************************************************************* */  
 if( isset($_POST['inscrip2'])){
-    if( empty($_POST['postalCode'])
-    || empty($_POST['city'])
-    || empty($_POST['address'])
+    if( empty(trim($_POST['postalCode']))
+    || empty(trim($_POST['city']))
+    || empty(trim($_POST['address']))
     
 )
 {
@@ -42,12 +42,13 @@ $msg = 'you must fill in all the fields ';
 header('location: Address.php?msg=' . $msg);
 exit();
 } 
- if($_POST['postalCode']>5)
- {
-    $msg = 'you must fill in all the fields ';
-    header('location: address.php?msg=' . $msg);
-    exit();
-    }
+
+$string = $_POST['postalCode'];
+
+if(strlen($string) != 5)
+{$msg = 'you must have only 5 digits ';
+    header('location: Address.php?msg=' . $msg);
+    exit();}
 
 
 else{
@@ -67,7 +68,7 @@ if( isset($_POST['inscrip3'])){
         $msg = 'you must fill in all the fields ';
         header('location: password.php?msg=' . $msg);
         exit();
-        } if (isset($_POST['password']) != isset($_POST['confirmPassword'])) {
+        } if (($_POST['password']) != ($_POST['confirmPassword'])) {
             $msg = 'the password must be the same.';
             header ('location: password.php?msg='.$msg);
             exit();

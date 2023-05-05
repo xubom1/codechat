@@ -51,7 +51,7 @@ if($reponse ==0){
     header('location: sign_in.php?msg=' .$msg);
     exit();
 } else {
-    $msg = 'compte créé avec succès!!';
+    $msg = 'successfully created account!!';
     header('location: ../login.php?msg=' .$msg);
     exit;
 }
