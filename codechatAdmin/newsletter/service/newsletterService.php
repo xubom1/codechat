@@ -27,6 +27,6 @@ foreach ($getMail as $mail){
     foreach ($getUser as $user) {
         sendMail('newsletter@codechat.fr', 'Newsletter', $user['mail'], $user['pseudo'], NULL, NULL, $mail['title'], $mail['content'], $mail['content'], NULL);
     }
-    $cmd = $db->prepare('UPDATE newsletter SET sendDateTime = ? WHERE id = ?');
+    $cmd = $db->prepare('UPDATE newsletter SET sendDateTime = ? AND sent = 1 WHERE id = ?');
     $cmd->execute([date('Y-m-d H:i:s'), $mail['id']]);
 }
