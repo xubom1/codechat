@@ -68,7 +68,7 @@ $content .= '
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                    <form action="service/newsletterService.php" method="post">
+                    <form action="setNewsletter.php" method="post">
                         <label>Title</label>
                         <input class="form-control mt-1">
                         <label class="mt-2">Content</label>
