@@ -70,18 +70,18 @@ $content .= '
                   <div class="modal-body">
                     <form action="setNewsletter.php" method="post">
                         <label>Title</label>
-                        <input class="form-control mt-1">
+                        <input name="title" class="form-control mt-1">
                         <label class="mt-2">Content</label>
-                        <textarea class="form-control mt-1" style="max-height: 250px; min-height: 250px"></textarea>
+                        <textarea name="content" class="form-control mt-1" style="max-height: 250px; min-height: 250px"></textarea>
                         <label class="mt-2">Date</label>
-                        <input class="form-control mt-1" type="date">
+                        <input id="inputDate" name="date" class="form-control mt-1" type="date">
                         <label class="mt-2">Time</label>
-                        <input class="form-control mt-1" type="time">
-                    </form>
+                        <input name="time" class="form-control mt-1" type="time">
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Programme</button>
+                    <button type="submit" class="btn btn-primary">Programme</button>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -102,8 +102,8 @@ $content .= '
 
 date_default_timezone_set('Europe/Paris');
 
-$cmdProgrammed = $db->prepare('SELECT * FROM newsletter WHERE sendDateTime > ?');
-$cmdProgrammed->execute([date('Y-m-d H:m:s')]);
+$cmdProgrammed = $db->prepare('SELECT * FROM newsletter WHERE sendDateTime > ? AND NOT deleted');
+$cmdProgrammed->execute([date('Y-m-d H:i:s')]);
 $getAllProgram = $cmdProgrammed->fetchAll(PDO::FETCH_ASSOC);
 
 if ($getAllProgram){
@@ -116,8 +116,8 @@ if ($getAllProgram){
                 <td>'. $prog['createBy'] .'</td>
                 <td>'. $prog['sendTo'] .'</td>
                 
-                <td><img src="../assets/edit.svg" alt="edit" class="editButton p-0" height="20" title="edit"></td>
-                <td><img src="../assets/delete2.svg" alt="edit" class="editButton p-0" height="20" title="edit"></td>
+                <td><a href="modify.php?id='. $prog['id'] .'"><img src="../assets/edit.svg" alt="edit" class="editButton p-0" height="20" title="edit"></a></td>
+                <td><a href="deleted.php?id='. $prog['id'] .'"><img src="../assets/delete2.svg" alt="edit" class="editButton p-0" height="20" title="edit"></a></td>
             </tr>
         ';
     }
@@ -143,7 +143,7 @@ $content .= '</tbody>
               </thead>
               <tbody>';
 
-$cmdHistory = $db->prepare('SELECT * FROM newsletter WHERE sent = ?');
+$cmdHistory = $db->prepare('SELECT * FROM newsletter WHERE sent = ? OR deleted = 1');
 $cmdHistory->execute([1]);
 $getAllHistory = $cmdHistory->fetchAll(PDO::FETCH_ASSOC);
 
@@ -153,8 +153,15 @@ if ($getAllHistory){
             <tr>
                 <td>'. $history['id'] .'</td>
                 <td>'. $history['title'] .'</td>
-                <td>'. $history['content'] .'</td>
-                <td>'. $history['sendDateTime'] .'</td>
+                <td>'. $history['content'] .'</td>';
+
+        if ($history['deleted'] == 1) {
+            $content .= '<td>DELETED</td>';
+        } else {
+            $content .= '<td>'. $history['sendDateTime'] .'</td>';
+        }
+
+        $content .='
                 <td>'. $history['createBy'] .'</td>
                 <td>'. $history['sendTo'] .'</td>
             </tr>

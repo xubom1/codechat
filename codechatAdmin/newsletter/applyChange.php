@@ -34,6 +34,6 @@ $content = $_POST['content'];
 
 $timeToSend = $_POST['date'] . ' ' . $_POST['time'];
 
-$cmd = $db->prepare('INSERT INTO newsletter (title, content, creationDateTime, sendDateTime, createBy, sendTo) VALUES (?, ?, ?, ?, ?, ?)');
-$cmd->execute([$_POST['title'], $_POST['content'], date('Y-m-d H:i:s'), $timeToSend, $_SESSION['admin'], $_POST['sendTo']]);
-header('location: index.php?msg=The message has been programmed.&err=false');
+$cmd = $db->prepare('UPDATE newsletter SET title = ?, content = ?, creationDateTime = ?, sendDateTime = ?, createBy = ?, sendTo = ? WHERE id = ?');
+$cmd->execute([$_POST['title'], $_POST['content'], date('Y-m-d H:i:s'), $timeToSend, $_SESSION['admin'], $_POST['sendTo'], $_POST['id']]);
+header('location: index.php?msg=The message has been modified.&err=false');
