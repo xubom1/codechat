@@ -20,14 +20,13 @@ $get = $cmd->execute([]);
 $getAll = $cmd->fetchAll();
 
 
-$content .= "
+$content = "
     <table class='table table-responsive table-hover my-5'>
     <thead>
         <tr>
-            <th scope='col' class='col-1' >#</th>
             <th scope='col' class='col-2' >username</th>
             <th scope='col' class='col-8' >Publication</th>
-            <th scope='col' class='col' ></th>
+            <th scope='col' class='col' >Manage</th>
         </tr>
     </thead>
     <tbody>
@@ -39,7 +38,6 @@ foreach ($getAll as $i =>$publication) {
     $user = $cmdUser->fetch();
     $content .= "
         <tr>
-            <th>". $i + 1 ."</th>
             <td>" . $user[0] . "</td>
             <td>" . $publication['content'] . "</td>
             <td class='d-flex justify-content-end'>

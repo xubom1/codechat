@@ -7,8 +7,7 @@ if (isset($_GET['user']) && empty($_GET['user'])){
 include('../pages/utils.php');
 checkSessionAdminElseLogin();
 
-include('../../database.php');
-$db = getDatabase();
+include('generatePDF.php');
 
 $user = $_GET['user'];
 
@@ -18,8 +17,10 @@ use Dompdf\Dompdf;
 
 $dompdf = new Dompdf;
 
-$dompdf -> loadHtml('Hello world');
 
-$dompdf -> render();
-
-$dompdf -> stream();
+$dompdf->loadHtml(getPDF('logo.png'));
+$dompdf->setPaper('A4', 'portrait');
+$dompdf->render();
+$dompdf->stream('document.pdf', [
+    'Attachment' => false
+]);
