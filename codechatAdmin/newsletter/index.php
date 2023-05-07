@@ -93,8 +93,6 @@ $content .= '
                   <th scope="col">Content</th>
                   <th scope="col">Send Date / Time</th>
                   <th scope="col">Made By</th>
-                  <th scope="col">To</th>
-                  <th scope="col">Modify</th>
                   <th scope="col">Delete</th>
                 </tr>
               </thead>
@@ -114,9 +112,7 @@ if ($getAllProgram){
                 <td>'. $prog['content'] .'</td>
                 <td>'. $prog['sendDateTime'] .'</td>
                 <td>'. $prog['createBy'] .'</td>
-                <td>'. $prog['sendTo'] .'</td>
                 
-                <td><a href="modify.php?id='. $prog['id'] .'"><img src="../assets/edit.svg" alt="edit" class="editButton p-0" height="20" title="edit"></a></td>
                 <td><a href="deleted.php?id='. $prog['id'] .'"><img src="../assets/delete2.svg" alt="edit" class="editButton p-0" height="20" title="edit"></a></td>
             </tr>
         ';

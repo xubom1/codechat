@@ -26,7 +26,7 @@ $content = '<h3 class="text-center">Modify newsletter id '. $id .'</h3>
     <label class="mt-2">Date</label>
     <input class="form-control mt-1" name="date" type="date" id="inputDate">
     <label class="mt-2">Time</label>
-    <input class="form-control mt-1" name="time" type="time" value="'. $getNews['title'] .'">
+    <input class="form-control mt-1" name="time" type="time">
     <button type="submit" class="btn btn-primary mt-3">Apply Change</button>
     <a href="index.php"><button type="button" class="btn btn-danger mt-3">Cancel</button><a>
 </form>
