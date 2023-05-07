@@ -19,8 +19,17 @@ $cmd = $db->prepare('SELECT * FROM publication LIMIT 10');
 $get = $cmd->execute([]);
 $getAll = $cmd->fetchAll();
 
+$content = '
+    <div class="m-auto input-group" style="width: 500px">
+        <input type="text" id="search" class="form-control" placeholder="Search">
+        <button class="btn btn-success" onclick="searchPublication()" id="searchBtn">Search</button>
+        <button class="btn btn-primary" onclick="location.href=\'index.php\'">Reset</button>
+    </div>
+    <p class="describe" id="description"></p>
+';
 
-$content = "
+$content .= "
+    
     <table class='table table-responsive table-hover my-5'>
     <thead>
         <tr>
@@ -29,7 +38,7 @@ $content = "
             <th scope='col' class='col' >Manage</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id='publicationRow'>
 ";
 
 foreach ($getAll as $i =>$publication) {
@@ -50,6 +59,7 @@ foreach ($getAll as $i =>$publication) {
 $content .= '
     </tbody>
     </table>
+    <script src="getPublication.js"></script>
 ';
 
 include("../pages/template.php");
