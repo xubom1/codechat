@@ -37,6 +37,7 @@ function sendMail($setFromMail, $setFromPseudo, $userMail, $user, $attachementNa
         return 'ok';
     } catch (Exception $e){
         header('location: '. $path .'?msg=Mail not send&err=true');
+        exit();
     }
 
 }
