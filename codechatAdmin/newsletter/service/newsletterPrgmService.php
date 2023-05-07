@@ -9,8 +9,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require '/var/www/html/codechat/codechatAdmin/lib/PHPMailer/src/Exception.php';
-require '/var/www/html/codechat/codechatAdmin/lib/lib/PHPMailer/src/PHPMailer.php';
-require '/var/www/html/codechat/codechatAdmin/lib/lib/PHPMailer/src/SMTP.php';
+require '/var/www/html/codechat/codechatAdmin/lib/PHPMailer/src/PHPMailer.php';
+require '/var/www/html/codechat/codechatAdmin/lib/PHPMailer/src/SMTP.php';
 
 
 function sendMailP($setFromMail, $setFromPseudo, $userMail, $user, $attachementName, $attachementPath, $subject, $body, $bodyNoHtml){
