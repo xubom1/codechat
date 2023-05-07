@@ -4,16 +4,16 @@ include('../src/template.php');
 
 
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $pseudo = isset($_POST['pseudo']) ? $_POST['pseudo'] : '';
-     $lastName = isset($_POST['lastName']) ? $_POST['lastName'] : '';
-    $firstName = isset($_POST['firstName']) ? $_POST['firstName'] : '';
-    $mail = isset($_POST['mail']) ? $_POST['mail'] : '';
-    setcookie('pseudo', $pseudo, time() + (86400 * 30)); // Durée de vie de 30 jours
-    setcookie('lastName', $lastName, time() + (86400 * 30));
-    setcookie('firstName', $firstName, time() + (86400 * 30));
-    setcookie('mail', $mail, time() + (86400 * 30));
-}
+//if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+//    $pseudo = isset($_POST['pseudo']) ? $_POST['pseudo'] : '';
+//     $lastName = isset($_POST['lastName']) ? $_POST['lastName'] : '';
+//    $firstName = isset($_POST['firstName']) ? $_POST['firstName'] : '';
+//    $mail = isset($_POST['mail']) ? $_POST['mail'] : '';
+//    setcookie('pseudo', $pseudo, time() + (86400 * 30)); // Durée de vie de 30 jours
+//    setcookie('lastName', $lastName, time() + (86400 * 30));
+//    setcookie('firstName', $firstName, time() + (86400 * 30));
+//    setcookie('mail', $mail, time() + (86400 * 30));
+//}
 
 ?>
 <!DOCTYPE html>
@@ -50,13 +50,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                  <h6 class="my-3"> Personal information </h6>
 
                  <label for="username" class="form-label">Pseudo</label>
-                 <input type="text" class="form-control" id="pseudo" name="pseudo" placeholder="your pseudo" value="<?php echo isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : ''; ?>" required>
+                 <input type="text" class="form-control" id="pseudo" name="pseudo" placeholder="your pseudo" value="<?php echo htmlspecialchars($_COOKIE['pseudo'] ?? ''); ?>" required>
                  <label for="nom" class="form-label my-2">Lastname</label>
-                 <input type="text" class="form-control" id="nom" name="lastName"placeholder="your Lastname" value="<?php echo isset($_COOKIE['lastName']) ? $_COOKIE['lastName'] : ''; ?>" required>
+                 <input type="text" class="form-control" id="nom" name="lastName" placeholder="your Lastname" value="<?php echo htmlspecialchars($_COOKIE['lastName'] ?? ''); ?>" required>
                  <label for="prenom" class="form-label my-2">Firstname</label>
-                 <input type="text"class="form-control" id="prenom" name="firstName" placeholder="your Firstname" value="<?php echo isset($_COOKIE['firstName']) ? $_COOKIE['firstName'] : ''; ?>" required>
+                 <input type="text" class="form-control" id="prenom" name="firstName" placeholder="your Firstname" value="<?php echo htmlspecialchars($_COOKIE['firstName'] ?? ''); ?>" required>
                  <label for="email" class="form-label my-2">Mail</label>
-                 <input type="email" class="form-control" id="email" name="mail" placeholder="your mail" value="<?php echo isset($_COOKIE['mail']) ? $_COOKIE['mail'] : ''; ?>" required>
+                 <input type="email" class="form-control" id="email" name="mail" placeholder="your mail" value="<?php echo htmlspecialchars($_COOKIE['mail'] ?? ''); ?>" required>
 
                  <input type="submit" value="Next" name="inscrip1" class="btn btn-secondary my-3" >
 

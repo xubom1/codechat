@@ -37,11 +37,11 @@ include('../src/template.php');
                  <h6 class="my-3"> Address </h6>
 
                  <label for="codepostal" class="form-label">Postal code</label>
-                 <input type="text" class="form-control" id="codepostal" name="postalCode" placeholder="your Postal code" value="<?php echo isset($_COOKIE['postalCode']) ? $_COOKIE['postalCode'] : ''; ?>" required>
+                 <input type="number" class="form-control" id="codepostal" name="postalCode" placeholder="your Postal code" max="99999" value="<?php echo htmlspecialchars($_COOKIE['postalCode'] ?? ''); ?>" required>
                  <label for="ville" class="form-label my-2">City</label>
-                 <input type="text" class="form-control" id="ville" name="city"placeholder="your city" value="<?php echo isset($_COOKIE['city']) ? $_COOKIE['city'] : ''; ?>" required>
+                 <input type="text" class="form-control" id="ville" name="city" placeholder="your city" value="<?php echo htmlspecialchars($_COOKIE['city'] ?? ''); ?>" required>
                  <label for="adresse" class="form-label my-2">Address</label>
-                 <input type="text" class="form-control" id="adresse" name="address"placeholder="your address" value="<?php echo isset($_COOKIE['address']) ? $_COOKIE['address'] : ''; ?>" required>
+                 <input type="text" class="form-control" id="adresse" name="address" placeholder="your address" value="<?php echo htmlspecialchars($_COOKIE['address'] ?? ''); ?>" required>
 
                  <input type="submit" value="Next" name="inscrip2" class="btn btn-secondary my-3" >
              </form>

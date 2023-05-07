@@ -71,3 +71,9 @@ CREATE TABLE message(
     content VARCHAR(255) NOT NULL,
     creation DATETIME NOT NULL DEFAULT NOW()
 );
+
+CREATE TABLE token(
+      token CHAR(32) PRIMARY KEY,
+      creation DATETIME DEFAULT NOW() NOT NULL,
+      owner INT NOT NULL UNIQUE REFERENCES user(id)
+);

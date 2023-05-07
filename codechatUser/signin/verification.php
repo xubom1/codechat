@@ -11,21 +11,19 @@ if( isset($_POST['inscrip1'])){
     || empty($_POST['firstName'])
 )
 {
-$msg = 'you must fill in all the fields ';
-header('location: sign_in.php?msg=' . $msg);
+header('location: sign_in.php?msg=you must fill in all the fields ');
 exit();
 }
    
 if(!filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL))
 {
-	$msg = 'Invalid mail.';
-	header('location: sign_in.php?msg=' . $msg);
+	header('location: sign_in.php?msg=Invalid mail.');
 	exit();
 }else{
-    $_SESSION ['mail'] = $_POST['mail'];
-    $_SESSION ['pseudo'] = $_POST ['pseudo'];
-    $_SESSION ['firstName'] = $_POST['firstName'];
-    $_SESSION['lastName'] =  $_POST['lastName'];
+    setcookie('mail', $_POST['mail']);
+    setcookie('pseudo', $_POST['pseudo']);
+    setcookie('firstName', $_POST['firstName']);
+    setcookie('lastName', $_POST['lastName']);
     header('location: address.php');
     exit;
 }
@@ -38,16 +36,15 @@ if( isset($_POST['inscrip2'])){
     
 )
 {
-$msg = 'you must fill in all the fields ';
-header('location: Address.php?msg=' . $msg);
+header('location: Address.php?msg=you must fill in all the fields ');
 exit();
 } 
  
 
 else{
-    $_SESSION['postalCode'] = $_POST['postalCode'];
-    $_SESSION ['city'] = $_POST ['city'];
-    $_SESSION ['address'] = $_POST['address'];
+    setcookie('postalCode', $_POST['postalCode']);
+    setcookie('city', $_POST['city']);
+    setcookie('address', $_POST['address']);
     header('location: password.php');
     exit;
 }
@@ -58,68 +55,73 @@ if( isset($_POST['inscrip3'])){
     || empty($_POST['confirmPassword'])
     )
     {
-        $msg = 'you must fill in all the fields ';
-        header('location: password.php?msg=' . $msg);
+        header('location: password.php?msg=you must fill in all the fields ');
         exit();
-        } if (isset($_POST['password']) !== isset($_POST['confirmPassword'])) {
-            $msg = 'the password must be the same.';
-            header ('location: password.php?msg='.$msg);
-            exit();
-        }
-        else{
-            $_SESSION ['password'] = $_POST['password'];
-         
-          
-        
+    }
+    setcookie('password', $_POST['password']);
+    setcookie('confirmPassword', $_POST['confirmPassword']);
+    if ($_POST['password'] !== $_POST['confirmPassword']) {
+        header ('location: password.php?msg=the password must be the same.');
+        exit();
+    }
 
 /************************************************************************************************************************** */
 
     $q = 'SELECT pseudo FROM user WHERE pseudo = :pseudo';
     $req = $db-> prepare($q);
     $req->execute([
-        'pseudo' =>  $_SESSION ['pseudo']
+        'pseudo' =>  $_COOKIE['pseudo']
     ]);
 
-    $response = $req->fetch(); 
+    $response = $req->fetch();
     if($response){
-        $msg = 'The nickname is already in use';
-        header ('location: sign_in.php?msg='. $msg);
+        header ('location: sign_in.php?msg=The nickname is already in use');
         exit();
     }
     $q = 'SELECT mail  FROM user WHERE mail = :mail';
     $req = $db-> prepare($q);
     $req->execute([
-        'mail' =>  $_SESSION ['mail']
+        'mail' =>  $_COOKIE ['mail']
     ]);
-    $response = $req->fetch(); 
+    $response = $req->fetch();
     if($response){
-        $msg = 'The email address is already in use';
-        header ('location: sign_in.php?msg='.$msg);
+        header ('location: sign_in.php?msg=The email address is already in use !');
         exit();
     }
     $q = 'INSERT INTO user (pseudo, mail, lastName, firstName, postalCode, city, address, password) VALUES(:pseudo, :mail, :lastName, :firstName, :postalCode, :city, :address,  :password)';
     $req = $db-> prepare($q);
 
-    $reponse = $req ->execute([
-        'pseudo'=>  $_SESSION ['pseudo'],
-        'mail'=>  $_SESSION ['mail'],
-        'lastName'=>  $_SESSION ['lastName'],
-        'firstName'=>  $_SESSION ['firstName'],
-        'postalCode'=>  $_SESSION ['postalCode'],
-        'city'=>  $_SESSION ['city'],
-        'address'=>  $_SESSION ['address'],
-        'password' => password_hash( $_SESSION['password'], PASSWORD_DEFAULT)
-    ]);
 
-    if($reponse ==0){
-        $msg = 'Erreur lors de l\'inscription en base de données.';
-        header('location: sign_in.php?msg=' .$msg);
-        exit();
-    } else {
-        $msg = 'compte créé avec succès!!';
-        header('location: ../login.php?msg=' .$msg);
-        exit;
+    try {
+        $reponse = $req ->execute([
+            'pseudo'=>  htmlspecialchars($_COOKIE ['pseudo']),
+            'mail'=>  htmlspecialchars($_COOKIE ['mail']),
+            'lastName'=>  htmlspecialchars($_COOKIE ['lastName']),
+            'firstName'=>  htmlspecialchars($_COOKIE ['firstName']),
+            'postalCode'=>  htmlspecialchars($_COOKIE ['postalCode']),
+            'city'=>  htmlspecialchars($_COOKIE ['city']),
+            'address'=>  htmlspecialchars($_COOKIE ['address']),
+            'password' => password_hash( $_COOKIE['password'], PASSWORD_DEFAULT)
+        ]);
     }
-}
+    catch(Exception $e){
+        header('location: sign_in.php?msg=oops! An error occurred.');
+    }
+
+    if(!$reponse) header('location: sign_in.php?msg=oops! An error occurred.');
+
+    //delete the cookies
+    setcookie('pseudo', '', time());
+    setcookie('mail', '', time());
+    setcookie('lastName', '', time());
+    setcookie('firstName', '', time());
+    setcookie('postalCode', '', time());
+    setcookie('city', '', time());
+    setcookie('address', '', time());
+    setcookie('password', '', time());
+    setcookie('confirmPassword', '', time());
+
+
+    header('location: ../login.php?msg=your account was created successfully');
 }
 
