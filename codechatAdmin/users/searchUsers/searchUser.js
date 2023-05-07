@@ -1,3 +1,6 @@
+
+
+
 async function searchUser(){
     const input = document.getElementById('search');
     const name = input.value;
@@ -23,20 +26,4 @@ async function searchUser(){
     }
 }
 
-function formClick() {
-    const test1 = document.getElementById('flexCheck1');
-    const test2 = document.getElementById('flexCheck2');
-    const test3 = document.getElementById('flexCheck3');
-    const test4 = document.getElementById('flexCheck4');
-    if (!test1.disabled && !test2.disabled && !test3.disabled && !test4.disabled){
-        test1.setAttribute("disabled", " ");
-        test2.setAttribute("disabled", " ");
-        test3.setAttribute("disabled", " ");
-        test4.setAttribute("disabled", " ");
-    } else {
-        test1.removeAttribute("disabled");
-        test2.removeAttribute("disabled");
-        test3.removeAttribute("disabled");
-        test4.removeAttribute("disabled");
-    }
-}
+

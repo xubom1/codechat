@@ -61,11 +61,29 @@ CREATE TABLE avatarownership(
        owner INT,
        component INT,
        PRIMARY KEY(owner, component),
-       FOREIGN KEY(owner) REFERENCES user(id),
-       FOREIGN KEY(component) REFERENCES avatarcomponent(id)
+       FOREIGN KEY(owner) REFERENCES user(id)  ON DELETE CASCADE ON UPDATE CASCADE,
+       FOREIGN KEY(component) REFERENCES avatarcomponent(id)  ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE events (   
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,   
+    name VARCHAR(100),  
+    description VARCHAR(255),  
+    starting_date DATETIME,   
+    ending_date DATETIME,   
+    location VARCHAR(100),   
+    user INT,   
+    FOREIGN KEY (user) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE eventSign (
+    signer VARCHAR(80) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    event VARCHAR(80) REFERENCES events(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    PRIMARY KEY (signer, event)
 );
 
 CREATE TABLE message(
+    id INT AUTO_INCREMENT PRIMARY KEY,
     author INT REFERENCES user(id),
     receiver INT REFERENCES user(id),
     content VARCHAR(255) NOT NULL,
@@ -76,4 +94,46 @@ CREATE TABLE token(
       token CHAR(32) PRIMARY KEY,
       creation DATETIME DEFAULT NOW() NOT NULL,
       owner INT NOT NULL UNIQUE REFERENCES user(id)
+);
+
+CREATE TABLE newsletter (
+    id int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    title TEXT,
+    content TEXT,
+    creationDateTime DATETIME,
+    sendDateTime DATETIME,
+    deleted BOOLEAN DEFAULT 0,
+    createBy VARCHAR(50),
+    sent BOOLEAN DEFAULT 0,
+    sendTo VARCHAR(18)
+);
+
+CREATE TABLE sendTo (
+    id_newsletter INT,
+    id_user INT,
+    PRIMARY KEY (id_newsletter, id_user),
+    FOREIGN KEY(id_newsletter) REFERENCES newsletter(id),
+    FOREIGN KEY(id_user) REFERENCES user(id)
+);
+
+CREATE TABLE send (
+    id INT PRIMARY KEY,
+    month INT,
+    day INT,
+    hour INT,
+    minute INT,
+    date DATE,
+    lastSendDate DATE,
+    lastSendTime TIME,
+    lastUpdate DATETIME
+);
+
+CREATE TABLE request (
+    id INT PRIMARY KEY,
+    id_user INT,
+    title VARCHAR(100),
+    content TEXT,
+    urgence_level INT,
+    date DATETIME,
+    close BOOLEAN DEFAULT 0
 );

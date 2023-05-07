@@ -6,14 +6,21 @@ checkSessionAdminElseLogin('../');
 include('../../database.php');
 $db = getDatabase();
 
+if (!empty($_GET['msg'])){
+    $content = '
+        <div class="alert alert-warning" role="alert">
+            '. $_GET['msg'] .'
+        </div>
+    ';
+}
+
 
 $cmd = $db->prepare('SELECT * FROM publication LIMIT 10');
 $get = $cmd->execute([]);
 $getAll = $cmd->fetchAll();
 
 
-
-$content = "
+$content .= "
     <table class='table table-responsive table-hover my-5'>
     <thead>
         <tr>

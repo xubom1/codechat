@@ -1,12 +1,14 @@
 <?php
 
-ini_set('display_errors', 1);
+include('../../pages/utils.php');
+checkSessionAdminElseLogin('../..');
 
+include('../../../database.php');
 
 if(isset($_GET['name'])){
     $name = $_GET['name'];
-    $db = new PDO('mysql:host=localhost;port=3306;dbname=codechat;charset=utf8', 'root', 'esgi');
-    $sql = 'SELECT * FROM user WHERE pseudo LIKE ? OR mail LIKE ? OR firstName LIKE ?';
+    $db = getDatabase();
+    $sql = 'SELECT * FROM user WHERE pseudo LIKE ? OR mail LIKE ? OR firstName LIKE ? AND banned=0';
 
     /**
      * Le mot clé LIKE permet de filtrer en valeur qui match une partie d'un mot

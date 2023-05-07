@@ -1,6 +1,6 @@
 <?php
 include('../../pages/utils.php');
-checkSessionAdminElseLogin('.');
+checkSessionAdminElseLogin('../..');
 
 
 function error()
@@ -12,37 +12,32 @@ function error()
 
 $content = '
     <br>
-    <div class="container-fluid m-auto form-check-inline d-flex justify-content-center" style="width: 500px">
-        <input type="search" id="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"/>
-        <button class="btn btn-success" onclick="searchUser()">Cliquez</button>
+    <div class="m-auto input-group" style="width: 500px">
+        <input type="text" id="search" class="form-control" placeholder="Search">
+        <button class="btn btn-success" onclick="searchUser()" id="searchBtn">Search</button>
+        <button class="btn btn-primary" onclick="location.href=\'index.php\'">Reset</button>
     </div>
     <div class="d-flex flex-row m-2 d-flex justify-content-center">
         <div class="form-check m-2">
-          <input class="form-check-input btnSearch" type="checkbox" id="flexCheckDefault" onclick="formClick()" checked>
-          <label class="form-check-label" for="flexCheckDefault">
-            All
-          </label>
-        </div>
-        <div class="form-check m-2">
-          <input class="form-check-input" type="checkbox" value="test" name="pseudo" id="flexCheck1" disabled>
+          <input class="form-check-input" type="checkbox" value="" name="pseudo" id="flexCheck1" onclick="validate()">
           <label class="form-check-label" for="flexCheckChecked">
             Pseudo
           </label>
         </div>
         <div class="form-check m-2">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheck2" disabled>
+          <input class="form-check-input" type="checkbox" value="" id="flexCheck2" onclick="validate()">
           <label class="form-check-label" for="flexCheckDefault">
             mail
           </label>
         </div>
         <div class="form-check m-2">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheck3" disabled>
+          <input class="form-check-input" type="checkbox" value="" id="flexCheck3" onclick="validate()">
           <label class="form-check-label" for="flexCheckChecked">
             first Name
           </label>
         </div>
         <div class="form-check m-2">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheck4" disabled>
+          <input class="form-check-input" type="checkbox" value="" id="flexCheck4" onclick="validate()">
           <label class="form-check-label" for="flexCheckChecked">
             last Name
           </label>
@@ -52,13 +47,16 @@ $content = '
     <p class="describe" id="description"></p>
 ';
 
-$content .= "
-    <div class='container mt-5 ' style='width: 150px'>
-        <p class='text-center " . ((isset($_GET['err']) && $_GET['err'] == 'true') ? "text-danger" : " ") . "'> 
+if (isset($_GET['err'])){
+    $content .= "
+    <div class='container mt-5 ' style=''>
+        <p class='text-center" . ((isset($_GET['err']) && $_GET['err'] == 'true') ? " alert alert-danger mt-4" : " alert alert-success mt-4") . "'> 
         " . error() . "
         </p>
     </div>
 ";
+}
+
 
 $content .= "
     <table class='table table-striped table-hover'>
@@ -76,8 +74,34 @@ $content .= "
 ";
 
 
+// import table
+include('../../../database.php');
+$db = getDatabase();
+
+//get some users in the database
+$cmd = $db->prepare('SELECT * FROM user WHERE admin=0 AND banned=0 ORDER BY creation ASC LIMIT 10');
+$cmd->execute();
+$users = $cmd->fetchAll();
+
+foreach ($users as $i => $user){
+    $content .= sprintf("
+    <tr>
+        <th scope='row'>%d</th>
+        <td>%s</td>
+        <td>%s</td>
+        <td>%s</td>
+        <td>%s</td>
+        <td class='d-flex justify-content-end'>
+            <button class='btn btn-secondary btn-sm' onclick='location.href=\"../manageUser.php?user=%s\"'>manage profile</button>
+        </td>
+    </tr>
+    ", $i + 1, $user['pseudo'], $user['mail'], $user['firstName'], $user['lastName'], $user['pseudo']);
+}
+
+
 $content .= "
-        </head>
+            
+        </tbody>
     </table>
     <script src='searchUser.js'></script>
 ";

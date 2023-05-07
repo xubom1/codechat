@@ -36,6 +36,8 @@
                         <div><?=$_SESSION['pseudo']?></div>
                     </div>
                     <button class='colorModeButton btn btn-outline-success m-2' onclick='switchColorMode()'><?=(($_COOKIE['codechat_theme'] ?? 'light') === 'dark' ? 'light' : 'dark')?> mode</button>
+                    <button class="btn btn-secondary" onclick="location.href='events/createEvents.php'"> creat an event</button> <br> <br>
+                
                 </div>
                 <button class="btn btn-secondary" onclick="location.href='/newPublication.php'">new publication</button>
             </div>

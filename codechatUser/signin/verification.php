@@ -5,10 +5,10 @@ $db = getDatabase();
 
 session_start();
 if( isset($_POST['inscrip1'])){
-    if( empty($_POST['pseudo'])
-    || empty($_POST['mail'])
-    || empty($_POST['lastName'])
-    || empty($_POST['firstName'])
+    if( empty(trim($_POST['pseudo']))
+    || empty(trim($_POST['mail']))
+    || empty(trim($_POST['lastName']))
+    || empty(trim($_POST['firstName']))
 )
 {
 header('location: sign_in.php?msg=you must fill in all the fields ');
@@ -30,16 +30,23 @@ if(!filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL))
 }
 /*******************VERIFICATION DEUXIÈME PAGE******************************************************************************************************* */  
 if( isset($_POST['inscrip2'])){
-    if( empty($_POST['postalCode'])
-    || empty($_POST['city'])
-    || empty($_POST['address'])
+    if( empty(trim($_POST['postalCode']))
+    || empty(trim($_POST['city']))
+    || empty(trim($_POST['address']))
     
 )
 {
 header('location: Address.php?msg=you must fill in all the fields ');
 exit();
 } 
- 
+
+$string = $_POST['postalCode'];
+
+if(strlen($string) != 5)
+{$msg = 'you must have only 5 digits ';
+    header('location: Address.php?msg=' . $msg);
+    exit();}
+
 
 else{
     setcookie('postalCode', $_POST['postalCode']);
@@ -123,5 +130,9 @@ if( isset($_POST['inscrip3'])){
 
 
     header('location: ../login.php?msg=your account was created successfully');
+
 }
 
+/******************************************************************************* */
+
+     ?>

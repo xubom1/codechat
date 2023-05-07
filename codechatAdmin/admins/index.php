@@ -14,8 +14,24 @@ $admins = $command->fetchAll();
 //create page
 include("../pages/template.php");
 
-$content = "
-    <h1 class='text-center'>Manage administrators</h1>
+$content = "<h1 class='text-center'>Manage administrators</h1>";
+
+function error()
+{
+    if (isset($_GET['msg']) && !empty($_GET['msg'])) {
+        return htmlspecialchars($_GET['msg']);
+    }
+}
+
+if (isset($_GET['msg'])) {
+    $content .= "<div class='container mt-5 '>
+        <p class='text-center " . ((isset($_GET['err']) && $_GET['err'] == 'true') ? " alert alert-danger" : " alert alert-success") . "'>
+    " . error() . "
+        </p>
+    </div>";
+}
+
+$content .= "
     <table class='table table-responsive table-hover my-5'>
     <thead>
         <tr>
@@ -57,7 +73,13 @@ foreach ($admins as $i => $admin){
                   delete account
                 </button>
             </td>
+            <td>
+                <button type='button' class='btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#" . $admin['pseudo'] . "Modal-no' $deleteAccountButtonClass>
+                  Not admin
+                </button>
+            </td>
         </tr>
+        
         <!-- Modal delete account -->
         <div class='modal fade' id='" . $admin['pseudo'] . "Modal' aria-hidden='true'>
           <div class='modal-dialog'>
@@ -76,6 +98,30 @@ foreach ($admins as $i => $admin){
               </div>
             </div>
           </div>
+        </div>
+          
+          
+          <!-- Modal not admin account -->
+        <div class='modal fade' id='" . $admin['pseudo'] . "Modal-no' aria-hidden='true'>
+          <div class='modal-dialog'>
+            <div class='modal-content'>
+              <div class='modal-header'>
+                <h1 class='modal-title fs-5' id='exampleModalLabel'>Are you sure you want to remove " . $admin['pseudo'] . " as an admin ?</h1>
+                <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+              </div>
+             
+              <div class='modal-footer'>
+                <form action='removeAdmin.php' method='post'>
+                    <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
+                    <input type='text' readonly name='admin' style='display: none' value='" . $admin['pseudo'] ."'>
+                    <input class='btn btn-danger' type='submit' value='Remove'>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
         </div>
         <!-- reset password account -->
         <div class='modal fade' id='" . $admin['pseudo'] . "ModalResetPassword' aria-hidden='true'>
@@ -109,7 +155,7 @@ $content .= "
         new admin
     </button>
     <div class='modal fade' id='newAdminModal' aria-labelledby='exampleModalLabel' aria-hidden='true'>
-        <form action='createAdmin.php' method='get' class='modal-dialog'>
+        <form action='createAdmin.php' method='post' class='modal-dialog'>
             <div class='modal-content'>
                 <div class='modal-header'>
                     <h1 class='modal-title fs-5' id='exampleModalLabel'>new account</h1>
@@ -132,13 +178,7 @@ $content .= "
     </div>
 ";
 
-if (isset($_GET['msg']))
-    $content .= "
-    <script>
-        alert('" . $_GET['msg'] . "')
-        location.href = './';
-    </script>
-    ";
+
 
 echo makePage('Admins', $content, "../");
 
