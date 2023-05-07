@@ -1,7 +1,7 @@
 <?php
 include("utils.php");
-include('../../database.php');
-include('../../codechatAdmin/mailFunction.php');
+include('/var/www/html/codechat/database.php');
+include('/var/www/html/codechat/codechatAdmin/mailFunction.php');
 
 
 if (empty($_POST['username'])){
@@ -29,9 +29,12 @@ if ($test){
     $newPassword = randomPassword();
     $haspPassword = password_hash($newPassword, PASSWORD_DEFAULT);
     $cmd = $db->prepare('UPDATE user SET password = ? WHERE id = ?');
-    $cmd->execute([$haspPassword, $test['id']]);
     $sub = 'Reset a password';
     $cont = 'Hello '. $test['pseudo'] . ', Connect with this password : ' . $newPassword .' Please change the password quickly';
-    sendMail('support codechat', 'support', $test['mail'], $test['pseudo'], NULL, NULL, $sub, $cont, $cont, 'getNewPassword.php');
-    header('getNewPassword.php?msg=New password has been send.&err=false');
+    $check = sendMail('support@codechat.fr', 'support', $test['mail'], $test['pseudo'], NULL, NULL, $sub, $cont, $cont, '../getNewPassword.php');
+    if ($check == 'ok'){
+        $cmd->execute([$haspPassword, $test['id']]);
+    }
+
+    header('location: ../getNewPassword.php?msg=New password has been send.&err=false');
 }
