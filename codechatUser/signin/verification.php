@@ -129,10 +129,7 @@ if( isset($_POST['inscrip3'])){
     setcookie('password', '', time());
     setcookie('confirmPassword', '', time());
 
-    sendMail('check@codechat.fr', 'codechat', 'nicolasguillot92@gmail.com', 'nicolas', NULL, NULL, 'TEST', '<h1>coucou ca fonctionne</H1>', 'coucou', NULL);
-    echo 'mail sent ?';
-
-    //header('location: ../login.php?msg=your account was created successfully');
+    header('location: ../login.php?msg=your account was created successfully');
 
 }
 
