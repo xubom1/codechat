@@ -118,6 +118,21 @@ if( isset($_POST['inscrip3'])){
 
     if(!$reponse) header('location: sign_in.php?msg=oops! An error occurred.');
 
+    //generate a token of 32 characters
+    $possibleChars = "123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$/!:,?";
+    $token = '';
+    for ($i = 0; $i < 32; $i++) {
+        $token .= $possibleChars[rand(0,strlen($possibleChars) - 1)];
+    }
+
+    $mail = "
+        <h2>Hello " . $_COOKIE ['pseudo'] . " !</h2>
+        <p>Your codechat account is almost here ! please click on the link below to finalise it.</p>
+        <a href='https://codechat.fr/signin/tokenVerification.php?token=$token'></a>
+    ";
+    sendMail('support@codechat.fr', 'Codechat support', 'nicolasguillot92@gmail.com', $_COOKIE['pseudo'], NULL, NULL, 'codechat account verification', $mail, $mail, '/login.php');
+
+
     //delete the cookies
     setcookie('pseudo', '', time());
     setcookie('mail', '', time());
