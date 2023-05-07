@@ -90,6 +90,12 @@ CREATE TABLE message(
     creation DATETIME NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE token(
+      token CHAR(32) PRIMARY KEY,
+      creation DATETIME DEFAULT NOW() NOT NULL,
+      owner INT NOT NULL UNIQUE REFERENCES user(id)
+);
+
 CREATE TABLE newsletter (
     id int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     title TEXT,
