@@ -1,5 +1,6 @@
 <?php
 include('../../database.php');
+include('../../codechatAdmin/mailFunction.php');
 
 $db = getDatabase();
 
@@ -128,9 +129,8 @@ if( isset($_POST['inscrip3'])){
     setcookie('password', '', time());
     setcookie('confirmPassword', '', time());
 
-    include('../../codechatAdmin/mailFunction.php');
-
     sendMail('check@codechat.fr', 'codechat', 'nicolasguillot92@gmail.com', 'nicolas', NULL, NULL, 'TEST', '<h1>coucou ca fonctionne</H1>', 'coucou', NULL);
+    echo 'mail sent ?';
 
     //header('location: ../login.php?msg=your account was created successfully');
 
