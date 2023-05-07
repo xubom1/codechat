@@ -1,4 +1,4 @@
--+<?php
+<?php
 session_start();
 
 if(!isset($_POST['username']) || !isset($_POST['password'])){
@@ -8,12 +8,17 @@ if(!isset($_POST['username']) || !isset($_POST['password'])){
 include('../../database.php');
 $db = getDatabase();
 
-$cmd = $db->prepare('SELECT password, id FROM user WHERE pseudo=?');
+$cmd = $db->prepare('SELECT password, id, verif FROM user WHERE pseudo=?');
 $cmd->execute([$_POST['username']]);
 $res = $cmd->fetch();
 
 if (!$res){
     header("location: ../login.php?msg=username is not correct !&err=true");
+}
+
+if ($res['verif'] == '0'){
+    header("location: /login.php?msg=please verify your account by clicking on the link we sent to you by mail !&err=true");
+    exit;
 }
 
 if (password_verify($_POST['password'], $res['password'])){

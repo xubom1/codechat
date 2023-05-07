@@ -96,10 +96,10 @@ if( isset($_POST['inscrip3'])){
         header ('location: sign_in.php?msg=The email address is already in use !');
         exit();
     }
+
+    //create user
     $q = 'INSERT INTO user (pseudo, mail, lastName, firstName, postalCode, city, address, password) VALUES(:pseudo, :mail, :lastName, :firstName, :postalCode, :city, :address,  :password)';
     $req = $db-> prepare($q);
-
-
     try {
         $reponse = $req ->execute([
             'pseudo'=>  htmlspecialchars($_COOKIE ['pseudo']),
@@ -109,14 +109,15 @@ if( isset($_POST['inscrip3'])){
             'postalCode'=>  htmlspecialchars($_COOKIE ['postalCode']),
             'city'=>  htmlspecialchars($_COOKIE ['city']),
             'address'=>  htmlspecialchars($_COOKIE ['address']),
-            'password' => password_hash( $_COOKIE['password'], PASSWORD_DEFAULT)
+            'password' => password_hash( $_POST['password'], PASSWORD_DEFAULT)
         ]);
     }
     catch(Exception $e){
-        header('location: sign_in.php?msg=oops! An error occurred.');
+        header('location: sign_in.php?msg=oops! An error occurred while creating the user.');
     }
 
     if(!$reponse) header('location: sign_in.php?msg=oops! An error occurred.');
+
 
     //generate a token of 32 characters
     $possibleChars = "123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$/!:,?";
@@ -125,14 +126,33 @@ if( isset($_POST['inscrip3'])){
         $token .= $possibleChars[rand(0,strlen($possibleChars) - 1)];
     }
 
+    //save the token in the database
+     {
+        $getUser = $db->prepare('SELECT id FROM user WHERE pseudo = :pseudo');
+        $getUser->execute(['pseudo' => $_COOKIE['pseudo']]);
+        $userId = $getUser->fetch(PDO::FETCH_ASSOC)['id'];
+
+        $deleteOld = $db->prepare('DELETE FROM token WHERE owner = :user ');
+        $deleteOld->execute(['user' => $userId]);
+
+        $insert = $db->prepare('INSERT INTO token(token, owner) VALUES (:token, :user)');
+        $insert->execute([
+            'token' => $token,
+            'user' => $userId
+        ]);
+    }
+//    catch(Exception $e){
+//        header('location: sign_in.php?msg=oops! An error occurred while generating the token !');
+//    }
+
     $mail = "
         <h2>Hello " . $_COOKIE ['pseudo'] . " !</h2>
         <p>Your codechat account is almost here ! please click on the link below to finalise it.</p>
-        <a href='https://codechat.fr/signin/tokenVerification.php?token=$token'></a>
+        <a href='https://codechat.fr/signin/tokenVerification.php?token=$token'>codechat.fr/signin/tokenVerification.php</a>
     ";
-    sendMail('support@codechat.fr', 'codechat', 'nicolasguillot92@gmail.com', /*$_COOKIE['pseudo']*/'nicolas', NULL, NULL, 'codechat account verification', 'coucou', 'error', '/login.php');
-    echo $mail;
-    exit;
+
+    sendMail('support@codechat.fr', 'codechat', $_COOKIE['mail'], $_COOKIE['pseudo'],
+        NULL, NULL, 'codechat account verification', $mail, $mail, '/login.php');
 
     //delete the cookies
     setcookie('pseudo', '', time());
@@ -145,10 +165,6 @@ if( isset($_POST['inscrip3'])){
     setcookie('password', '', time());
     setcookie('confirmPassword', '', time());
 
-    //header('location: ../login.php?msg=your account was created successfully');
+    header('location: ../login.php?msg=your account was created successfully, check your mail to verify your account !');
 
 }
-
-/******************************************************************************* */
-
-     ?>

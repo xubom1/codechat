@@ -14,7 +14,8 @@ CREATE TABLE user(
     admin boolean NOT NULL DEFAULT 0,
     wantNews boolean NOT NULL DEFAULT 1,
     creation DATETIME NOT NULL DEFAULT NOW(),
-    lastLogin DATETIME NOT NULL DEFAULT NOW()
+    lastLogin DATETIME NOT NULL DEFAULT NOW(),
+    verif BOOLEAN NOT NULL DEFAULT 0
 );
 
 CREATE TABLE publication(
@@ -137,3 +138,5 @@ CREATE TABLE request (
     date DATETIME,
     close BOOLEAN DEFAULT 0
 );
+
+ALTER TABLE user ADD verif BOOLEAN NOT NULL DEFAULT 0;
