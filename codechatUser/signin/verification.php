@@ -1,6 +1,6 @@
 <?php
 include('../../database.php');
-include('../../codechatAdmin/mailFunction.php');
+include('var/www/html/codechat/codechatAdmin/mailFunction.php');
 
 $db = getDatabase();
 
@@ -130,9 +130,9 @@ if( isset($_POST['inscrip3'])){
         <p>Your codechat account is almost here ! please click on the link below to finalise it.</p>
         <a href='https://codechat.fr/signin/tokenVerification.php?token=$token'></a>
     ";
-    sendMail('support@codechat.fr', 'CodechatSupport', 'nicolasguillot92@gmail.com', /*$_COOKIE['pseudo']*/'user', NULL, NULL, 'codechat account verification', 'coucou', 'error', '/login.php');
-    echo $mail;
-    exit;
+    sendMail('support@codechat.fr', 'codechat', 'nicolasguillot92@gmail.com', /*$_COOKIE['pseudo']*/'nicolas', NULL, NULL, 'codechat account verification', 'coucou', 'error', '/login.php');
+    //echo $mail;
+    //exit;
 
     //delete the cookies
     setcookie('pseudo', '', time());
