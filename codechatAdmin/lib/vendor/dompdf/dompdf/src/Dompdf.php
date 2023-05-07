@@ -266,7 +266,7 @@ class Dompdf
             }
         }
 
-        //$this->setPhpConfig();
+        $this->setPhpConfig();
 
         $this->paperSize = $this->options->getDefaultPaperSize();
         $this->paperOrientation = $this->options->getDefaultPaperOrientation();
