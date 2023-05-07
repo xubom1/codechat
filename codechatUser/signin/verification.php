@@ -128,8 +128,11 @@ if( isset($_POST['inscrip3'])){
     setcookie('password', '', time());
     setcookie('confirmPassword', '', time());
 
+    include('../../codechatAdmin/mailFunction.php');
 
-    header('location: ../login.php?msg=your account was created successfully');
+    sendMail('check@codechat.fr', 'codechat', 'nicolasguillot92@gmail.com', 'nicolas', NULL, NULL, 'TEST', '<h1>coucou ca fonctionne</H1>', 'coucou', NULL);
+
+    //header('location: ../login.php?msg=your account was created successfully');
 
 }
 
