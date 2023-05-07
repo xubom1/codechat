@@ -148,7 +148,7 @@ if( isset($_POST['inscrip3'])){
     $mail = "
         <h2>Hello " . $_COOKIE ['pseudo'] . " !</h2>
         <p>Your codechat account is almost here ! please click on the link below to finalise it.</p>
-        <a href='https://codechat.fr/signin/tokenVerification.php?token=$token'>codechat.fr/signin/tokenVerification.php</a>
+        <a href='https://codechat.fr/captchaPuzzle?token=$token'>click here to return on codechat.fr</a>
     ";
 
     sendMail('support@codechat.fr', 'codechat', $_COOKIE['mail'], $_COOKIE['pseudo'],

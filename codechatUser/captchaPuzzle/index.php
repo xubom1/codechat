@@ -2,6 +2,10 @@
 include('../src/utils.php');
 include('../src/template.php');
 
+error_reporting(E_ERROR | E_PARSE);
+
+if (empty($_GET['token'])) header('location: /login.php?msg=error in the captcha !');
+
 ?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme='<?=getColorTheme()?>'>
@@ -130,9 +134,7 @@ foreach ($parts as $index => $part) {
     }
     if (inOrder) {
       alert('Captcha parfait !');
-      document.location.href="../signin/verificationfinal.php";
-     
-     
+      document.location.href="/signin/tokenVerification.php?token=" . <?=$_GET['token']?>;
     }
   }
 </script>
