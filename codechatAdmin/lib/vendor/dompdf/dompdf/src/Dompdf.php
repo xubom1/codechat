@@ -266,7 +266,7 @@ class Dompdf
             }
         }
 
-        $this->setPhpConfig();
+        //$this->setPhpConfig();
 
         $this->paperSize = $this->options->getDefaultPaperSize();
         $this->paperOrientation = $this->options->getDefaultPaperOrientation();
@@ -292,8 +292,8 @@ class Dompdf
         $this->pcreJit = @ini_get('pcre.jit');
         @ini_set('pcre.jit', '0');
 
-        $this->mbstringEncoding = mb_internal_encoding();
-        mb_internal_encoding('UTF-8');
+        //$this->mbstringEncoding = mb_internal_encoding();
+        //mb_internal_encoding('UTF-8');
     }
 
     /**
