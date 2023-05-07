@@ -20,6 +20,9 @@ $cmdUser = $db->prepare('SELECT pseudo FROM user WHERE id=?');
 $getPseudo = $cmdUser->execute([$getAll['creator']]);
 $user = $cmdUser->fetch();
 
+if (!$getAll){
+    header('location: index.php');
+}
 
 $content = '
     <table class="table table-hover">
@@ -48,10 +51,10 @@ $content .= "
     <div class='row my-5'>
         <div class='col-auto'><button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#banAccount'>ban ". $user[0] ."</button></div>
         <div class='col-auto'><button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#deletePublication'>delete publication</button></div>
-        <div class='col-auto'><button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#goBack'>Go Back</button></div>
+        <div class='col-auto'><a href='index.php'><button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#goBack'>Go Back</button></a></div>
     </div>
     
-    <!--ban account -->
+    <!-- delete publication -->
     <div class='modal' id='deletePublication'>
       <div class='modal-dialog'>
         <div class='modal-content'>
@@ -65,24 +68,26 @@ $content .= "
           </div>
           <div class='modal-footer'>
             <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
-            <button type='button' class='btn btn-danger' onclick='location.href=\"deletePublication.php?id=" . $getAll['id'] . "\"'>delete</button>
+            <button type='button' class='btn btn-danger' onclick='location.href=\"deletePublication.php?idPublication=" . $getAll['id'] . "\"'>delete</button>
           </div>
         </div>
       </div>
     </div>
     
-     <!--ban account -->
+     <!-- ban account -->
     <div class='modal' id='banAccount'>
       <div class='modal-dialog'>
         <div class='modal-content'>
           <div class='modal-header'>
             <h5 class='modal-title'> ban $user[0] account ?</h5>
-            
+            <div class='modal-body'>
+            <strong>Ban account and delete publication in the same time. This action is definitive !</strong>
+            </div>
             <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
           </div>
           <div class='modal-footer'>
             <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
-            <button type='button' class='btn btn-danger' onclick='location.href=\"banUserPublication.php?user=" . $user[0] . "\"'>ban</button>
+            <button type='button' class='btn btn-danger' onclick='location.href=\"banUserPublication.php?user=" . $user[0] . "&idPublication=". $getAll['id'] ."\"'>ban</button>
           </div>
         </div>
       </div>
