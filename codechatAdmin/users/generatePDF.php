@@ -13,10 +13,10 @@ function YesOrNot($var) {
 }
 
 
-function getPDF($pathlogo = 'logo.php'){
+function getPDF(){
     $user = htmlspecialchars($_GET['user']);
 
-    include('/var/www/html/codechat/database.php');
+    include('../../database.php');
     $db = getDatabase();
 
     // user
@@ -33,7 +33,7 @@ function getPDF($pathlogo = 'logo.php'){
     <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Invoice</title>
+        <title>'. $_GET['user'] .'</title>
 
         <style type="text/css">
             * {
@@ -75,7 +75,7 @@ If you’ve found this page — “what is the GDPR?” — chances are you’re
 
     <table width="100%">
         <tr>
-            <td valign="top"><img style="height: 150px; width: 150px;" src="'. $pathlogo .'"/></td>
+            <td valign="top"><img style="height: 150px; width: 150px;" src="../assets/logo.png"/></td>
             <td align="right">
                 <h3>Codechat</h3>
                 <pre>
