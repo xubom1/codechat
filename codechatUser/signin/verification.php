@@ -1,6 +1,6 @@
 <?php
 include('../../database.php');
-include('var/www/html/codechat/codechatAdmin/mailFunction.php');
+include('../../codechatAdmin/mailFunction.php');
 
 $db = getDatabase();
 
