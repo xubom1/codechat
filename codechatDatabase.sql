@@ -73,6 +73,7 @@ CREATE TABLE events (
     ending_date DATETIME,   
     location VARCHAR(100),   
     user INT,   
+    max_signups INT,
     FOREIGN KEY (user) REFERENCES user(id) 
 );
 

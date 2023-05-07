@@ -16,11 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt = $db->prepare('UPDATE events SET name = :name, starting_date = :starting_date, ending_date = :ending_date, location = :location, description = :description WHERE id = :event_id');
     $stmt->execute(array(':name' => $name, ':starting_date' => $starting_date, ':ending_date' => $ending_date, ':location' => $location, ':description' => $description, ':event_id' => $event_id));
 
-    
-    header('Location: myEvent.php?id=' . $event_id);
+    {
+        $msg = 'your event has been modified  ';
+        
+        
+    header('Location: myEvent.php?msg=' . $msg );
     exit();
-} else {
- 
-    echo "Le formulaire n'a pas été soumis.";
+} 
 }
 ?>

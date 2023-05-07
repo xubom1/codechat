@@ -35,8 +35,8 @@
                         <div class='avatar' codechat-user='<?=$_SESSION['user']?>'></div>
                         <div><?=$_SESSION['pseudo']?></div>
                     </div>
-                    <button class='colorModeButton btn btn-outline-success m-2' onclick='switchColorMode()'><?=(($_COOKIE['codechat_theme'] ?? 'light') === 'dark' ? 'light' : 'dark')?> mode</button>
-                    <button class="btn btn-secondary" onclick="location.href='events/createEvents.php'"> creat an event</button> <br> <br>
+                    <button class='colorModeButton btn btn-outline-success m-2' onclick='switchColorMode()'><?=(($_COOKIE['codechat_theme'] ?? 'light') === 'dark' ? 'light' : 'dark')?> mode</button><br><br>
+                    <button class="btn btn-secondary" onclick="location.href='events/createEvents.php'"> Events</button> <br> <br>
                 
                 </div>
                 <button class="btn btn-secondary" onclick="location.href='/newPublication.php'">new publication</button>

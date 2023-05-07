@@ -1,7 +1,0 @@
-{
-    "name": "rakulan/html2pdf",
-    "require": {
-        "spipu/html2pdf": "^4.6",
-        "nahidulhasan/html2pdf": "^1.4"
-    }
-}

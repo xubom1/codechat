@@ -56,6 +56,10 @@ checkSessionElseLogin(false);
                 <label for="description">Description:</label>
                 <textarea class="form-control" rows="10" id="description" name="description"></textarea>
             </div>
+            <div class="form-group">
+    <label for="max_signups">Maximum number of signups:</label>
+    <input type="number" class="form-control" id="max_signups" name="max_signups" required min="1">
+</div>
             <br>
             <button type="submit" class="btn btn-primary">Create</button>
             </form>

@@ -16,6 +16,7 @@ checkSessionElseLogin(false);
      <main class="container">
 
      <nav aria-label="breadcrumb" class="my-2">
+
                 <ol class="breadcrumb p-2 d-flex justify-content-center">
                     <li class="breadcrumb-item"><a href="createEvents.php">Create an event</a></li>
                     <li class="breadcrumb-item"><a href="takePartEvent.php">Assist to an event</a></li>
@@ -23,6 +24,18 @@ checkSessionElseLogin(false);
                    
                 </ol>
             </nav>
+            
+
+<?php
+if (!empty($_GET['msg'])){
+    $msg =  $_GET['msg'];
+    echo "
+       <div class='alert alert-success' role='alert'>
+          $msg
+       </div>
+    ";
+}
+?>
             <div class="events">
     <h2>My events</h2>
     
@@ -50,6 +63,12 @@ checkSessionElseLogin(false);
               echo '<button class="btn-edit">';
                 echo '<a href="edit.php?id=' . $event['id'] . '">edit</a>';
                 echo '</button>';
+                echo '<span>&nbsp;</span>';
+                echo '<button class="btn-edit">';
+                      echo '<a href="attendees.php?id=' . $event['id'] . '">attendees</a>';
+                      echo '</button>';
+
+                
 
               echo '</li>';
             }
