@@ -5,6 +5,41 @@ include("src/utils.php");
 include("../database.php");
 
 checkSessionElseLogin();
+
+function createRow($text, $bddName, $user, $type){
+    return "
+        
+        <tr class='row justify-content-md-center'>
+            <th class='col-3'>$text</th>
+            <td class='col'>" . $user[$bddName] . "</td>
+            <td class='col-auto'><button class='btn btn-secondary btn-sm' data-bs-toggle='modal' data-bs-target='#$bddName-modal'>change</button></td>
+        </tr>
+        
+        <!--change value -->
+        <div class='modal' id='$bddName-modal'>
+          <div class='modal-dialog'>
+            <div class='modal-content'>
+              <div class='modal-header'>
+                <h5 class='modal-title'>change ". $_GET['user'] ."'s $text</h5>
+                          
+                <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+              </div>
+              <form action='change.php?user=". $_GET['user'] ."&type=$bddName' method='post'>
+                  <div class='modal-body'>
+                     <label for='name' class='form-label'>New $text</label>
+                     <input name='$bddName' type='$type' class='form-control'>
+                  </div>
+                  <div class='modal-footer'>
+                    <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
+                    <button type='submit' class='btn btn-danger'>change</button>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    ";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme='<?=getColorTheme()?>'>
@@ -52,9 +87,14 @@ checkSessionElseLogin();
                             $user = $cmd->fetch();
 
                             function makeLine($title, $display, $modalInputType = null, $bddName = null, $editAttributes = null){
+                                $modalBtnAttributes = "";
+                                if (isset($modalInputType)){
+                                    $modalBtnAttributes = " data-bs-toggle='modal' data-bs-target='#$bddName-modal'";
+                                }
+
                                 $edit = '<br>';
-                                if (isset($editAttributes))
-                                    $edit = "<img src='../assets/edit.svg' alt='edit' class='editButton p-0' height='20' title='edit $title' $editAttributes>";
+                                if (isset($editAttributes) || isset($modalInputType))
+                                    $edit = "<img src='../assets/edit.svg' alt='edit' class='editButton p-0' height='20' title='edit $title' $editAttributes $modalBtnAttributes>";
 
                                 $ret = "
                                     <tr class='row'>
@@ -74,9 +114,9 @@ checkSessionElseLogin();
                                                       
                                             <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                                           </div>
-                                          <form action='users/change.php?user=" . $_SESSION['pseudo'] . "&type=$bddName' method='post'>
+                                          <form action='/src/change.php' method='get'>
                                               <div class='modal-body'>
-                                                 <label for='name' class='form-label'>New $title</label>
+                                                 <label for='$bddName' class='form-label'>New $title</label>
                                                  <input name='$bddName' type='$modalInputType' class='form-control'>
                                               </div>
                                               <div class='modal-footer'>
@@ -92,17 +132,17 @@ checkSessionElseLogin();
                                 echo $ret;
                             }
                             makeLine('avatar', "<div class='avatar' codechat-user='". $_SESSION['user'] ."'></div>", null, null, 'onclick=\'location.href = "createAvatar.php"\'');
-                            makeLine('pseudo', $_SESSION['pseudo'], "text", 'pseudo', '');
-                            makeLine('mail', $user['mail'], "text", 'mail', '');
-                            makeLine('last name', $user['lastName'], "text", 'lastName', '');
-                            makeLine('first name', $user['firstName'], "text", 'firstName', '');
-                            makeLine('postal code', $user['postalCode'], "text", 'postalCode', '');
-                            makeLine('city', $user['city'], "text", 'city', '');
-                            makeLine('address', $user['address'], "text", 'address', '');
-                            makeLine('receive newsletter', $user['wantNews']? 'yes' : 'no', "text", 'wantNews', '');
-                            makeLine('subscribed', $user['subscription'] ? 'yes' : 'no', "text", 'subscription', '');
-                            makeLine('grade', $user['grade'], 'text', 'grade', '');
-                            makeLine('account creation date', $user['creation'], 'text', 'creation', '');
+                            makeLine('pseudo', $_SESSION['pseudo'], "text", 'pseudo');
+                            makeLine('mail', $user['mail'], "text", 'mail',);
+                            makeLine('last name', $user['lastName'], "text", 'lastName');
+                            makeLine('first name', $user['firstName'], "text", 'firstName');
+                            makeLine('postal code', $user['postalCode'], "number", 'postalCode');
+                            makeLine('city', $user['city'], "text", 'city');
+                            makeLine('address', $user['address'], "text", 'address');
+                            makeLine('receive newsletter', $user['wantNews']? 'yes' : 'no', null, null, "onclick='location.href=\"/src/change.php?wantNews=\"'");
+                            makeLine('subscribed', $user['subscription'] ? 'yes' : 'no');
+                            makeLine('grade', $user['grade']);
+                            makeLine('account creation date', $user['creation']);
 
                         ?>
                         </table>

@@ -14,7 +14,7 @@ if (empty($_GET['entry'])){
 $getUsersCount = $db->prepare("SELECT COUNT(*) FROM user WHERE pseudo LIKE CONCAT('%', :entry, '%') ");
 $getPublicationsCount = $db->prepare("SELECT COUNT(*) FROM publication WHERE respondTo IS NULL AND content LIKE CONCAT('%', :entry, '%')");
 $getCommentariesCount = $db->prepare("SELECT COUNT(*) FROM publication WHERE respondTo IS NOT NULL AND content LIKE CONCAT('%', :entry, '%')");
-$input = ['entry' => $_GET['entry']];
+$input = ['entry' => htmlspecialchars($_GET['entry'])];
 
 $getUsersCount->execute($input);
 $usersCount = $getUsersCount->fetch()[0];
@@ -44,7 +44,7 @@ $type = $_GET['type'] ?? $defaultType;
         </style>
     ")?>
         <body>
-        <?= make_header('.', $_GET['entry'] ?? '')?>
+        <?= make_header('.', htmlspecialchars($_GET['entry']) ?? '')?>
         <main class="container">
             <div class='mt-5 row'>
                 <div class="col-2 p-3">

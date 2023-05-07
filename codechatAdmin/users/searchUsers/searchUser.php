@@ -1,6 +1,7 @@
 <?php
 
-ini_set('display_errors', 1);
+include('../../pages/utils.php');
+checkSessionAdminElseLogin('../..');
 
 include('../../../database.php');
 

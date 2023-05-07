@@ -13,7 +13,7 @@ if (empty($_POST['content']) || empty($_POST['publication'])){
 
 $createComment = $db->prepare('INSERT INTO publication(content, respondTo, creator) VALUES(:content, :publication, :author)');
 $createComment->execute([
-    'content' => $_POST['content'],
+    'content' => htmlspecialchars($_POST['content']),
     'publication' => $_POST['publication'],
     'author' => $_SESSION['user']
 ]);

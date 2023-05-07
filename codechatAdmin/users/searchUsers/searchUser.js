@@ -4,8 +4,6 @@
 async function searchUser(){
     const input = document.getElementById('search');
     const name = input.value;
-    const del = document.getElementById('tenSub').value;
-    console.log(del);
     try {
         const res = await fetch('searchUser.php?name=' + name);
         const str = await res.text();

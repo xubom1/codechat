@@ -19,18 +19,26 @@ $cmd = $db->prepare('SELECT * FROM publication LIMIT 10');
 $get = $cmd->execute([]);
 $getAll = $cmd->fetchAll();
 
+$content = '
+    <div class="m-auto input-group" style="width: 500px">
+        <input type="text" id="search" class="form-control" placeholder="Search">
+        <button class="btn btn-success" onclick="searchPublication()" id="searchBtn">Search</button>
+        <button class="btn btn-primary" onclick="location.href=\'index.php\'">Reset</button>
+    </div>
+    <p class="describe" id="description"></p>
+';
 
 $content .= "
+    
     <table class='table table-responsive table-hover my-5'>
     <thead>
         <tr>
-            <th scope='col' class='col-1' >#</th>
             <th scope='col' class='col-2' >username</th>
             <th scope='col' class='col-8' >Publication</th>
-            <th scope='col' class='col' ></th>
+            <th scope='col' class='col' >Manage</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id='publicationRow'>
 ";
 
 foreach ($getAll as $i =>$publication) {
@@ -39,7 +47,6 @@ foreach ($getAll as $i =>$publication) {
     $user = $cmdUser->fetch();
     $content .= "
         <tr>
-            <th>". $i + 1 ."</th>
             <td>" . $user[0] . "</td>
             <td>" . $publication['content'] . "</td>
             <td class='d-flex justify-content-end'>
@@ -52,6 +59,7 @@ foreach ($getAll as $i =>$publication) {
 $content .= '
     </tbody>
     </table>
+    <script src="getPublication.js"></script>
 ';
 
 include("../pages/template.php");

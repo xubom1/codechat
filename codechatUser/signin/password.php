@@ -35,11 +35,11 @@ session_start();
                  <h6 class="my-3"> Create your password </h6>
 
                  <label for="motdepasse" class="form-label">password</label>
-                 <input type="password" class="form-control" id="motdepasse" name="password" placeholder="your password" value="<?php echo isset($_COOKIE['password']) ? $_COOKIE['password'] : ''; ?>" required>
+                 <input type="password" class="form-control" id="motdepasse" name="password" placeholder="your password" value="<?php echo htmlspecialchars($_COOKIE['password'] ?? ''); ?>" required>
                  <label for="motdepasse_confirm" class="form-label my-2">Confirm password</label>
-                 <input type="password" class="form-control" id="motdepasse_confirm" name="confirmPassword" placeholder="confirm your password" value="<?php echo isset($_COOKIE['confirmPassword']) ? $_COOKIE['confirmPassword'] : ''; ?>" required>
+                 <input type="password" class="form-control" id="motdepasse_confirm" name="confirmPassword" placeholder="confirm your password" value="<?php echo htmlspecialchars($_COOKIE['confirmPassword'] ?? ''); ?>" required>
 
-                 <input type="submit" value="Sign in" name="inscrip3" class="btn btn-primary my-3">
+                 <input type="submit" value="Sign Up" name="inscrip3" class="btn btn-primary my-3">
 
              </form>
          </main>

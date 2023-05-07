@@ -1,6 +1,6 @@
 <?php
 include('../../pages/utils.php');
-checkSessionAdminElseLogin('.');
+checkSessionAdminElseLogin('../..');
 
 
 function error()
@@ -47,14 +47,16 @@ $content = '
     <p class="describe" id="description"></p>
 ';
 
-$content .= "
-    <div class='container mt-5 ' style='width: 150px'>
-        <p class='text-center" . ((isset($_GET['err']) && $_GET['err'] == 'true') ? "alert alert-danger mt-4" : " ") . "'> 
+if (isset($_GET['err'])){
+    $content .= "
+    <div class='container mt-5 ' style=''>
+        <p class='text-center" . ((isset($_GET['err']) && $_GET['err'] == 'true') ? " alert alert-danger mt-4" : " alert alert-success mt-4") . "'> 
         " . error() . "
         </p>
     </div>
-    <p class='container mx-auto' id='tenSub'>Here we are the last 10 subsriber !</p>
 ";
+}
+
 
 $content .= "
     <table class='table table-striped table-hover'>
