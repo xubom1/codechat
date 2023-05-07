@@ -145,7 +145,7 @@ if( isset($_POST['inscrip3'])){
     setcookie('password', '', time());
     setcookie('confirmPassword', '', time());
 
-    header('location: ../login.php?msg=your account was created successfully');
+    //header('location: ../login.php?msg=your account was created successfully');
 
 }
 
