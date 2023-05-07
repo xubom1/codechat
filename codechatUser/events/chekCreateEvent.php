@@ -8,6 +8,7 @@ if (empty(trim($_POST['name']))
     || empty($_POST['ending_date'])
     || empty(trim($_POST['location']))
     || empty(trim($_POST['description']))
+    || empty(trim($_POST['max_signups']))
 )
 {
     $msg = 'you must fill in all the fields';
@@ -28,15 +29,24 @@ if (empty(trim($_POST['name']))
         exit();
     }
     
+    if (!empty($_POST['max_signups']) && $_POST['max_signups'] <= 0)
+    {
+       
+        $msg = 'The maximum number of signups must be greater than zero';
+        header('Location: createEvents.php?msg=' . $msg);
+        exit();
+    }
+
     $db = getDatabase();
-$newEvents = $db->prepare('INSERT INTO events(name, starting_date, ending_date, location, description, creator) VALUES(:name, :starting_date, :ending_date, :location, :description, :creator)');
+$newEvents = $db->prepare('INSERT INTO events(name, starting_date, ending_date, location, description, creator, max_signups) VALUES(:name, :starting_date, :ending_date, :location, :description, :creator, :max_signups)');
 $newEvents->execute([
     'name' => $_POST['name'],
     'starting_date' => $_POST['starting_date'],
     'ending_date' => $_POST['ending_date'],
     'location' => $_POST['location'],
     'description' => $_POST['description'],
-    'creator' => $_SESSION['user']
+    'creator' => $_SESSION['user'],
+    'max_signups'  => $_POST['max_signups']
 ]);
 header('location: /');
 ?>

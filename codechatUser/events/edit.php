@@ -38,19 +38,34 @@ checkSessionElseLogin(false);
 ?>
 
 <!-- Affiche le formulaire de modification avec les informations de l'événement pré-remplies -->
-<form action="updateEvent.php" method="post">
+<form action="updateEvent.php" method="post" class="">
+
     <input type="hidden" name="event_id" value="<?php echo $eventId; ?>">
+
+    <div class="form-group">
     <label for="name">Name of the event :</label>
-    <input type="text" name="name" id="name" value="<?php echo $event['name']; ?>"required><br><br>
-    <label for="starting_date">Starting date :</label>
-    <input type="datetime-local" name="starting_date" id="starting_date" value="<?php echo $event['starting_date']; ?>"required><br><br>
-    <label for="ending_date">Ending date :</label>
-    <input type="datetime-local" name="ending_date" id="ending_date" value="<?php echo $event['ending_date']; ?>"required><br><br>
-    <label for="location">Location  :</label>
-    <input type="text" name="location" id="location" value="<?php echo $event['location']; ?>"required><br><br>
-    <label for="description">Description :</label>
+    <input type="text" class="form-control" name="name" id="name" value="<?php echo $event['name']; ?>"required><br>
+    <div>
     
-<textarea name="description" id="description"><?php echo $event['description']; ?></textarea><br><br>
+    <div class="form-group">
+    <label for="starting_date">Starting date :</label>
+    <input type="datetime-local"  class="form-control" name="starting_date" id="starting_date" value="<?php echo $event['starting_date']; ?>"required><br>
+    <div>
+
+    <div class="form-group">
+    <label for="ending_date">Ending date :</label>
+    <input type="datetime-local"class="form-control" name="ending_date" id="ending_date" value="<?php echo $event['ending_date']; ?>"required><br>
+    <div>
+
+    <div class="form-group">
+    <label for="location">Location  :</label>
+    <input type="text" class="form-control" name="location" id="location" value="<?php echo $event['location']; ?>"required><br>
+    <div>
+
+    <div class="form-group">
+    <label for="description">Description :</label>
+    <textarea  class="form-control"name="description" id="description"><?php echo $event['description']; ?></textarea><br><br>
+    <div>
 
     <input type="submit" value="Edit" name="events" class="btn btn-secondary my-3">
 </form>

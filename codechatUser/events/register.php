@@ -12,6 +12,23 @@ $eventId = $_POST['event_id'];
 
 $db = getDatabase();
 
+$checkEvent = $db->prepare('SELECT * FROM events WHERE id = :id');
+$checkEvent->execute(['id' => $eventId]);
+$event = $checkEvent->fetch(PDO::FETCH_ASSOC);
+
+$maxSignups = $event['max_signups'];
+
+$checkSignCount = $db->prepare('SELECT COUNT(*) FROM eventSign WHERE event = :event');
+$checkSignCount->execute([
+    'event' => $eventId
+]);
+$eventSignCount = $checkSignCount->fetchColumn();
+
+if ($eventSignCount >= $maxSignups) {
+    
+    die('Sorry, registrations for this event are already full');
+}
+
 
 $checkSign = $db->prepare('SELECT * FROM eventSign WHERE signer = :signer AND event = :event');
 $checkSign->execute([

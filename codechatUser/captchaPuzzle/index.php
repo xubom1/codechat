@@ -66,7 +66,7 @@ for ($i = 0; $i < 3; $i++) {
 }
 
 foreach ($parts as $index => $part) {
-    imagejpeg($part, "image_test".($index+1).".jpg", 100);
+  imagejpeg($part, "puzzle_piece/image_test".($index+1).".jpg", 100);
 }
 ?>
 
@@ -76,15 +76,15 @@ foreach ($parts as $index => $part) {
       <div class="my-board row">
         <?php
         $imageSources = [
-          'image_test1.jpg', 
-          'image_test2.jpg', 
-          'image_test3.jpg', 
-          'image_test4.jpg', 
-          'image_test5.jpg', 
-          'image_test6.jpg', 
-          'image_test7.jpg', 
-          'image_test8.jpg', 
-          'image_test9.jpg'
+          'puzzle_piece/image_test1.jpg', 
+          'puzzle_piece/image_test2.jpg', 
+          'puzzle_piece/image_test3.jpg', 
+          'puzzle_piece/image_test4.jpg', 
+          'puzzle_piece/image_test5.jpg', 
+          'puzzle_piece/image_test6.jpg', 
+          'puzzle_piece/image_test7.jpg', 
+          'puzzle_piece/image_test8.jpg', 
+          'puzzle_piece/image_test9.jpg'
         ];
         shuffle($imageSources);
         foreach ($imageSources as $index => $src) {
