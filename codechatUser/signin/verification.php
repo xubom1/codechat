@@ -1,6 +1,6 @@
 <?php
 include('../../database.php');
-include('../../codechatAdmin/mailFunction.php');
+include('var/www/html/codechat/codechatAdmin/mailFunction.php');
 
 $db = getDatabase();
 
@@ -118,6 +118,22 @@ if( isset($_POST['inscrip3'])){
 
     if(!$reponse) header('location: sign_in.php?msg=oops! An error occurred.');
 
+    //generate a token of 32 characters
+    $possibleChars = "123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$/!:,?";
+    $token = '';
+    for ($i = 0; $i < 32; $i++) {
+        $token .= $possibleChars[rand(0,strlen($possibleChars) - 1)];
+    }
+
+    $mail = "
+        <h2>Hello " . $_COOKIE ['pseudo'] . " !</h2>
+        <p>Your codechat account is almost here ! please click on the link below to finalise it.</p>
+        <a href='https://codechat.fr/signin/tokenVerification.php?token=$token'></a>
+    ";
+    sendMail('support@codechat.fr', 'codechat', 'nicolasguillot92@gmail.com', /*$_COOKIE['pseudo']*/'nicolas', NULL, NULL, 'codechat account verification', 'coucou', 'error', '/login.php');
+    echo $mail;
+    exit;
+
     //delete the cookies
     setcookie('pseudo', '', time());
     setcookie('mail', '', time());
@@ -129,7 +145,7 @@ if( isset($_POST['inscrip3'])){
     setcookie('password', '', time());
     setcookie('confirmPassword', '', time());
 
-    header('location: ../login.php?msg=your account was created successfully');
+    //header('location: ../login.php?msg=your account was created successfully');
 
 }
 
