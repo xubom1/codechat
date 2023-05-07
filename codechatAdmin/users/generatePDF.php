@@ -16,7 +16,7 @@ function YesOrNot($var) {
 function getPDF($pathlogo = 'logo.php'){
     $user = htmlspecialchars($_GET['user']);
 
-    include('../../database.php');
+    include('/var/www/html/codechat/database.php');
     $db = getDatabase();
 
     // user
