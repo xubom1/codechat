@@ -1,0 +1,19 @@
+Change password :
+	inactiveAccount
+	newsletter
+	mailfunction
+password forget user side
+
+Add permission
+
+Start all service
+programNewsletterService.service
+
+commande :
+sudo nvim /var/www/html/codechat/codechatAdmin/inactiveAccount/automaticEmail/sendMailService.php
+sudo nvim /var/www/html/codechat/codechatAdmin/mailFunction.php
+sudo nvim /var/www/html/codechat/codechatAdmin/newsletter/service/newsletterPrgmService.php
+
+sudo chmod 777 /var/www/html/codechat/codechatAdmin/newsletter/service/newsletterPrgmService.php
+sudo chmod 777 /var/www/html/codechat/codechatAdmin/inactiveAccount/automaticEmail/sendMailService.php
+sudo chmod 777 /var/www/html/codechat/codechatAdmin/newsletter/service/newsletterService.php
